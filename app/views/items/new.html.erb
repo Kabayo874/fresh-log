@@ -12,9 +12,16 @@
   </div>
   <div class="pt-2">
     <label for="category">Category</label>
-    <%= f.select :category, options_from_collection_for_select(Item.all, :id, :name) %>
+    <%= f.radio_button :category, Item.categories.key(0) %>
+    <%= f.label :category_cosmetics, Item.categories_i18n[:cosmetics] %>
+    <%= f.radio_button :category, Item.categories.key(1) %>
+    <%= f.label :category_daily_necessities, Item.categories_i18n[:daily_necessities] %>
+    <%= f.radio_button :category, Item.categories.key(2) %>
+    <%= f.label :category_groceries, Item.categories_i18n[:groceries] %>
+    <%= f.radio_button :category, Item.categories.key(3) %>
+    <%= f.label :category_supplement, Item.categories_i18n[:supplement] %>
   </div>
   <div class="pt-2">
-    <%= f.submit 'Create Book', class: "btn btn-success" %>
+    <%= f.submit '登録', class: "btn btn-success" %>
   </div>
 <% end %>
