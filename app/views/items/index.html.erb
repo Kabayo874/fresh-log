@@ -1,2 +1,12 @@
-<h1>Items#index</h1>
-<p>Find me in app/views/items/index.html.erb</p>
+<% @items.each do |item| %>
+  <div>
+    <p>商品画像：<%= image_tag item.get_image %></p>
+    <p>投稿ユーザー画像：<%= image_tag item.image, size: "150x150" %></p>
+    <p>タイトル：<%= item.title %></p>
+    <p>説明：<%= item.body %></p>
+    <p>ユーザーネーム：<%= item.user.name %></p>
+  </div>
+<% end %>
+
+
+<%= paginate @items %>

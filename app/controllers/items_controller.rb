@@ -7,10 +7,12 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user_id = current_user.id
     @item.save
-    redirect_to '/'
+    byebug
+    redirect_to '/items'
   end
 
   def index
+    @items = Item.page(params[:page])
   end
 
   def show
