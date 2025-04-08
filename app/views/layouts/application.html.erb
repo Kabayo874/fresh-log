@@ -14,6 +14,18 @@
     <header>
       <% if user_signed_in? %>
         <li>
+          <%= link_to "使い方", new_item_path %>
+        </li>
+        <li>
+          <%= link_to "新規投稿", new_item_path %>
+        </li>
+        <li>
+          <%= link_to "投稿一覧", new_item_path %>
+        </li>
+        <li>
+          <%= link_to "グループ一覧", new_item_path %>
+        </li>
+        <li>
           <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
         </li>
       <% else %>

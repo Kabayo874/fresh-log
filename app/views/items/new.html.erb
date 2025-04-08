@@ -10,6 +10,12 @@
     <label for="opinion">Opinion</label>
     <%= f.text_area :body, id:"opinion", class: "form-control" %>
   </div>
+
+  <div class="pt-2">
+    <label for="image">Image</label>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
+
   <div class="pt-2">
     <label for="category">Category</label>
     <%= f.radio_button :category, Item.categories.key(0) %>
