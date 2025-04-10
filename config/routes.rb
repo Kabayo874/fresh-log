@@ -8,6 +8,6 @@ Rails.application.routes.draw do
 
   resources :items, only: [:new, :create, :index, :show, :edit]
   resources :item_posts, only: [:new]
-  resources :groups, only: [:new, :index, :show]
+  resources :groups, only: [:new, :create, :index, :show]
 
 end

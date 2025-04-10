@@ -5,8 +5,8 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @item = Item.new
-    @group = Group.find(params[:id])
+    # @item = Item.new
+    # @group = Group.find(params[:id])
   end
 
   def create
@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :discription, :group_image, :status)
+    params.require(:group).permit(:name, :discription, :image, :status)
   end
 
   def ensure_correct_user
@@ -32,5 +32,5 @@ class GroupsController < ApplicationController
       redirect_to groups_path
     end
   end
-  
+
 end
