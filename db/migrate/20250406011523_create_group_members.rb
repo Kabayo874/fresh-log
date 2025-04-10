@@ -1,8 +1,8 @@
 class CreateGroupMembers < ActiveRecord::Migration[6.1]
   def change
     create_table :group_members do |t|
-      t.integer :user_id, null: false
-      t.integer :proup_id, null: false
+      t.references :user, foreign_key: true
+      t.references :proup, foreign_key: true
       t.boolean :status, null: false
 
       t.timestamps
