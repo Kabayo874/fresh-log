@@ -1,9 +1,13 @@
 <% @items.each do |item| %>
   <div>
-    <p>商品画像：<%= image_tag item.get_image %></p>
-    <p>投稿ユーザー画像：<%= image_tag item.image, size: "150x150" %></p>
-    <p>タイトル：<%= item.title %></p>
-    <p>説明：<%= item.body %></p>
+    <%= link_to item_path(item.id) do %>
+      <p>商品画像：<%= image_tag item.image, size: "150x150" %></p>
+      <p>タイトル：<%= item.title %></p>
+      <p>説明：<%= item.body %></p>
+    <% end %>
+
+
+    <p>投稿ユーザー画像：<%= image_tag item.image, size: "50x50" %></p>
     <p>ユーザーネーム：<%= item.user.name %></p>
   </div>
 <% end %>

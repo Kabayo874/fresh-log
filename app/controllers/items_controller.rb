@@ -7,8 +7,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user_id = current_user.id
     @item.save
-    byebug
-    redirect_to '/items'
+    redirect_to items_path
   end
 
   def index
@@ -16,9 +15,23 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find(params[:id])
   end
 
   def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    item = Item.find(params[:id])
+    item.update(item_params)
+    redirect_to item_path(item.id)
+  end
+
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+    redirect_to items_path
   end
 
 

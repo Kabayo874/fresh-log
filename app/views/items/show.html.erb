@@ -1,2 +1,12 @@
-<h1>Items#show</h1>
-<p>Find me in app/views/items/show.html.erb</p>
+<div>
+  <%= image_tag @item.image %>
+  <p>商品名：<%= @item.title %></p>
+  <p>説明：<%= @item.body %></p>
+  <p>投稿ユーザー画像：<%= image_tag @item.image %></p>
+  <p>ユーザーネーム：<%= @item.user.name %></p>
+  <p>投稿日：<%= @item.created_at.strftime('%Y/%m/%d') %></p>
+
+  <% if @item.user == current_user %>
+    <%= link_to "編集", edit_item_path(@item.id) %>
+  <% end %>
+</div>
