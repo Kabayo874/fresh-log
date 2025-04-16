@@ -1,8 +1,8 @@
 <div>
-<h3><%= @user.name %></h3>
-<%= image_tag @user.get_profile_image(100,100) %>
+<h3><%= @group.name %></h3>
+<%= image_tag @group.get_image(100,100) %>
 <div>
-  <p>プロフィール：<%= @user.profile %><p>
+  <p>説明：<%= @group.discription %><p>
 </div>
 <p><%= link_to "プロフィール編集", edit_user_path %></p>
 </div>
