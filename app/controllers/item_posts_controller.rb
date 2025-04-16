@@ -13,20 +13,20 @@ class ItemPostsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
-    @item_post = Item_post.find(params[:id])
+    @item = Item.find(params[:item_id])
+    @item_post = ItemPost.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
-    @item_post = Item_post.find(params[:id])
+    @item = Item.find(params[:item_id])
+    @item_post = ItemPost.find(params[:id])
     @item_post.update(item_post_params)
-    redirect_to post_path(params[:item_id])
+    redirect_to item_path(params[:item_id])
   end
 
   def destroy
-    @item = Item.find(params[:id])
-    @item_post = current_user.item_posts.find_by(item_id: @item.id)
+    @item = Item.find(params[:item_id])
+    @item_post = current_user.item_posts.find_by(item_id: @item.id, id: params[:id])
     @item_post.destroy
     redirect_to item_path(params[:item_id])
   end

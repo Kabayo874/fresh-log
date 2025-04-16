@@ -6,15 +6,16 @@
   
   <h4>本文</h4>
   <%= f.text_area :body %>
+
+  <div class="pt-2">
+    <label for="image">Image</label>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
   
   <div>
     <%= f.submit '保存' %>
   </div>
 
-  <div>
-    <% if @item.user == current_user %>
-      <%= link_to "削除", item_path(@item), method: :delete %>
-    <% end %>
-  </div>
+
   
 <% end %>
