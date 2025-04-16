@@ -6,6 +6,13 @@ ja:
         daily_necessities: "日用品"
         groceries: "食品"
         supplement: "サプリメント"
+      status:
+        start: "開封"
+        active: "使用中"
+        finish: "終了"
+        discard: "破棄"
+        repeat: "リピート"
+
   activerecord:
     errors:
       messages:
@@ -13,3 +20,5 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+
+  

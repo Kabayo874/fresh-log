@@ -1,7 +1,7 @@
 class ItemPostsController < ApplicationController
   def new
-    @item = Item.find(params[:id])
-    @item_post = Item_post.new
+    @item = Item.find(params[:item_id])
+    @item_post = ItemPost.new
   end
   
   def create
@@ -34,7 +34,7 @@ class ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item).permit(:item_post)
+    params.require(:item_post).permit(:item_post, :image, :status)
   end
 
 end
