@@ -1,30 +1,27 @@
 <div>
   <%= form_with model: [@item, @item_post] do |f| %>
-    <%= f.text_area :item_post, rows: '5' %>
 
 
     <div class="pt-2">
-      <label for="post">Opinion</label>
-      <%= f.text_area :item_post, row: '5', id:"post", class: "form-control" %>
+      <label for="post">説明</label>
+      <%= f.text_area :review, row: '5', id:"post", class: "form-control" %>
     </div>
 
     <div class="pt-2">
-      <label for="image">Image</label>
+      <label for="image">画像</label>
       <%= f.file_field :image, accept: "image/*" %>
     </div>
 
     <div class="pt-2">
       <label for="status">Status</label>
-      <%= f.radio_button :status, ItemPost.status.key(0) %>
-      <%= f.label :status_start, ItemPost.status_i18n[:start] %>
-      <%= f.radio_button :status, ItemPost.status.key(1) %>
-      <%= f.label :status_active, ItemPost.status_i18n[:active] %>
-      <%= f.radio_button :status, ItemPost.status.key(2) %>
-      <%= f.label :status_finish, ItemPost.status_i18n[:finish] %>
-      <%= f.radio_button :status, ItemPost.status.key(3) %>
-      <%= f.label :status_discard, ItemPost.status_i18n[:discard] %>
-      <%= f.radio_button :status, ItemPost.status.key(4) %>
-      <%= f.label :status_repeat, ItemPost.status_i18n[:repeat] %>
+      <%= f.radio_button :status, ItemPost.statuses.key(0) %>
+      <%= f.label :status_active, ItemPost.statuses_i18n[:active] %>
+      <%= f.radio_button :status, ItemPost.statuses.key(1) %>
+      <%= f.label :status_finish, ItemPost.statuses_i18n[:finish] %>
+      <%= f.radio_button :status, ItemPost.statuses.key(2) %>
+      <%= f.label :status_discard, ItemPost.statuses_i18n[:discard] %>
+      <%= f.radio_button :status, ItemPost.statuses.key(3) %>
+      <%= f.label :status_repeat, ItemPost.statuses_i18n[:repeat] %>
     </div>
 
     <div class="pt-2">

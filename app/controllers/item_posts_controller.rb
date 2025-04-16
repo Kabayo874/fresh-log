@@ -34,7 +34,7 @@ class ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item_post).permit(:item_post, :image, :status)
+    params.require(:item_post).permit(:review, :image, :status)
   end
 
 end

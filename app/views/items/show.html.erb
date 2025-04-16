@@ -12,9 +12,12 @@
 
   <div>
     <% @item.item_posts.each do |item_post| %>
-      <%= image_tag item_post.image, size: "100x100" %>
-      <%= item_post.post %>
-      <%= item_post.created_at.strftime('%Y/%m/%d') %>
+      <div>
+        <%= item_post.status %>
+        <%= image_tag item_post.image, size: "100x100" %>
+        <%= item_post.review %>
+        <%= item_post.created_at.strftime('%Y/%m/%d') %>
+      </div>
     <% end %>
   </div>
 

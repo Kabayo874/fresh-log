@@ -4,6 +4,6 @@ class ItemPost < ApplicationRecord
   belongs_to :user
   belongs_to :item
 
-  enum status: { start: 0, active: 1, finish: 2, discard: 3, repeat: 4 }
+  enum status: { active: 0, finish: 1, discard: 2, repeat: 3 }
 
 end
