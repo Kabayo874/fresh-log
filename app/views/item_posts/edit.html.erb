@@ -1,0 +1,6 @@
+<div>
+  <%= form_with model: [@item, @item_post] do |f| %>
+    <%= f.text_area :item_post, rows: '5' %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
