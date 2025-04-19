@@ -21,4 +21,10 @@ ja:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
 
-  
+  errors:
+    messages:
+      taken: "はすでに使用されています"
+      not_saved: "保存できませんでした"
+    attributes:
+      email:
+        taken: "はすでに登録されています"

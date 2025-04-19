@@ -1,0 +1,14 @@
+<div>
+  <h3><%= user.name %></h3>
+  <%= image_tag user.get_profile_image(100,100) %>
+  <div>
+    <p>プロフィール：<%= user.profile %><p>
+  </div>
+</div>
+
+<div>
+  <div><%= link_to "投稿一覧", user_path %></div>
+  <div><%= link_to "グループ一覧", groups_user_path %></div>
+  <div><%= link_to "プロフィール編集", edit_user_path %></div>
+</div>
+

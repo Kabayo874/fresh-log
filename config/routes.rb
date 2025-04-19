@@ -8,10 +8,14 @@ Rails.application.routes.draw do
 
   get 'homes/about' => 'homes#about', as: 'about'
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show, :edit, :update, :groups] do
+    member do
+      get :groups
+    end
+  end
   resources :items, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
     resources :item_posts, only: [:new, :create, :edit, :update, :destroy]
   end
-  resources :groups, only: [:new, :create, :index, :show]
+  resources :groups, only: [:new, :create, :show]
 
 end

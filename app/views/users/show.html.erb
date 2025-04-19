@@ -1,20 +1,14 @@
-<div>
-  <h3><%= @user.name %></h3>
-  <%= image_tag @user.get_profile_image(100,100) %>
-  <div>
-    <p>プロフィール：<%= @user.profile %><p>
-  </div>
-  <p><%= link_to "プロフィール編集", edit_user_path %></p>
-</div>
+<%= render 'profile', user: @user %>
 
-
-<% @items.each do |item| %>
 <div>
-  <%= link_to item_path(item.id) do %>
-    <%= image_tag item.image, size: "150x150" %>
+  <% @items.each do |item| %>
+    <div>
+      <%= link_to item_path(item.id) do %>
+        <%= image_tag item.image, size: "150x150" %>
+      <% end %>
+      <p>タイトル：<%= item.title %></p>
+      <p>説明：<%= item.body %></p>
+      <p>ユーザーネーム：<%= item.user.name %></p>
+    </div>
   <% end %>
-  <p>タイトル：<%= item.title %></p>
-  <p>説明：<%= item.body %></p>
-  <p>ユーザーネーム：<%= item.user.name %></p>
-</div>
-<% end %>
+<div>
