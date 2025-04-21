@@ -1,8 +1,8 @@
 <h1>商品投稿フォーム</h1>
 
-<h2>投稿グループ；<% @group.name %><h2>
+<h2>投稿グループ；<%= @group.name %><h2>
 
-<%= form_with model: @item, url: group_items_path(@group) do |f| %>
+<%= form_with model: @item, url: group_items_path(@group), local: true do |f| %>
   <%= f.hidden_field :group_id, value: @group.id %>
   
   <div>
