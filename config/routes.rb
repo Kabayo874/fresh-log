@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :items, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
     resources :item_posts, only: [:new, :create, :edit, :update, :destroy]
   end
-  resources :groups, only: [:new, :create, :show]
+  resources :groups, only: [:new, :create, :show, :edit] do
+    resources :group_members, only: [:create, :destroy]
+  end
 
 end

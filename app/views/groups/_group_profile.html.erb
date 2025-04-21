@@ -1,0 +1,30 @@
+<div>
+  <h3><%= @group.name %></h3>
+  <%= image_tag @group.image, size: "150x150" %>
+  <div>
+    <p>説明：<%= @group.discription %></p>
+  </div>
+  <div>
+    <%= @group.owner_user.name %>
+</div>
+
+<div>
+  <div><%= link_to "投稿一覧", group_path %></div>
+  <div><%= link_to "グループ編集", edit_group_path %></div>
+</div>
+
+<%= form_with url: group_group_members_path(@group), method: :post do |f| %>
+  <%= f.label :email, "メールアドレス" %>
+  <%= f.text_field :email %>
+  <%= f.submit "招待する" %>
+<% end %>
+
+
+<div>
+  <% @group.group_members.each do |member| %>
+    <%= link_to user_path(member.id) do %>
+      <%= image_tag member.user.get_profile_image(100,100) %>
+      <%= member.user.name %>
+    <% end %>
+  <% end %>
+</div>

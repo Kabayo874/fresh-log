@@ -1,13 +1,27 @@
 class ItemsController < ApplicationController
   def new
-    @item = Item.new
+    if params[:group_id]
+      @group = Group.find(params[:group_id])
+      @item = @group.items.build(user: current_user)
+    else
+      @item = Item.new
   end
 
   def create
-    @item = Item.new(item_params)
-    @item.user_id = current_user.id
-    @item.save
-    redirect_to items_path
+    if params[:group_id]
+      @group = Group.find(params[:group_id])
+      @item = @group.items.build(item_params.merge(user: current_user))
+      @item.user = current_user
+    else
+      @item = current_user.items.build(item_params)
+    end
+
+    if
+      @item.save
+      redirect_to items_path
+    else
+      render :new
+    end
   end
 
   def index

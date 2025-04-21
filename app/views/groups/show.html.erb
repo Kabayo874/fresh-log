@@ -1,21 +1,4 @@
-<div>
-  <h3><%= @group.name %></h3>
-  <%= image_tag @group.image, size: "150x150" %>
-  <div>
-    <p>説明：<%= @group.discription %></p>
-  </div>
-  <div>
-    <%= @group.owner_user.name %>
-</div>
-
-<div>
-  <% @group.group_members.each do |member| %>
-    <%= link_to user_path(member.id) do %>
-      <%= image_tag member.user.get_profile_image(100,100) %>
-      <%= member.user.name %>
-    <% end %>
-  <% end %>
-</div>
+<%= render 'group_profile', group: @group %>
 
 <div>
   <% @items.each do |item| %>
