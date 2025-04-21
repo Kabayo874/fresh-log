@@ -4,11 +4,13 @@
       <p>商品画像：<%= image_tag item.image, size: "150x150" %></p>
       <p>タイトル：<%= item.title %></p>
       <p>説明：<%= item.body %></p>
+      <% if item.group.present? %>
+        <p class="text-muted">所属グループ：<%= link_to item.group.name, group_path(item.group) %></p>     <% end %>
+      <% end %>
+    <%= link_to user_path(item.user.id) do %>  
+      <p>投稿ユーザー画像：<%= image_tag item.user.get_profile_image(50,50) %></p>
+      <p>ユーザーネーム：<%= item.user.name %></p>
     <% end %>
-
-
-    <p>投稿ユーザー画像：<%= image_tag item.user.get_profile_image(50,50) %></p>
-    <p>ユーザーネーム：<%= item.user.name %></p>
   </div>
 <% end %>
 

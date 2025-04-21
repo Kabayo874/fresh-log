@@ -1,6 +1,11 @@
 <%= render 'group_profile', group: @group %>
 
 <div>
+  <%= link_to "グループ投稿", new_group_item_path(@group) %>
+</div>
+
+
+<div>
   <% @items.each do |item| %>
     <%= link_to item_path(item.id) do %>
       <%= image_tag item.image, size: "150x150" %>

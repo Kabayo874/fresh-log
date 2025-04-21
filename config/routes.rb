@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   get 'homes/about' => 'homes#about', as: 'about'
+  get 'groups/:group_id/items/new', to: 'items#new', as: 'new_group_item'
 
   resources :users, only: [:show, :edit, :update, :groups] do
     member do

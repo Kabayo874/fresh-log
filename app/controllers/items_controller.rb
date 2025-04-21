@@ -5,19 +5,19 @@ class ItemsController < ApplicationController
       @item = @group.items.build(user: current_user)
     else
       @item = Item.new
+    end
   end
 
   def create
     if params[:group_id]
       @group = Group.find(params[:group_id])
-      @item = @group.items.build(item_params.merge(user: current_user))
+      @item = @group.items.build(item_params)
       @item.user = current_user
     else
       @item = current_user.items.build(item_params)
     end
-
-    if
-      @item.save
+  
+    if @item.save
       redirect_to items_path
     else
       render :new
@@ -53,6 +53,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :body, :image, :category)
+    params.require(:item).permit(:title, :body, :image, :category, :group_id)
   end
 end
