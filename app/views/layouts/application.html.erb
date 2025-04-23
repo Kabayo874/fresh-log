@@ -6,38 +6,56 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/b033198601.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <header>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to "使い方", about_path %>
-        </li>
-        <li>
-          <%= link_to "新規投稿", new_item_path %>
-        </li>
-        <li>
-          <%= link_to "投稿一覧", items_path %>
-        </li>
-        <li>
-          <%= link_to "マイページ", user_path(current_user.id) %>
-        </li>
-        <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
+
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand p-3"><%= link_to "Fresh-log", index_path %></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to "使い方", about_path %>
+                </li>
+                <li>
+                  <%= link_to "新規投稿", new_item_path %>
+                </li>
+                <li>
+                  <%= link_to "投稿一覧", items_path %>
+                </li>
+                <li>
+                  <%= link_to "マイページ", user_path(current_user.id) %>
+                </li>
+                <li>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to "新規登録", new_user_registration_path %>
+                </li>
+                <li>
+                  <%= link_to "ログイン", new_user_session_path %>
+                </li>
+              <% end %>
+              </ul>
+            </div>
+        </div>
+      </nav>
     </header>
 
+    <main class="mb-auto">
     <%= yield %>
+    </main>
   </body>
 </html>
