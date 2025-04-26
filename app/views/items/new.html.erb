@@ -2,6 +2,8 @@
 
 
 <%= form_with model: @item do |f| %>
+  <%= f.hidden_field :group_id %>
+
   <div>
     <label for="title">Title</label>
     <%= f.text_field :title, id:"title", class: "form-control" %>

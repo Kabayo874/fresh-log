@@ -9,8 +9,8 @@ class ItemsController < ApplicationController
   end
 
   def create
-    if params[:group_id]
-      @group = Group.find(params[:group_id])
+    if item_params[:group_id] .present?
+      @group = Group.find(item_params[:group_id])
       @item = @group.items.build(item_params.except(:group_id))
       @item.user = current_user
     else
@@ -53,6 +53,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :body, :image, :category)
+    params.require(:item).permit(:title, :body, :image, :category, :group_id)
   end
 end
