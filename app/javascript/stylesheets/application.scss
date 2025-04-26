@@ -1,1 +1,42 @@
 @use 'bootstrap/scss/bootstrap';
+
+.object-fit-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card a {
+  text-decoration: none;
+  color: #212529;
+}
+
+.card a:hover {
+  text-decoration: none;
+  color: #212529;
+}
+
+.btn-cosmetics, .btn-cosmetics:hover {
+  background-color: #e6e0f8;
+  color: #333;
+  border: none
+}
+
+.btn-daily, .btn-daily:hover {
+  background-color: #d7e2eb;
+  color: #333;
+  border: none
+}
+
+.btn-food, .btn-food:hover {
+  background-color: #dde7d0;
+  color: #333;
+  border: none
+}
+
+.btn-supplement, .btn-supplement:hover {
+  background-color: #f9f3d6;
+  color: #333;
+  border: none
+}

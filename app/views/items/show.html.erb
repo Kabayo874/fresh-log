@@ -2,6 +2,7 @@
   <%= image_tag @item.image, size: "150x150" %>
   <p>商品名：<%= @item.title %></p>
   <p>説明：<%= @item.body %></p>
+  <p>カテゴリー：<%= @item.category_i18n %></p>
   <% if @item.group.present? %>
     <p class="text-muted">所属グループ：<%= link_to @item.group.name, group_path(@item.group) %></p>
   <% end %>
