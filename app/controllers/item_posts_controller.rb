@@ -5,11 +5,15 @@ class ItemPostsController < ApplicationController
   end
   
   def create
-    item = Item.find(params[:item_id])
-    post = current_user.item_posts.new(item_post_params)
-    post.item_id = item.id
-    post.save
-    redirect_to item_path(item)
+    @item = Item.find(params[:item_id])
+    @item_post = current_user.item_posts.new(item_post_params)
+    @item_post.item_id = item.id
+    if @item_post.save
+      @item.update(status: @item_post.status)
+      redirect_to item_path(@item)
+    else
+      render :new
+    end
   end
 
   def edit
@@ -20,8 +24,12 @@ class ItemPostsController < ApplicationController
   def update
     @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
-    @item_post.update(item_post_params)
-    redirect_to item_path(params[:item_id])
+    if @item_post.update(item_post_params)
+      @item.update(status: @item_post.status)
+      redirect_to item_path(@item)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -34,7 +42,7 @@ class ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item_post).permit(:review, :image, :status)
+    params.require(:item_post).permit(:review, :image)
   end
 
 end

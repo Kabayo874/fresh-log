@@ -3,18 +3,22 @@
     <% @items.each do |item| %>
 
       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-        <div class="card h-100">
+        <div class="card h-100 position-relative rounded-4">
+
           <%= link_to item_path(item.id) do %>
             <%= image_tag item.image, class: "card-img-top object-fit-cover" %>
           <% end %>
+          <div class="position-absolute top-0 start-0 m-2 bg-light px-2 py-1 rounded small">
+            <%= item.status_i18n %>
+          </div>
           <div class="card-body">
+            <% if item.group.present? %>
+              <div class=""><%= link_to item.group.name, group_path(item.group) %></div>
+            <% end %>
             <%= link_to item_path(item.id) do %>
               <h5 class="card-title"><%= item.title %></h5>
               <p class="card-text"><%= item.body %><p>
               <div class="btn btn-primary btn-sm <%= category_color_class(item.category) %>"><%= item.category_i18n %></div>
-              <% if item.group.present? %>
-                <div class="text-muted">所属グループ：<%= link_to item.group.name, group_path(item.group) %></div>
-              <% end %>
             <% end %>
 
             <%= link_to user_path(item.user.id), class: "d-flex align-items-center" do %>  

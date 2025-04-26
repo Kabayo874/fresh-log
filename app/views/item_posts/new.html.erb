@@ -23,6 +23,7 @@
       <%= f.radio_button :status, ItemPost.statuses.key(3) %>
       <%= f.label :status_repeat, ItemPost.statuses_i18n[:repeat] %>
     </div>
+    <%= f.hidden_field :item_status, value: @item.status %> 
 
     <div class="pt-2">
       <%= f.submit '登録', class: "btn btn-success" %>
