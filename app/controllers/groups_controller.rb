@@ -13,12 +13,6 @@ class GroupsController < ApplicationController
     else
       render :new
     end
-
-    if @item.save
-      redirect_to items_path
-    else
-      render :new
-    end
   end
 
   def show

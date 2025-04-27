@@ -11,18 +11,26 @@
           <div class="position-absolute top-0 start-0 m-2 bg-light px-2 py-1 rounded small">
             <%= item.status_i18n %>
           </div>
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <% if item.group.present? %>
-              <div class=""><%= link_to item.group.name, group_path(item.group) %></div>
-            <% end %>
-            <%= link_to item_path(item.id) do %>
-              <h5 class="card-title"><%= item.title %></h5>
-              <p class="card-text"><%= item.body %><p>
-              <div class="btn btn-primary btn-sm <%= category_color_class(item.category) %>"><%= item.category_i18n %></div>
+              <div><%= link_to item.group.name, group_path(item.group) %></div>
             <% end %>
 
-            <%= link_to user_path(item.user.id), class: "d-flex align-items-center" do %>  
-              <%= image_tag item.user.get_profile_image(50,50), class: "d-flex align-items-center" %>
+            <div class="mb-auto">
+              <%= link_to item_path(item.id) do %>
+                <h5 class="card-title"><%= item.title %></h5>
+                <p class="card-text"><%= truncate(item.body, length: 40) %><p>
+              <% end %>
+            </div>
+
+            <div>
+              <div class="btn btn-primary btn-sm <%= category_color_class(item.category) %>">
+                <%= item.category_i18n %>
+              </div>
+            </div>
+
+            <%= link_to user_path(item.user.id), class: "d-flex align-items-center mt-2" do %>  
+              <%= image_tag item.user.get_profile_image(50,50), class: "rounded-circle me-2" %>
               <p class="mb-0"><%= item.user.name %></p>
             <% end %>
           </div>

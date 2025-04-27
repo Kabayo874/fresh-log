@@ -1,46 +1,88 @@
-<div>
-  <%= image_tag @item.image, size: "150x150" %>
-  <p>商品名：<%= @item.title %></p>
-  <p>説明：<%= @item.body %></p>
-  <p>カテゴリー：<%= @item.category_i18n %></p>
-  <% if @item.group.present? %>
-    <p class="text-muted">所属グループ：<%= link_to @item.group.name, group_path(@item.group) %></p>
-  <% end %>
-  <%= link_to user_path(@item.user.id) do %>
-    <p>投稿ユーザー画像：<%= image_tag @item.user.get_profile_image(50,50) %></p>
-    <p>ユーザーネーム：<%= @item.user.name %></p>
-  <% end %>
-  <p>投稿日：<%= @item.created_at.strftime('%Y/%m/%d') %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <%= render 'users/profile', user: @item.user %>
+    </div>
 
-  <div>
-    <% if @item.user == current_user %>
-      <div>
-        <%= link_to "編集", edit_item_path(@item.id) %>
-        <%= link_to "削除", item_path(@item), method: :delete %>
-      </div>
-    <% end %>
-  </div>
+    <div class="col-lg-9">
+      <div class="m-5">
+        <% if @item.group.present? %>
+          <div class="row'>
+            <p class="text-muted">所属グループ：<%= link_to @item.group.name, group_path(@item.group) %></p>
+          </div>
+        <% end %>
 
-  <div>
-    <% @item.item_posts.each do |item_post| %>
-      <div>
-        <%= item_post.status %>
-        <%= image_tag item_post.image, size: "100x100" %>
-        <%= item_post.review %>
-        <%= item_post.created_at.strftime('%Y/%m/%d') %>
-        <div>
+        <div class="row mb-3">
+          <div class="col-auto">
+            <div class="btn btn-primary btn-sm <%= category_color_class(@item.category) %>">
+              <%= @item.category_i18n %>
+            </div>
+          </div>
+          <div class="col-8">
+            <h4><%= @item.title %></h4>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-4">
+            <%= image_tag @item.image, size: "150x150" %>
+          </div>
+          <div class="col-8">
+            <div class="d-flex align-items-end mb-2">
+              <div class="btn btn-primary btn-sm">
+                <%= @item.status_i18n %>
+              </div>
+              <p class="mb-0 ms-2 small">
+                <%= @item.created_at.strftime('%Y/%m/%d') %>
+              </p>
+            </div>
+            <div class="row">
+              <p><%= @item.body %></p>
+            </div>
+            
+            <% if @item.user == current_user %>
+            <div class="d-flex align-items-end mb-2">
+              <%= link_to "編集", edit_item_path(@item.id) %>
+              <%= link_to "削除", item_path(@item), method: :delete, class: "ms-3" %>
+            </div>
+            <% end %>
+          </div>
+        </div>
+
+
+        <% @item.item_posts.each do |item_post| %>
+        <div class="row">
+          <div class="col">
+            <%= image_tag item_post.image, size: "100x100" %>
+          </div>
+        </div>
+        <div class="d-flex align-items-end mb-2">
+            <div class="btn btn-primary btn-sm">
+              <%= @item.status_i18n %>
+            </div>
+            <p class="mb-0 ms-2 small">
+              <%= item_post.created_at.strftime('%Y/%m/%d') %>
+            </p>
+          </div>
+          <div class="col">      
+            <p><%= item_post.review %></p>
+          </div>
+              
           <% if @item.user == current_user %>
+            <div class="d-flex align-items-end mb-2">
               <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
-              <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete %>
+              <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
+            </div>
           <% end %>
         </div>
-    <% end %>
-  </div>
+        <% end %>
 
-  <div>
-    <% if @item.user == current_user %>
-      <%= link_to "経過報告", new_item_item_post_path(item_id: @item.id) %>
-    <% end %>
+        <% if @item.user == current_user %>
+        <div>
+          <%= link_to "経過報告", new_item_item_post_path(item_id: @item.id) %>
+        </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-
 </div>

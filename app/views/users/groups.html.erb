@@ -1,20 +1,29 @@
-<%= render 'profile', user: @user %>
+<div class="container">
+  <div class="row d-flex flex-wrap m-5">
+    <div class="col-lg-3">
+      <%= render 'profile', user: @user %>
+    </div>
 
-<%= link_to "+", new_group_path %>
+    <div class="col-12 col-lg-9 mb-4">
 
-<% if @groups.any? %>
-  <% @groups.each do |group| %>
-    <div>
-      <%= link_to group_path(group.id) do %>
-        <% if group.owner_id == current_user.id %>
-          <span style="color: green; font-weight: bold;">★</span>
+      <%= link_to "+", new_group_path %>
+
+      <% if @groups.any? %>
+        <% @groups.each do |group| %>
+          <div>
+            <%= link_to group_path(group.id) do %>
+              <% if group.owner_id == current_user.id %>
+                <span style="color: green; font-weight: bold;">★</span>
+              <% end %>
+              <div>
+                <p><%= image_tag group.image, size: "150x150" %></p>
+                <p><%= group.name %></p>
+                <p><%= group.discription %></p>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-        <div>
-          <p><%= image_tag group.image, size: "150x150" %></p>
-          <p><%= group.name %></p>
-          <p><%= group.discription %></p>
-        </div>
       <% end %>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>
