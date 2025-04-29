@@ -7,6 +7,17 @@
 
     <div class="col-12 col-lg-9 mb-4">
       <div class="row">
+
+        <% if @user == current_user %>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
+            <%= link_to new_item_path, class: "text-decoration-none" do %>
+              <div class="card h-100 position-relative rounded-4 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-plus fa-2x"></i>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
         <% @items.each do |item| %>
           <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
             <div class="card h-100 position-relative rounded-4">

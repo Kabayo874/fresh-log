@@ -4,6 +4,7 @@
       <%= render 'users/profile', user: @item.user %>
     </div>
 
+
     <div class="col-lg-9">
       <div class="m-5">
         <% if @item.group.present? %>
@@ -23,11 +24,12 @@
           </div>
         </div>
 
+        <% # Item最初の投稿 %>
         <div class="row mb-3">
-          <div class="col-4">
+          <div class="col-3">
             <%= image_tag @item.image, size: "150x150" %>
           </div>
-          <div class="col-8">
+          <div class="col-9">
             <div class="d-flex align-items-end mb-2">
               <div class="btn btn-primary btn-sm">
                 <%= @item.status_i18n %>
@@ -49,38 +51,51 @@
           </div>
         </div>
 
-
+        <% # Itempost追加投稿 %>
         <% @item.item_posts.each do |item_post| %>
-        <div class="row">
-          <div class="col">
-            <%= image_tag item_post.image, size: "100x100" %>
+        <div class="row mb-3">
+          <div class="col-3">
+            <%= image_tag item_post.image, size: "150x150" %>
           </div>
-        </div>
-        <div class="d-flex align-items-end mb-2">
-            <div class="btn btn-primary btn-sm">
-              <%= @item.status_i18n %>
-            </div>
-            <p class="mb-0 ms-2 small">
-              <%= item_post.created_at.strftime('%Y/%m/%d') %>
-            </p>
-          </div>
-          <div class="col">      
-            <p><%= item_post.review %></p>
-          </div>
-              
-          <% if @item.user == current_user %>
+          <div class="col-9">
             <div class="d-flex align-items-end mb-2">
-              <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
-              <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
+                <div class="btn btn-primary btn-sm">
+                  <%= @item.status_i18n %>
+                </div>
+                <p class="mb-0 ms-2 small">
+                  <%= item_post.created_at.strftime('%Y/%m/%d') %>
+                </p>
+              </div>
+              <div class="col">      
+                <p><%= item_post.review %></p>
+              </div>
+                  
+              <% if @item.user == current_user %>
+                <div class="d-flex align-items-end mb-2">
+                  <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
+                  <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
+                </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
         </div>
         <% end %>
 
+        <% # 追加投稿のリンク %> 
         <% if @item.user == current_user %>
-        <div>
-          <%= link_to "経過報告", new_item_item_post_path(item_id: @item.id) %>
+        <div class="row mb-3">
+          <div class="col-3">
+            <div class="border border-2 rounded-3 d-flex align-items-center justify-content-center"
+              style="width: 150px; height: 150px;">
+              <%= link_to new_item_item_post_path(item_id: @item.id) do %>
+                <i class="fa-solid fa-plus fa-2x"></i>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-9">
+          </div>
         </div>
+
         <% end %>
       </div>
     </div>

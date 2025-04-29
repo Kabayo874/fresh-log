@@ -5,25 +5,48 @@
     </div>
 
     <div class="col-12 col-lg-9 mb-4">
+      <div class="row">
+        <h4>所属グループ一覧</h4>
+      </div>
 
-      <%= link_to "+", new_group_path %>
-
-      <% if @groups.any? %>
-        <% @groups.each do |group| %>
-          <div>
-            <%= link_to group_path(group.id) do %>
-              <% if group.owner_id == current_user.id %>
-                <span style="color: green; font-weight: bold;">★</span>
-              <% end %>
-              <div>
-                <p><%= image_tag group.image, size: "150x150" %></p>
-                <p><%= group.name %></p>
-                <p><%= group.discription %></p>
+      <div class="row">
+        <% if @user == current_user %>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
+            <%= link_to new_group_path, class: "text-decoration-none" do %>
+              <div class="card h-100 position-relative rounded-4 d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-plus fa-2x"></i>
               </div>
             <% end %>
           </div>
         <% end %>
-      <% end %>
+
+        <% if @groups.any? %>
+          <% @groups.each do |group| %>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
+              <div class="card h-100 position-relative rounded-4">
+
+                <%= link_to group_path(group.id) do %>
+                  <%= image_tag group.image, class: "card-img-top object-fit-cover" %>
+                <% end %>
+                <% if group.owner_id == current_user.id %>
+                  <div class="position-absolute top-0 start-0 m-2 bg-light px-2 py-1 rounded small">
+                    <span style="color: green; font-weight: bold;">管理者</span>
+                  </div>
+                <% end %>
+                <div class="card-body d-flex flex-column">
+
+                  <div class="mb-auto">
+                    <%= link_to group_path(group.id) do %>
+                      <h5 class="card-title"><%= group.name %></h5>
+                      <p class="card-text"><%= truncate(group.discription, length: 40) %><p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

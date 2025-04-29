@@ -7,9 +7,9 @@ class ItemPostsController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @item_post = current_user.item_posts.new(item_post_params)
-    @item_post.item_id = item.id
+    @item_post.item_id = @item.id
     if @item_post.save
-      @item.update(status: @item_post.status)
+      @item.update(status: @item.status)
       redirect_to item_path(@item)
     else
       render :new
@@ -25,7 +25,7 @@ class ItemPostsController < ApplicationController
     @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
     if @item_post.update(item_post_params)
-      @item.update(status: @item_post.status)
+      @item.update(status: @item.status)
       redirect_to item_path(@item)
     else
       render :edit
