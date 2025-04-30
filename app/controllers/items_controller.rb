@@ -18,7 +18,11 @@ class ItemsController < ApplicationController
     end
   
     if @item.save
-      redirect_to items_path
+      if @item.group.present?
+        redirect_to group_path(@item.group)
+      else
+        redirect_to user_path(current_user) 
+      end
     else
       render :new
     end

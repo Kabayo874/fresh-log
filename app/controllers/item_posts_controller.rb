@@ -10,7 +10,11 @@ class ItemPostsController < ApplicationController
     @item_post.item_id = @item.id
     if @item_post.save
       @item.update(status: @item.status)
-      redirect_to item_path(@item)
+      if @item.group.present?
+        redirect_to group_path(@item.group)
+      else
+        redirect_to user_path(current_user)
+      end
     else
       render :new
     end

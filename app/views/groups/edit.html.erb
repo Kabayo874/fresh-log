@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row d-flex flex-wrap m-5">
+    <div class="col-lg-3">
+      <%= render 'group_profile', group: @group %>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+            <h5 class="text-dark bg-light p-4 mb-0">グループ編集</h5>
+            <div class="form-body p-4">
+              <%= form_with model: @group do |f| %>
+
+                <div>
+                  <label for="inputName">グループ名</label>
+                  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"グループ名", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="inputDiscription">グループ紹介</label>
+                  <%= f.text_area :discription, autofocus: true, id:"inputDiscription", placeholder:"自己紹介", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="inputImage">グループ画像</label>
+                  <%= f.file_field :image, id:"inputImage", placeholder: "グループ画像", accept: "image/*" %>
+                </div>
+                <div class="pt-2">
+                  <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

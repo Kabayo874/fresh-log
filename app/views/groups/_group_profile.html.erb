@@ -1,29 +1,31 @@
-<div>
-  <h3><%= @group.name %></h3>
-  <%= image_tag @group.image, size: "150x150" %>
+<div class="text-center mt-5">
+  <%= image_tag group.image, size: "150x150", class: "rounded rounded-3 mb-3" %>
+  <h5><%= group.name %></h5>
+</div>
+<div class="mt-5">
+  <p><%= group.discription %></p>
+</div>
+
+<div class="mb-5">
+  <div><%= link_to "投稿一覧", group_path(group) %></div>
   <div>
-    <p>説明：<%= @group.discription %></p>
+    <% if group.owner_user == current_user %>
+      <div><%= link_to "グループ編集", edit_group_path(group) %></div>
+    <% end %>
   </div>
-  <div>
-    <%= @group.owner_user.name %>
 </div>
 
 <div>
-  <div><%= link_to "投稿一覧", group_path %></div>
-  <div><%= link_to "グループ編集", edit_group_path %></div>
-</div>
-
-<%= form_with url: group_group_members_path(@group), method: :post do |f| %>
-  <%= f.label :email, "メールアドレス" %>
-  <%= f.text_field :email %>
-  <%= f.submit "招待する" %>
-<% end %>
-
-
-<div>
-  <% @group.group_members.each do |member| %>
+  <div class="mb-2">
+    <%= form_with url: group_group_members_path(group), method: :post do |f| %>
+      <%= f.label :email, "メールアドレスでメンバー招待" %>
+      <%= f.text_field :email %>
+      <%= f.submit "招待する", class: "btn btn-secondary mt-1" %>
+    <% end %>
+  </div>
+  <% group.group_members.each do |member| %>
     <%= link_to user_path(member.id) do %>
-      <%= image_tag member.user.get_profile_image(100,100) %>
+      <%= image_tag member.user.get_profile_image(70,70), class: "rounded-circle mb-3 me-3" %>
       <%= member.user.name %>
     <% end %>
   <% end %>

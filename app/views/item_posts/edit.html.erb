@@ -1,23 +1,44 @@
-<h1>編集画面</h1>
-<%= form_with model: [@item, @item_post] do |f| %>
-  
-  <div>
-    <%= f.text_area :review %>
-  </div>
 
-  <div class="pt-2">
-    <label for="image">Image</label>
-    <%= f.file_field :image, accept: "image/*" %>
-  </div>
-  
-  <div>
-    <%= f.submit '保存' %>
-  </div>
+<div class="container">
+  <div class="row d-flex flex-wrap m-5">
+    <div class="col-lg-3">
+      <% if params[:group_id].present? %>
+        <%= render 'groups/group_profile', group: @item.group %>
+      <% else %>
+        <%= render 'users/profile', user: @item.user %>
+      <% end %>
+    </div>
 
-  <div>
-    <% if @item.user == current_user %>
-      <%= link_to "削除", item_path(@item), method: :delete %>
-    <% end %>
+    <div class="col-lg-9">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+            <h5 class="text-dark bg-light p-4 mb-0">商品投稿編集</h5>
+            <div class="form-body p-4">
+              <%= form_with model: [@item, @item_post] do |f| %>
+
+                <div class="pt-2">
+                  <label for="review">レビュー</label>
+                  <%= f.text_area :review, autofocus: true, id:"review", placeholder:"レビュー", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="inputImage">商品画像</label>
+                  <%= f.file_field :image, id:"inputImage", placeholder: "画像", accept: "image/*" %>
+                </div>
+                <div class="pt-2">
+                  <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
+
+
+
+
   
-<% end %>
