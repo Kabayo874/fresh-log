@@ -9,4 +9,5 @@ class GroupMembersController < ApplicationController
     end
 
     redirect_to group_path(@group)
+  end
 end
