@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.page(params[:page])
+    @items = Item.order(created_at: :desc).page(params[:page])
   end
 
   def show

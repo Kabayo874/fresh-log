@@ -25,7 +25,7 @@
               <%= link_to item_path(item.id) do %>
                 <%= image_tag item.image, class: "card-img-top object-fit-cover" %>
               <% end %>
-              <div class="position-absolute top-0 start-0 m-2 bg-light px-2 py-1 rounded small">
+              <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(item.status) %>">
                 <%= item.status_i18n %>
               </div>
               <div class="card-body d-flex flex-column">
@@ -41,7 +41,7 @@
                 </div>
 
                 <div>
-                  <div class="btn btn-primary btn-sm <%= category_color_class(item.category) %>">
+                  <div class="btn btn-primary btn-sm no-hover <%= category_color_class(item.category) %>">
                     <%= item.category_i18n %>
                   </div>
                 </div>
