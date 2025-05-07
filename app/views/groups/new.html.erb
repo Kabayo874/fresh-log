@@ -11,6 +11,8 @@
             <h5 class="text-dark bg-light p-4 mb-0">グループ作成フォーム</h5>
             <div class="form-body p-4">
               <%= form_with model: @group do |f| %>
+                <%= render 'layouts/error_messages', model: form.object %>
+                
                 <div>
                   <label for="name">グループ名</label>
                   <%= f.text_field :name, id:"name", class: "form-control" %>

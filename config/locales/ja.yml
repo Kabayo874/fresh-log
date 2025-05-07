@@ -16,17 +16,13 @@ ja:
         repeat: "リピート"
 
   activerecord:
-    errors:
-      messages:
-        record_invalid: 'バリデーションに失敗しました: %{errors}'
-        restrict_dependent_destroy:
-          has_one: "%{record}が存在しているので削除できません"
-          has_many: "%{record}が存在しているので削除できません"
-
-  errors:
-    messages:
-      taken: "はすでに使用されています"
-      not_saved: "保存できませんでした"
     attributes:
-      email:
-        taken: "はすでに登録されています"
+      user:
+        nickname: ニックネーム
+      tweet:
+        text: テキスト
+        image: 画像
+  activemodel:   # Formオブジェクトを用いた場合
+     attributes:
+       order_object:
+         post_code: 郵便番号

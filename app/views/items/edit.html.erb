@@ -17,6 +17,7 @@
             <h5 class="text-dark bg-light p-4 mb-0">商品投稿編集</h5>
             <div class="form-body p-4">
               <%= form_with model: @item do |f| %>
+                <%= render 'layouts/error_messages', model: form.object %>
 
                 <div>
                   <label for="title">ニックネーム</label>
