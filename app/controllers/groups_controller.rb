@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   def new
     @group = Group.new
@@ -17,7 +18,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    @items = @group.items
+    @items = @group.items.order(created_at: :desc).page(params[:page])
   end
 
   def edit
@@ -26,8 +27,11 @@ class GroupsController < ApplicationController
 
   def update
     group = Group.find(params[:id])
-    group.update(group_params)
-    redirect_to group_path(group.id)
+    if group.update(group_params)
+      redirect_to group_path(group.id)
+    else
+      render :edit
+    end
   end
 
 

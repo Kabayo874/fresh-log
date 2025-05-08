@@ -1,4 +1,6 @@
 class ItemPostsController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
+
   def new
     @item = Item.find(params[:item_id])
     @item_post = ItemPost.new
@@ -48,5 +50,13 @@ class ItemPostsController < ApplicationController
   def item_post_params
     params.require(:item_post).permit(:review, :image)
   end
+
+  def is_matching_login_user
+    item_post = ItemPost.find(params[:id])
+    unless item_post.user == current_user
+      redirect_to items_path
+    end
+  end
+
 
 end

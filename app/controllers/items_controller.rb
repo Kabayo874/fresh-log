@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
+
   def new
     if params[:group_id]
       @group = Group.find(params[:group_id])
@@ -42,9 +44,12 @@ class ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    item.update(item_params)
-    redirect_to item_path(item.id)
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to item_path(@item.id)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -59,4 +64,12 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:title, :body, :image, :category, :status, :group_id)
   end
+
+  def is_matching_login_user
+    item = Item.find(params[:id])
+    unless item.user == current_user
+      redirect_to items_path
+    end
+  end
+
 end

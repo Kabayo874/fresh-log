@@ -12,8 +12,8 @@ validates :name, presence: true
   has_many :groups, through: :group_members
   has_many :items, dependent: :destroy
   has_many :item_posts, dependent: :destroy
-  has_many :favorites, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  # has_many :favorites, dependent: :destroy
+  # has_many :comments, dependent: :destroy
 
 
   has_one_attached :profile_image

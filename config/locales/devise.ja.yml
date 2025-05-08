@@ -26,6 +26,21 @@ ja:
         unconfirmed_email: 未確認Eメール
         unlock_token: ロック解除用トークン
         updated_at: 更新日
+        image: プロフィール画像
+      item:
+        title: 商品名
+        body: 説明
+        category: カテゴリー
+        status: 商品状況
+        image: 商品画像
+      item_post:
+        review: 説明
+        image: 商品画像
+      group:
+        name: グループ名
+        discription: グループ説明
+        image: グループ画像
+
     models:
       user: ユーザー
   devise:
