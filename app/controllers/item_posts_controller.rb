@@ -1,4 +1,4 @@
-class ItemPostsController < ApplicationController
+class Public::ItemPostsController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update, :destroy]
 
   def new

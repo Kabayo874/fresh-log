@@ -1,12 +1,11 @@
 
-
 <div class="container">
-  <div class="row d-flex flex-wrap">
+  <div class="row d-flex flex-wrap m-5">
     <div class="col-lg-3">
-      <% if @item.group.present? %>
-        <%= render 'groups/group_profile', group: @item.group %>
+      <% if params[:group_id].present? %>
+        <%= render 'public/groups/group_profile', group: @item.group %>
       <% else %>
-        <%= render 'users/profile', user: @item.user %>
+        <%= render 'public/users/profile', user: @item.user %>
       <% end %>
     </div>
 
@@ -21,16 +20,12 @@
               </a>
             </h5>
             <div class="form-body p-4">
-              <%= form_with model: @item do |f| %>
-                <%= render 'layouts/error_messages', model: f.object %>
+              <%= form_with model: [@item, @item_post] do |f| %>
+                <%= render 'public/layouts/error_messages', model: f.object %>
 
-                <div>
-                  <label for="title">商品名</label>
-                  <%= f.text_field :title, autofocus: true, id:"title", placeholder:"商品名", class: "form-control" %>
-                </div>
                 <div class="pt-2">
-                  <label for="comment">説明</label>
-                  <%= f.text_area :body, autofocus: true, id:"comment", placeholder:"説明", class: "form-control" %>
+                  <label for="review">レビュー</label>
+                  <%= f.text_area :review, autofocus: true, id:"review", placeholder:"レビュー", class: "form-control" %>
                 </div>
                 <div class="pt-2">
                   <label for="inputImage">商品画像</label>
@@ -48,3 +43,8 @@
 
   </div>
 </div>
+
+
+
+
+  

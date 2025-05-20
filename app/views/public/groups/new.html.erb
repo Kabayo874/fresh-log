@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-3">
-      <%= render 'users/profile', user: current_user %>
+      <%= render 'public/users/profile', user: current_user %>
     </div>
 
     <div class="col-lg-9">
@@ -16,7 +16,7 @@
             </h5>
             <div class="form-body p-4">
               <%= form_with model: @group do |f| %>
-                <%= render 'layouts/error_messages', model: f.object %>
+                <%= render 'public/layouts/error_messages', model: f.object %>
                 
                 <div>
                   <label for="name">グループ名</label>

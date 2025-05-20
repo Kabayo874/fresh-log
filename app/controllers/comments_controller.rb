@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Public::CommentsController < ApplicationController
 
   def create
     item = Item.find(params[:item_id])

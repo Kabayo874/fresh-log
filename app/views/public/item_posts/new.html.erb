@@ -20,7 +20,7 @@
         <div class="form-body p-4">
           <%= form_with model: [@item, @item_post] do |f| %>
             <%= f.hidden_field :group_id %>
-            <%= render 'layouts/error_messages', model: f.object %>
+            <%= render 'public/layouts/error_messages', model: f.object %>
 
             <div class="pt-2">
               <label for="image">写真</label>

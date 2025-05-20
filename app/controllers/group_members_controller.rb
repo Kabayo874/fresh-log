@@ -1,4 +1,4 @@
-class GroupMembersController < ApplicationController
+class Public::GroupMembersController < ApplicationController
 
   def create
     @group = Group.find(params[:group_id])

@@ -1,2 +1,2 @@
-class FavoritesController < ApplicationController
+class Public::FavoritesController < ApplicationController
 end
