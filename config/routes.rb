@@ -22,4 +22,8 @@ Rails.application.routes.draw do
     resources :items, only: [:new, :create]
   end
 
+  devise_for :admin, skip: [:registrations, :password], controllers: {
+    sessions: 'admin/sessions'
+  }
+
 end
