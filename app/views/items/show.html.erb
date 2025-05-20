@@ -28,13 +28,14 @@
           </div>
         </div>
 
+        <!-- 初回投稿 -->
         <div class="row mb-3">
           <div class="col-3">
             <%= image_tag @item.image, size: "150x150" %>
           </div>
           <div class="col-9">
             <div class="d-flex align-items-end mb-2">
-              <div class="btn btn-sm no-hover <%= status_color_class(@item.category) %>">
+              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
                 <%= @item.status_i18n %>
               </div>
               <p class="mb-0 ms-2 small">
@@ -62,29 +63,28 @@
             </div>
             <div class="col-9">
               <div class="d-flex align-items-end mb-2">
-                  <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+                  <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
                     <%= @item.status_i18n %>
                   </div>
                   <p class="mb-0 ms-2 small">
                     <%= item_post.created_at.strftime('%Y/%m/%d') %>
                   </p>
-                </div>
-                <div class="col">      
-                  <p><%= item_post.review %></p>
-                </div>
-                    
-                <% if @item.user == current_user %>
-                  <div class="d-flex align-items-end mb-2">
-                    <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
-                    <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
-                  </div>
-                <% end %>
               </div>
-            </div>
-          </div>
+              <div class="col">      
+                <p><%= item_post.review %></p>
+              </div>
+                    
+              <% if @item.user == current_user %>
+                <div class="d-flex align-items-end mb-2">
+                  <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
+                  <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
+                </div>
+              <% end %>
+            </div> <!-- col-9 -->
+          </div> <!-- row mb-3 -->
         <% end %>
 
-                <!-- 追加投稿のリンク --> 
+        <!-- 追加投稿のリンク --> 
         <% if @item.user == current_user %>
           <div class="row mb-3">
             <div class="col-3">
@@ -120,7 +120,10 @@
             <% @item.comments.each do |comment| %>
               <div class="border rounded p-2 mb-2">
                 <div class="d-flex justify-content-between small text-muted mb-1">
-                  <span><strong><%= comment.user.name %></strong></span>
+                  <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
+                    <%= image_tag comment.user.get_profile_image(50,50), class: "rounded-circle me-3" %>
+                    <span><strong><%= comment.user.name %></strong></span>
+                  <% end %>
                   <span><%= comment.created_at.strftime('%Y/%m/%d') %></span>
                 </div>
                 <div>
