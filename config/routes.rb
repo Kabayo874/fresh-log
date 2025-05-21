@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'user_items/index'
   end
-  get 'users/show'
-  get 'users/edit'
 
   scope module: :public do
     devise_for :users
