@@ -37,6 +37,7 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @item_post = ItemPost.new
+    @comment = Comment.new
   end
 
   def edit

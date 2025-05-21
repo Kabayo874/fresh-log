@@ -28,13 +28,14 @@
           </div>
         </div>
 
+        <!-- 初回投稿 -->
         <div class="row mb-3">
           <div class="col-3">
             <%= image_tag @item.image, size: "150x150" %>
           </div>
           <div class="col-9">
             <div class="d-flex align-items-end mb-2">
-              <div class="btn btn-sm no-hover <%= status_color_class(@item.category) %>">
+              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
                 <%= @item.status_i18n %>
               </div>
               <p class="mb-0 ms-2 small">
@@ -54,52 +55,86 @@
           </div>
         </div>
 
-        <% # Itempost追加投稿 %>
+        <!-- Itempost追加投稿 -->
         <% @item.item_posts.each do |item_post| %>
-        <div class="row mb-3">
-          <div class="col-3">
-            <%= image_tag item_post.image, size: "150x150" %>
-          </div>
-          <div class="col-9">
-            <div class="d-flex align-items-end mb-2">
-                <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(item.status) %>">
-                  <%= @item.status_i18n %>
-                </div>
-                <p class="mb-0 ms-2 small">
-                  <%= item_post.created_at.strftime('%Y/%m/%d') %>
-                </p>
+          <div class="row mb-3">
+            <div class="col-3">
+              <%= image_tag item_post.image, size: "150x150" %>
+            </div>
+            <div class="col-9">
+              <div class="d-flex align-items-end mb-2">
+                  <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+                    <%= @item.status_i18n %>
+                  </div>
+                  <p class="mb-0 ms-2 small">
+                    <%= item_post.created_at.strftime('%Y/%m/%d') %>
+                  </p>
               </div>
               <div class="col">      
                 <p><%= item_post.review %></p>
               </div>
-                  
+                    
               <% if @item.user == current_user %>
                 <div class="d-flex align-items-end mb-2">
                   <%= link_to "編集", edit_item_item_post_path(item_id: @item.id, id: item_post.id) %>
                   <%= link_to "削除", item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" %>
                 </div>
               <% end %>
-            </div>
-          </div>
-        </div>
+            </div> <!-- col-9 -->
+          </div> <!-- row mb-3 -->
         <% end %>
 
-        <% # 追加投稿のリンク %> 
+        <!-- 追加投稿のリンク --> 
         <% if @item.user == current_user %>
-        <div class="row mb-3">
-          <div class="col-3">
-            <div class="border border-2 rounded-3 d-flex align-items-center justify-content-center"
-              style="width: 150px; height: 150px;">
-              <%= link_to new_item_item_post_path(item_id: @item.id) do %>
-                <i class="fa-solid fa-plus fa-2x"></i>
-              <% end %>
+          <div class="row mb-3">
+            <div class="col-3">
+              <div class="border border-2 rounded-3 d-flex align-items-center justify-content-center"
+                style="width: 150px; height: 150px;">
+                <%= link_to new_item_item_post_path(item_id: @item.id) do %>
+                  <i class="fa-solid fa-plus fa-2x"></i>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-9">
             </div>
           </div>
-          <div class="col-9">
+        <% end %>
+
+
+
+        <div class="row ms-5">
+          <!-- コメント投稿フォーム -->
+          <div class="mb-4">
+            <%= form_with model: [@item, @comment], local: true do |f| %>
+              <div class="d-flex">
+                <%= f.text_area :comment, class: "form-control me-2", rows: 2, placeholder: "コメントを入力..." %>
+                <%= f.submit "送信", class: "btn btn-outline-primary btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- コメント一覧 -->
+          <div>
+            <h6 class="mb-3">コメント（<%= @item.comments.count %>件）</h6>
+
+            <% @item.comments.each do |comment| %>
+              <div class="border rounded p-2 mb-2">
+                <div class="d-flex justify-content-between small text-muted mb-1">
+                  <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
+                    <%= image_tag comment.user.get_profile_image(50,50), class: "rounded-circle me-3" %>
+                    <span><strong><%= comment.user.name %></strong></span>
+                  <% end %>
+                  <span><%= comment.created_at.strftime('%Y/%m/%d') %></span>
+                </div>
+                <div>
+                  <%= simple_format(comment.comment) %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
 
-        <% end %>
+
       </div>
     </div>
   </div>
