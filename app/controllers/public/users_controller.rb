@@ -3,7 +3,11 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @items = @user.items.order(created_at: :desc).page(params[:page])
+    if @user.status == false
+      redirect_to root_path, alert: "このユーザーは退会しています"
+    else
+      @items = @user.items.order(created_at: :desc).page(params[:page])
+    end
   end
 
   def edit
@@ -23,6 +27,13 @@ class Public::UsersController < ApplicationController
     @user = User.find(params[:id])
     @groups = @user.groups
   end
+
+  def withdraw
+    current_user.update(status: false)
+    reset_session
+    redirect_to root_path, notice: "退会処理が完了しました"
+  end
+
 
 
   private

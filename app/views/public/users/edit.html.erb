@@ -39,7 +39,7 @@
 
           <!-- 退会リンク -->
           <div class="text-center my-4">
-          <%= link_to "退会する", registration_path(:user), method: :delete, data: { confirm: "本当に退会しますか？" }, class: "text-secondary" %>
+          <%= link_to "退会する", withdraw_user_path(current_user), method: :patch, data: { confirm: "本当に退会しますか？" }, class: "text-secondary" %>
           </div>
         </div>
       </div>

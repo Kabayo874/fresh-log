@@ -15,4 +15,6 @@ class Item < ApplicationRecord
   enum category: { cosmetics: 0, daily_necessities: 1, groceries: 2, supplement: 3}
   enum status: { unopened: 0, start: 1, active: 2, finish: 3, discard: 4, repeat: 5 }
 
+
+
 end
