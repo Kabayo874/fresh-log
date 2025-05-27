@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
- 
-  namespace :admin do
-    get 'user_items/index'
-  end
 
   scope module: :public do
     devise_for :users
@@ -36,13 +32,17 @@ Rails.application.routes.draw do
   # 管理者画面
   namespace :admin do
     get 'dashboards', to: 'dashboards#index'
-    resources :users, only: [:index, :destroy, :show]
+    resources :users, only: [:index, :destroy, :show] do
+      member do
+        get :groups
+      end
+    end
 
-    resource :items, only: [:index, :show, :destroy] do
+    resources :items, only: [:index, :show, :destroy] do
       resources :item_posts, only: [:destroy]
       resources :comments, only: [:destroy]
     end
-    resources :groups, only: [:show, :destroy] do
+    resources :groups, only: [:index, :show, :destroy] do
       resources :group_members, only: [:destroy]
     end
   end

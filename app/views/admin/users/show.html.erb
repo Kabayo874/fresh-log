@@ -12,7 +12,7 @@
           <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4">
             <div class="card h-100 position-relative rounded-4">
 
-              <%= link_to item_path(item.id) do %>
+              <%= link_to admin_item_path(item.id) do %>
                 <%= image_tag item.image, class: "card-img-top object-fit-cover" %>
               <% end %>
               <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(item.status) %>">
@@ -20,11 +20,11 @@
               </div>
               <div class="card-body d-flex flex-column">
                 <% if item.group.present? %>
-                  <div><%= link_to item.group.name, group_path(item.group) %></div>
+                  <div><%= link_to item.group.name, admin_group_path(item.group) %></div>
                 <% end %>
 
                 <div class="mb-auto">
-                  <%= link_to item_path(item.id) do %>
+                  <%= link_to admin_item_path(item.id) do %>
                     <h5 class="card-title"><%= item.title %></h5>
                     <p class="card-text"><%= truncate(item.body, length: 40) %><p>
                   <% end %>
@@ -36,7 +36,7 @@
                   </div>
                 </div>
 
-                <%= link_to user_path(item.user.id), class: "d-flex align-items-center mt-2" do %>  
+                <%= link_to admin_user_path(item.user.id), class: "d-flex align-items-center mt-2" do %>  
                   <%= image_tag item.user.get_profile_image(50,50), class: "rounded-circle me-2" %>
                   <p class="mb-0"><%= item.user.name %></p>
                 <% end %>

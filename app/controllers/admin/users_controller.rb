@@ -17,4 +17,9 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     @items = @user.items.order(created_at: :desc).page(params[:page])
   end
+
+  def groups
+    @user = User.find(params[:id])
+    @groups = @user.groups
+  end
 end

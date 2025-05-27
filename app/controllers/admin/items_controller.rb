@@ -3,7 +3,7 @@ class Admin::ItemsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @posts = @user.posts.order(created_at: :desc)
+    @items = Item.all
   end
 
   def show
