@@ -1,5 +1,9 @@
 <div class="text-center mt-5">
-  <%= link_to edit_user_path(current_user) do %>
+  <% if user == current_user %>
+    <%= link_to edit_user_path(current_user) do %>
+      <%= image_tag user.get_profile_image(150,150), class: "rounded-circle mb-3" %>
+    <% end %>
+  <% else %>
     <%= image_tag user.get_profile_image(150,150), class: "rounded-circle mb-3" %>
   <% end %>
   <h5><%= user.name %></h5>
