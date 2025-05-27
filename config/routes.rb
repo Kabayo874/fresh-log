@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
     get 'homes/about' => 'homes#about', as: 'about'
 
+    # ユーザー画面
     resources :users, only: [:show, :edit, :update, :groups] do
       member do
         get :groups
@@ -31,10 +32,19 @@ Rails.application.routes.draw do
     sessions: 'admin/sessions'
   }
 
+
+  # 管理者画面
   namespace :admin do
     get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:index, :destroy, :show]
-      resource :items, only: [:index], controller: 'user_items'
+
+    resource :items, only: [:index, :show, :destroy] do
+      resources :item_posts, only: [:destroy]
+      resources :comments, only: [:destroy]
+    end
+    resources :groups, only: [:show, :destroy] do
+      resources :group_members, only: [:destroy]
+    end
   end
 
 end
