@@ -26,7 +26,7 @@
           <div class="col-8">
             <h4><%= @item.title %></h4>
           </div>
-          <div>
+          <div  class="col-auto text-end">
             <%= link_to "商品投稿を削除", admin_item_path(@item), method: :delete, data: { confirm: "この投稿を削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
           </div>
         </div>
