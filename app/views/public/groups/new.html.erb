@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-3">
+  <div class="row mt-3">
+    <div class="col-12 col-md-4 col-lg-3">
       <%= render 'public/users/profile', user: current_user %>
     </div>
 
-    <div class="col-lg-9">
+    <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="container">
         <div class="row no-gutters">
           <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="pt-2">
-                  <%= f.submit '登録', class: "btn btn-success" %>
+                  <%= f.submit '登録', class: "btn btn-primary" %>
                 </div>
               <% end %>
               </div>

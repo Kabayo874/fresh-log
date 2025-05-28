@@ -82,3 +82,18 @@
   color: #333;
 }
 
+.user-menu {
+  background-color: #f8f9fa;
+  color: #000; 
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.user-menu:hover {
+  background-color: #e2e6ea;
+  color: #000; 
+}
