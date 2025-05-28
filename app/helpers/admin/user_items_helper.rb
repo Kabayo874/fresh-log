@@ -1,2 +1,0 @@
-module Admin::UserItemsHelper
-end

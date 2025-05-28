@@ -1,0 +1,50 @@
+
+
+<div class="container">
+  <div class="row d-flex flex-wrap">
+    <div class="col-lg-3">
+      <% if @item.group.present? %>
+        <%= render 'groups/group_profile', group: @item.group %>
+      <% else %>
+        <%= render 'users/profile', user: @item.user %>
+      <% end %>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+            <h5 class="text-dark bg-light p-4 mb-0 d-flex justify-content-between align-items-center">
+              商品投稿編集
+              <a href="javascript:history.back();">
+                <i class="fa-solid fa-xmark" style="color: #005eff; font-size: 20px;"></i>
+              </a>
+            </h5>
+            <div class="form-body p-4">
+              <%= form_with model: @item do |f| %>
+                <%= render 'layouts/error_messages', model: f.object %>
+
+                <div>
+                  <label for="title">商品名</label>
+                  <%= f.text_field :title, autofocus: true, id:"title", placeholder:"商品名", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="comment">説明</label>
+                  <%= f.text_area :body, autofocus: true, id:"comment", placeholder:"説明", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="inputImage">商品画像</label>
+                  <%= f.file_field :image, id:"inputImage", placeholder: "画像", accept: "image/*" %>
+                </div>
+                <div class="pt-2">
+                  <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

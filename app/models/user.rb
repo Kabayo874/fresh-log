@@ -4,17 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :name, presence: true
+validates :name, presence: true
 
-  enum status: { active: 0, deactivated: 1 }
-  def active_for_authentication?
-    super && active?
-  end
 
-  def inactive_message
-    active? ? super : :account_deactivated
-  end
-  
 
   has_many :group_members, dependent: :destroy
   has_many :groups, through: :group_members
