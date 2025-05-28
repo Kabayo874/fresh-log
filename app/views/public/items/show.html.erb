@@ -13,7 +13,7 @@
       <div class="m-5">
         <% if @item.group.present? %>
           <div class="row'>
-            <p class="text-muted">所属グループ：<%= link_to @item.group.name, group_path(@item.group) %></p>
+            <p class="text-muted">所属グループ<%= link_to @item.group.name, group_path(@item.group) %></p>
           </div>
         <% end %>
 
