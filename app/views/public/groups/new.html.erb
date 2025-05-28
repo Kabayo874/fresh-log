@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <%= render 'public/users/profile', user: current_user %>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+            <h5 class="text-dark bg-light p-4 mb-0 d-flex justify-content-between align-items-center">
+              グループ作成フォーム
+              <a href="javascript:history.back();">
+                <i class="fa-solid fa-xmark" style="color: #005eff; font-size: 20px;"></i>
+              </a>
+            </h5>
+            <div class="form-body p-4">
+              <%= form_with model: @group do |f| %>
+                <%= render 'public/layouts/error_messages', model: f.object %>
+                
+                <div>
+                  <label for="name">グループ名</label>
+                  <%= f.text_field :name, id:"name", class: "form-control" %>
+                </div>
+                <div class="pt-2">
+                  <label for="discription">グループの説明</label>
+                  <%= f.text_area :discription, id:"discription", class: "form-control" %>
+                </div>
+
+                <div class="pt-2">
+                  <label for="image">グループ画像</label>
+                  <%= f.file_field :image, accept: "image/*" %>
+                </div>
+
+                <div class="pt-2">
+                  <%= f.submit '登録', class: "btn btn-success" %>
+                </div>
+              <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

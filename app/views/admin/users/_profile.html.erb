@@ -1,0 +1,26 @@
+<div class="text-center mt-5">
+  <div>
+    <%= image_tag user.get_profile_image(150,150), class: "rounded-circle mb-3" %>
+  </div>
+  <h5><%= user.name %></h5>
+</div>
+<div class="mt-5">
+  <p><%= user.profile %></p>
+</div>
+
+<div>
+  <div><%= link_to "投稿一覧", admin_user_path(user) %></div>
+  <div><%= link_to "グループ一覧", groups_admin_user_path(user) %></div>
+  <div>
+    <% if user.active? %>
+      <div class="mt-4">
+        <%= link_to "退会させる", admin_user_path(user),
+            method: :delete,
+            data: { confirm: "本当に退会処理しますか？" },
+            class: "btn btn-danger fw-bold px-4 py-2" %>
+      </div>
+    <% else %>
+      <div class="text-danger fw-bold fs-5 mt-4">退会済み</div>
+    <% end %>
+  </div>
+</div>

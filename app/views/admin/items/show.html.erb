@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <% if @item.group.present? %>
+        <%= render 'admin/groups/group_profile', group: @item.group %>
+      <% else %>
+        <%= render 'admin/users/profile', user: @item.user %>
+      <% end %>
+    </div>
+
+
+    <div class="col-lg-9">
+      <div class="m-5">
+        <% if @item.group.present? %>
+          <div class="row'>
+            <p class="text-muted">所属グループ：<%= link_to @item.group.name, admin_group_path(@item.group) %></p>
+          </div>
+        <% end %>
+
+        <div class="row mb-3">
+          <div class="col-auto">
+            <div class="btn btn-primary btn-sm <%= category_color_class(@item.category) %>">
+              <%= @item.category_i18n %>
+            </div>
+          </div>
+          <div class="col-8">
+            <h4><%= @item.title %></h4>
+          </div>
+          <div  class="col-auto text-end">
+            <%= link_to "商品投稿を削除", admin_item_path(@item), method: :delete, data: { confirm: "この投稿を削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+
+        <!-- 初回投稿 -->
+        <div class="row mb-3">
+          <div class="col-3">
+            <%= image_tag @item.image, size: "150x150" %>
+          </div>
+          <div class="col-9">
+            <div class="d-flex align-items-end mb-2">
+              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+                <%= @item.status_i18n %>
+              </div>
+              <p class="mb-0 ms-2 small">
+                <%= @item.created_at.strftime('%Y/%m/%d') %>
+              </p>
+            </div>
+            <div class="row">
+              <p><%= @item.body %></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Itempost追加投稿 -->
+        <% @item.item_posts.each do |item_post| %>
+          <div class="row mb-3">
+            <div class="col-3">
+              <%= image_tag item_post.image, size: "150x150" %>
+            </div>
+            <div class="col-9">
+              <div class="d-flex align-items-end mb-2">
+                  <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+                    <%= @item.status_i18n %>
+                  </div>
+                  <p class="mb-0 ms-2 small">
+                    <%= item_post.created_at.strftime('%Y/%m/%d') %>
+                  </p>
+              </div>
+              <div class="col">      
+                <p><%= item_post.review %></p>
+              </div>
+              <div class="text-end">
+                <%= link_to "追加投稿を削除", admin_item_item_post_path(@item, item_post), method: :delete, data: { confirm: "この追加投稿を削除しますか？" }, class: "btn btn-danger btn-sm" %>
+              </div>
+                    
+            </div> <!-- col-9 -->
+          </div> <!-- row mb-3 -->
+        <% end %>
+
+
+
+        <div class="row ms-5">
+
+          <!-- コメント一覧 -->
+          <div>
+            <h6 class="mb-3">コメント（<%= @item.comments.count %>件）</h6>
+
+            <% @item.comments.each do |comment| %>
+              <div class="border rounded p-2 mb-2">
+                <div class="d-flex justify-content-between small text-muted mb-1">
+                  <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
+                    <%= image_tag comment.user.get_profile_image(50,50), class: "rounded-circle me-3" %>
+                    <span><strong><%= comment.user.name %></strong></span>
+                  <% end %>
+                  <span><%= comment.created_at.strftime('%Y/%m/%d') %></span>
+                </div>
+                <%= link_to "コメント削除", admin_item_comment_path(@item, comment), method: :delete, data: { confirm: "このコメントを削除しますか？" }, class: "btn btn-danger btn-sm" %>
+                <div>
+                  <%= simple_format(comment.comment) %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
