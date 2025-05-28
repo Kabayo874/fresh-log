@@ -18,45 +18,52 @@
     <header class="shadow-sm">
 
       <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container d-flex justify-content-between">
+        <div class="container-fluid d-flex justify-content-between align-items-center px-2 px-sm-3">
+
+          <!-- ロゴ -->
           <div class="me-auto p-2">
             <a class="navbar-brand p-3" href="<%= root_path %>">
               <%= image_tag 'fresh-log_logo.png', alt: 'Fresh-log', height: '40' %>
             </a>        
           </div>
 
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
           <div class="collapse navbar-collapse p-2" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
-            <% if user_signed_in? %>
-              <li  class="nav-item">
-                <%= link_to "使い方", about_path, class: 'nav-link text-dark' %>
-              </li>
-              <li  class="nav-item">
-                <%= link_to "新規投稿", new_item_path, class: 'nav-link text-dark' %>
-              </li>
-              <li  class="nav-item">
-                <%= link_to "投稿一覧", items_path, class: 'nav-link text-dark' %>
-              </li>
-              <li  class="nav-item">
-                <%= link_to "マイページ", user_path(current_user.id), class: 'nav-link text-dark' %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "マイグループ", groups_user_path(current_user.id), class: 'nav-link text-dark' %>
-              </li>
-              <li  class="nav-item">
-                <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-dark' do %>
-                  <i class="fa-solid fa-right-from-bracket" style="color: #005eff;"></i>
+            <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center w-100 justify-content-end">
+
+              <!-- 検索フォーム -->
+              <div class="me-lg-3 mb-2 mb-lg-0">
+                <%= form_with url: search_path, local: true, method: :get, html: { class: "d-flex" } do |f| %>
+                  <%= f.text_field :word, class: "form-control form-control-sm me-2", placeholder: "検索ワードを入力" %>
+                  <%= button_tag type: 'submit', class: 'btn p-0 border-0 bg-transparent' do %>
+                    <i class="fa-solid fa-magnifying-glass" style="color: #005eff;"></i>
+                  <% end %>
                 <% end %>
-              </li>
-            <% else %>
-              <li  class="nav-item">
-                <%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %>
-              </li>
-              <li  class="nav-item">
-                <%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %>
-              </li>
-            <% end %>
-            </ul>
+              </div>
+
+              <!-- メニューバー -->
+                <ul class="navbar-nav">
+                  <% if user_signed_in? %>
+                    <li class="nav-item"><%= link_to "使い方", about_path, class: 'nav-link text-dark' %></li>
+                    <li class="nav-item"><%= link_to "新規投稿", new_item_path, class: 'nav-link text-dark' %></li>
+                    <li class="nav-item"><%= link_to "投稿一覧", items_path, class: 'nav-link text-dark' %></li>
+                    <li class="nav-item"><%= link_to "マイページ", user_path(current_user.id), class: 'nav-link text-dark' %></li>
+                    <li class="nav-item"><%= link_to "マイグループ", groups_user_path(current_user.id), class: 'nav-link text-dark' %></li>
+                    <li class="nav-item">
+                      <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                        <i class="fa-solid fa-right-from-bracket" style="color: #005eff;"></i>
+                      <% end %>
+                    </li>
+                  <% else %>
+                    <li class="nav-item"><%= link_to "新規登録", new_user_registration_path, class: 'nav-link text-dark' %></li>
+                    <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: 'nav-link text-dark' %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

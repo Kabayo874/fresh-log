@@ -1,0 +1,94 @@
+<div class="container mt-5">
+  <h2 class="mb-4">検索結果：「<%= params[:word] %>」</h2>
+
+  <!-- タブナビゲーション -->
+  <ul class="nav nav-tabs" id="searchTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">ユーザー</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-controls="items" aria-selected="false">商品</button>
+    </li>
+  </ul>
+
+  <!-- タブの中身 -->
+  <div class="tab-content" id="searchTabsContent">
+    <!-- ユーザー検索結果 -->
+    <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+      <h3 class="my-3">ユーザー</h3>
+      <% if @users.any? %>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mb-3">
+          <% @users.each do |user| %>
+            <div class="col">
+              <div class="card h-100 p-3">
+                <div class="d-flex align-items-center">
+                  <%= image_tag user.get_profile_image(50, 50), class: "rounded-circle me-3" %>
+                  <div>
+                    <h5 class="card-title mb-1"><%= link_to user.name, user_path(user), class: "text-decoration-none" %></h5>
+                    <p class="card-text small mb-0"><%= truncate(user.profile, length: 60) %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <%= paginate @users, param_name: :user_page %>
+      <% else %>
+        <p class="text-muted mt-3">該当するユーザーはいませんでした。</p>
+      <% end %>
+    </div>
+
+    <!-- 商品検索結果 -->
+    <div class="tab-pane fade" id="items" role="tabpanel" aria-labelledby="items-tab">
+      <h3 class="my-3">商品</h3>
+      <% if @items.any? %>
+        <div class="row d-flex flex-wrap mt-2">
+          <% @items.each do |item| %>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+              <div class="card h-100 position-relative rounded-4">
+                <%= link_to item_path(item.id) do %>
+                  <%= image_tag item.image, class: "card-img-top object-fit-cover" %>
+                <% end %>
+                <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(item.status) %>">
+                  <%= item.status_i18n %>
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <div class="mb-auto">
+                    <%= link_to item_path(item.id) do %>
+                      <h5 class="card-title"><%= item.title %></h5>
+                      <p class="card-text"><%= truncate(item.body, length: 40) %></p>
+                    <% end %>
+                  </div>
+                  <div>
+                    <div class="btn btn-sm no-hover <%= category_color_class(item.category) %>">
+                      <%= item.category_i18n %>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mt-2">
+                    <% if item.group.present? %>
+                      <%= link_to group_path(item.group), class: "d-flex align-items-center text-decoration-none" do %>
+                        <%= image_tag item.group.image, size: "50x50", class: "rounded-3 me-2" %>
+                        <div>
+                          <strong><%= item.group.name %></strong><br>
+                          <small class="text-muted">(by <%= item.user.name %>)</small>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <%= link_to user_path(item.user.id), class: "d-flex align-items-center text-decoration-none" do %>
+                        <%= image_tag item.user.get_profile_image(50, 50), class: "rounded-circle me-2" %>
+                        <p class="mb-0"><%= item.user.name %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <%= paginate @items %>
+      <% else %>
+        <p class="text-muted mt-3">該当する商品は見つかりませんでした。</p>
+      <% end %>
+    </div>
+  </div>
+</div>
