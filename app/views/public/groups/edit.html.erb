@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row d-flex flex-wrap m-5">
-    <div class="col-lg-3">
+  <div class="row d-flex flex-wrap mt-3">
+    <div class="col-12 col-md-4 col-lg-3">
       <%= render 'group_profile', group: @group %>
     </div>
 
-    <div class="col-lg-9">
+    <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="container">
         <div class="row no-gutters">
           <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
@@ -31,7 +31,7 @@
                   <%= f.file_field :image, id:"inputImage", placeholder: "グループ画像", accept: "image/*" %>
                 </div>
                 <div class="pt-2">
-                  <%= f.submit "変更を保存", class: "btn btn-secondary" %>
+                  <%= f.submit "変更を保存", class: "btn btn-primary" %>
                 </div>
               <% end %>
             </div>

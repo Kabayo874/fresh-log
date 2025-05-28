@@ -12,10 +12,11 @@
   <p><%= user.profile %></p>
 </div>
 
-<div>
-  <div><%= link_to "投稿一覧", user_path(user) %></div>
-  <div><%= link_to "グループ一覧", groups_user_path(user) %></div>
+<div class="d-grid mb-1">
+  <%= link_to "投稿一覧", user_path(user), class: "user-menu btn btn-primary text-start" %>
+  <%= link_to "グループ一覧", groups_user_path(user), class: "user-menu btn btn-primary text-start" %>
   <% if user == current_user %>
-    <div><%= link_to "プロフィール編集", edit_user_path(current_user) %></div>
+    <%= link_to "プロフィール編集", edit_user_path(current_user), class: "user-menu btn btn-primary text-start" %>
   <% end %>
 </div>
+

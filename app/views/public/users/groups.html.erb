@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row d-flex flex-wrap m-5">
-    <div class="col-lg-3">
+  <div class="row d-flex flex-wrap mt-3">
+    <div class="col-12 col-md-4 col-lg-3">
       <%= render 'profile', user: @user %>
     </div>
 
-    <div class="col-12 col-lg-9 mb-4">
+    <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="row">
         <h4>所属グループ一覧</h4>
       </div>
@@ -30,7 +30,7 @@
                 <% end %>
                 <% if group.owner_id == current_user.id %>
                   <div class="position-absolute top-0 start-0 m-2 bg-light px-2 py-1 rounded small">
-                    <span style="color: green; font-weight: bold;">管理者</span>
+                    <span style="color: #0d6efd; font-weight: bold;">管理者</span>
                   </div>
                 <% end %>
                 <div class="card-body d-flex flex-column">
