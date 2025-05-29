@@ -13,9 +13,9 @@ class Public::ItemPostsController < ApplicationController
     if @item_post.save
       @item.update(status: @item.status)
       if @item.group.present?
-        redirect_to group_path(@item.group)
+        redirect_to item_path(@item)
       else
-        redirect_to user_path(current_user)
+        redirect_to item_path(@item)
       end
     else
       render :new
