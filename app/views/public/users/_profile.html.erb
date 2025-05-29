@@ -1,10 +1,14 @@
 <div class="text-center mt-5">
   <% if user == current_user %>
     <%= link_to edit_user_path(current_user) do %>
-      <%= image_tag user.get_profile_image(150,150), class: "rounded-circle mb-3" %>
+      <%= image_tag user.get_profile_image(150, 150),
+              style: "width: 150px; height: 150px; object-fit: cover;",
+              class: "rounded-circle" %>
     <% end %>
   <% else %>
-    <%= image_tag user.get_profile_image(150,150), class: "rounded-circle mb-3" %>
+    <%= image_tag user.get_profile_image(150, 150),
+              style: "width: 150px; height: 150px; object-fit: cover;",
+              class: "rounded-circle" %>
   <% end %>
   <h5><%= user.name %></h5>
 </div>

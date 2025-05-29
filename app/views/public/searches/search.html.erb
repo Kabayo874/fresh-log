@@ -4,10 +4,10 @@
   <!-- タブナビゲーション -->
   <ul class="nav nav-tabs" id="searchTabs" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-controls="items" aria-selected="false">商品</button>
+      <button class="nav-link active" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-controls="items" aria-selected="true">商品</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">ユーザー</button>
+      <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">ユーザー</button>
     </li> 
   </ul>
 
@@ -15,7 +15,7 @@
   <div class="tab-content" id="searchTabsContent">
 
     <!-- 商品検索結果 -->
-    <div class="tab-pane fade" id="items" role="tabpanel" aria-labelledby="items-tab">
+    <div class="tab-pane fade show active" id="items" role="tabpanel" aria-labelledby="items-tab">
       <h3 class="my-3">商品</h3>
       <% if @items.any? %>
         <div class="row d-flex flex-wrap mt-2">
@@ -51,7 +51,9 @@
                       <% end %>
                     <% else %>
                       <%= link_to user_path(item.user.id), class: "d-flex align-items-center text-decoration-none" do %>
-                        <%= image_tag item.user.get_profile_image(50, 50), class: "rounded-circle me-2" %>
+                        <%= image_tag item.user.get_profile_image(50, 50),
+                          style: "width: 50px; height: 50px; object-fit: cover;",
+                          class: "rounded-circle me-2" %>
                         <p class="mb-0"><%= item.user.name %></p>
                       <% end %>
                     <% end %>
@@ -69,7 +71,7 @@
 
 
     <!-- ユーザー検索結果 -->
-    <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+    <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
       <h3 class="my-3">ユーザー</h3>
       <% if @users.any? %>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mb-3">
@@ -77,7 +79,9 @@
             <div class="col">
               <div class="card h-100 p-3">
                 <div class="d-flex align-items-center">
-                  <%= image_tag user.get_profile_image(50, 50), class: "rounded-circle me-3" %>
+                  <%= image_tag user.get_profile_image(50, 50),
+                    style: "width: 50px; height: 50px; object-fit: cover;",
+                    class: "rounded-circle me-3" %>
                   <div>
                     <h5 class="card-title mb-1"><%= link_to user.name, user_path(user), class: "text-decoration-none" %></h5>
                     <p class="card-text small mb-0"><%= truncate(user.profile, length: 60) %></p>

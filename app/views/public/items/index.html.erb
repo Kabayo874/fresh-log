@@ -48,7 +48,9 @@
                 <% end %>
               <% else %>
                 <%= link_to user_path(item.user.id), class: "d-flex align-items-center text-decoration-none" do %>
-                  <%= image_tag item.user.get_profile_image(50, 50), class: "rounded-circle me-2" %>
+                  <%= image_tag item.user.get_profile_image(50, 50),
+                    style: "width: 50px; height: 50px; object-fit: cover;",
+                    class: "rounded-circle me-2" %>
                   <p class="mb-0"><%= item.user.name %></p>
                 <% end %>
               <% end %>
