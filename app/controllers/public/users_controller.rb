@@ -29,7 +29,7 @@ class Public::UsersController < ApplicationController
   end
 
   def withdraw
-    current_user.update(status: false)
+    current_user.update(status: :withdrawn)
     reset_session
     redirect_to root_path, notice: "退会処理が完了しました"
   end

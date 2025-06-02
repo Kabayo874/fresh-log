@@ -6,7 +6,7 @@ class User < ApplicationRecord
   
   validates :name, presence: true
 
-  enum status: { active: 0, deactivated: 1 }
+  enum status: { active: 0, deactivated: 1, withdrawn: 2 }
   def active_for_authentication?
     super && active?
   end

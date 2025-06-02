@@ -23,7 +23,9 @@
                 <td><%= user.id %></td>
                 <td>
                   <%= link_to admin_user_path(user) do %>
-                    <%= image_tag user.get_profile_image(50,50), class: "rounded-circle" %>
+                    <%= image_tag user.get_profile_image(50, 50),
+                      style: "width: 50px; height: 50px; object-fit: cover;",
+                      class: "rounded-circle" %>
                   <% end %>
                 </td>
                 <td>
@@ -33,7 +35,14 @@
                 <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
                 <td><%= user.updated_at.strftime("%Y-%m-%d") %></td>
                 <td>
-                  <%= user.status ? "利用中" : "退会済み" %>
+                  <% case user.status %>
+                  <% when "active" %>
+                    <span class="badge bg-success">利用中</span>
+                  <% when "deactivated" %>
+                    <span class="badge bg-danger">強制停止</span>
+                  <% when "withdrawn" %>
+                    <span class="badge bg-secondary">自主退会</span>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

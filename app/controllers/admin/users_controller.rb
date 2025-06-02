@@ -9,7 +9,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.update(status: :withdrawn)
+    @user.update(status: :deactivated)
     redirect_to admin_users_path, notice: 'ユーザーを退会処理しました。'
   end
 

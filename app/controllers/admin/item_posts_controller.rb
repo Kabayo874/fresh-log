@@ -6,6 +6,6 @@ class Admin::ItemPostsController < ApplicationController
     @item = Item.find(params[:item_id])
     @item_post = @item.item_posts.find(params[:id])
     @item_post.destroy
-    redirect_to admin_user_post_path(@item), notice: '追加投稿を削除しました。'
+    redirect_to admin_item_path(@item), notice: '追加投稿を削除しました。'
   end
 end

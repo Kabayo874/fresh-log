@@ -33,7 +33,9 @@
                 </td>
                 <td>
                   <%= link_to admin_user_path(item.user) do %>
-                    <%= image_tag item.user.get_profile_image(50,50), class: "rounded-circle" %>
+                    <%= image_tag item.user.get_profile_image(50, 50),
+                      style: "width: 50px; height: 50px; object-fit: cover;",
+                      class: "rounded-circle" %>
                     <span><%= item.user.name %></span>
                   <% end %>
                 </td>

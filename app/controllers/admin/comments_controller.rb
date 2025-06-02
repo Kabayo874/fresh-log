@@ -4,8 +4,8 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:item_id])
-    @comment = @item.comment.find(params[:id])
+    @comment = @item.comments.find(params[:id])
     @comment.destroy
-    redirect_to admin_user_post_path(@item), notice: '追加投稿を削除しました。'
+    redirect_to admin_item_path(@item), notice: '追加投稿を削除しました。'
   end
 end
