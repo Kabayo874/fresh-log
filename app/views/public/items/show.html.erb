@@ -11,8 +11,6 @@
 
     <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="m-5">
-        
-    
 
         <div class="row mb-3">
           <div class="col-auto">
@@ -87,8 +85,8 @@
             </div>
             <div class="col-9">
               <div class="d-flex align-items-end mb-2">
-                  <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
-                    <%= @item.status_i18n %>
+                  <div class="btn btn-sm no-hover <%= status_color_class(item_post.status) %>">
+                    <%= item_post.status_i18n %>
                   </div>
                   <p class="mb-0 ms-2 small">
                     <%= item_post.created_at.strftime('%Y/%m/%d') %>

@@ -19,7 +19,6 @@ class Public::ItemPostsController < ApplicationController
     @item_post = current_user.item_posts.new(item_post_params)
     @item_post.item_id = @item.id
     if @item_post.save
-      @item.update(status: @item.status)
       if @item.group.present?
         redirect_to item_path(@item)
       else
@@ -39,7 +38,6 @@ class Public::ItemPostsController < ApplicationController
     @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
     if @item_post.update(item_post_params)
-      @item.update(status: @item.status)
       redirect_to item_path(@item)
     else
       render :edit
@@ -60,7 +58,7 @@ class Public::ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item_post).permit(:review, :image)
+    params.require(:item_post).permit(:review, :image, :status)
   end
 
   def is_matching_login_user

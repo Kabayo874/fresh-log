@@ -11,11 +11,6 @@
 
     <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="m-5">
-        <% if @item.group.present? %>
-          <div class="row'>
-            <p class="text-muted">所属グループ：<%= link_to @item.group.name, admin_group_path(@item.group) %></p>
-          </div>
-        <% end %>
 
         <div class="row mb-3">
           <div class="col-auto">
@@ -24,8 +19,26 @@
             </div>
           </div>
           <div class="col-8">
-            <h4><%= @item.title %></h4>
+
+            <% if active_user?(@item.user) %>
+              <h4 class="d-flex align-items-center flex-wrap gap-2">
+                <%= @item.title %>
+              
+                <span class="text-muted fs-6 d-flex align-items-center">
+                （投稿者：
+                  <%= link_to user_path(@item.user.id), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                    <%= image_tag @item.user.get_profile_image(30, 30),
+                      style: "width: 30px; height: 30px; object-fit: cover;",
+                      class: "rounded-circle me-1" %>
+                    <span class="text-dark fw-bold"><%= @item.user.name %></span>
+                    <%= withdrawn_badge(@item.user) %>
+                  <% end %>
+                ）
+                </span>
+              </h4>
+            <% end %>
           </div>
+
           <div  class="col-auto text-end">
             <%= link_to "商品投稿を削除", admin_item_path(@item), method: :delete, data: { confirm: "この投稿を削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
           </div>
@@ -91,8 +104,8 @@
                   <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
                     <%= image_tag comment.user.get_profile_image(50, 50),
                       style: "width: 50px; height: 50px; object-fit: cover;",
-                      class: "rounded-circle" %>
-                    <span><strong><%= comment.user.name %></strong></span>
+                      class: "rounded-circle me-2" %>
+                    <span><strong><%= comment.user.name %></strong><%= withdrawn_badge(comment.user) %></span>
                   <% end %>
                   <span><%= comment.created_at.strftime('%Y/%m/%d') %></span>
                 </div>
@@ -103,12 +116,6 @@
               </div>
             <% end %>
           </div>
-
-          <% @item.item_posts.each do |item_post| %>
-            <p>item_post.id: <%= item_post.id %>, item_post.item_id: <%= item_post.item_id %>, @item.id: <%= @item.id %></p>
-          <% end %>
-          
-
         </div>
 
 

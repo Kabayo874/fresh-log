@@ -15,6 +15,15 @@ ja:
         discard: "破棄"
         repeat: "リピート"
 
+    item_post:
+      status:
+          unopened: "未開封"
+          start: "使用開始"
+          active: "使用中"
+          finish: "終了"
+          discard: "破棄"
+          repeat: "リピート"
+
   activerecord:
     attributes:
       user:

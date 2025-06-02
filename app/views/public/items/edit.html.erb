@@ -36,6 +36,23 @@
                   <label for="inputImage">商品画像</label>
                   <%= f.file_field :image, id:"inputImage", placeholder: "画像", accept: "image/*" %>
                 </div>
+
+                <div class="pt-2">
+                  <label for="status">使用状況</label>
+                  <%= f.radio_button :status, Item.statuses.key(0) %>
+                  <%= f.label :status_unopened, Item.statuses_i18n[:unopened] %>
+                  <%= f.radio_button :status, Item.statuses.key(1) %>
+                  <%= f.label :status_start, Item.statuses_i18n[:start] %>
+                  <%= f.radio_button :status, Item.statuses.key(2) %>
+                  <%= f.label :status_active, Item.statuses_i18n[:active] %>
+                  <%= f.radio_button :status, Item.statuses.key(3) %>
+                  <%= f.label :status_finish, Item.statuses_i18n[:finish] %>
+                  <%= f.radio_button :status, Item.statuses.key(4) %>
+                  <%= f.label :status_discard, Item.statuses_i18n[:discard] %>
+                  <%= f.radio_button :status, Item.statuses.key(5) %>
+                  <%= f.label :status_repeat, Item.statuses_i18n[:repeat] %>
+                </div>
+
                 <div class="pt-2">
                   <%= f.submit "変更を保存", class: "btn btn-primary" %>
                 </div>

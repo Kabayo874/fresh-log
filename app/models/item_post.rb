@@ -7,6 +7,6 @@ class ItemPost < ApplicationRecord
   validates :review, presence: true, length: { maximum: 500 }
   validates :image, presence: true 
 
+  enum status: { unopened: 0, start: 1, active: 2, finish: 3, discard: 4, repeat: 5 }
   
-
 end
