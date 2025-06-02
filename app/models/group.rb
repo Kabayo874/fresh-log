@@ -16,4 +16,5 @@ class Group < ApplicationRecord
   scope :admin_deleted, -> { where(status: :admin_delete) }
   enum status: { active: 0, owner_delete: 1, admin_delete: 2 }
 
+
 end

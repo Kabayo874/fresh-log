@@ -11,11 +11,8 @@
 
     <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="m-5">
-        <% if @item.group.present? %>
-          <div class="row'>
-            <p class="text-muted">所属グループ：<%= link_to @item.group.name, group_path(@item.group) %></p>
-          </div>
-        <% end %>
+        
+    
 
         <div class="row mb-3">
           <div class="col-auto">
@@ -24,7 +21,30 @@
             </div>
           </div>
           <div class="col-8">
-            <h4><%= @item.title %></h4>
+            <h4 class="d-flex align-items-center flex-wrap gap-2">
+              <%= @item.title %>
+              
+              <% if active_user?(@item.user) %>
+                <span class="text-muted fs-6 d-flex align-items-center">
+                  （投稿者：
+                  <%= link_to user_path(@item.user.id), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                    <%= image_tag @item.user.get_profile_image(30, 30),
+                      style: "width: 30px; height: 30px; object-fit: cover;",
+                      class: "rounded-circle me-1" %>
+                    <span class="text-dark fw-bold"><%= @item.user.name %></span>
+                  <% end %>
+                  ）
+                </span>
+              <% else %>
+                <span class="text-muted fs-6 d-flex align-items-center">
+                  （投稿者：
+                  <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
+                    style: "width: 30px; height: 30px; object-fit: contain;",
+                    class: "rounded-circle mx-1" %>
+                  退会したユーザー）
+                </span>
+              <% end %>
+            </h4>
           </div>
         </div>
 
@@ -78,12 +98,12 @@
                 <p><%= item_post.review %></p>
               </div>
                     
-              <% if @item.user == current_user %>
+              <% if item_post.user == current_user %>
                 <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
                   <%= link_to edit_item_item_post_path(item_id: @item.id, id: item_post.id) do %>
                     <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
                   <% end %>
-                  <%= link_to item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, class: "ms-3" do %>
+                  <%= link_to item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, data: { confirm: "この投稿を削除しますか？" }, class: "ms-3" do %>
                     <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
                   <% end %>
                 </div>
@@ -93,7 +113,7 @@
         <% end %>
 
         <!-- 追加投稿のリンク --> 
-        <% if @item.user == current_user %>
+        <% if @item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group)) %>
           <div class="row mb-3">
             <div class="col-3">
               <div class="border border-2 rounded-3 d-flex align-items-center justify-content-center"

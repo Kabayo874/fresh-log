@@ -34,4 +34,8 @@ class User < ApplicationRecord
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
 
+  def member_of?(group)
+    group.group_members.exists?(user_id: self.id)
+  end
+
 end

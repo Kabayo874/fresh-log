@@ -41,10 +41,17 @@
               <% if item.group.present? %>
                 <%= link_to group_path(item.group), class: "d-flex align-items-center text-decoration-none" do %>
                   <%= image_tag item.group.image, size:"50x50", class: "rounded-3 me-2" %>
-                  <div>
-                    <strong><%= link_to item.group.name, group_path(item.group), class: "text-dark text-decoration-none" %></strong><br>
-                    <small class="text-muted">(by <%= item.user.name %>)</small>
-                  </div>
+                    <% if active_user?(item.user) %>
+                      <div>
+                        <strong><%= link_to item.group.name, group_path(item.group), class: "text-dark text-decoration-none" %></strong><br>
+                        <small class="text-muted">(by <%= item.user.name %>)</small>
+                      </div>
+                    <% else %>
+                      <div>
+                        <strong><%= link_to item.group.name, group_path(item.group), class: "text-dark text-decoration-none" %></strong><br>
+                        <small class="text-muted">(by 退会したユーザー)</small>
+                      </div>
+                    <% end %>
                 <% end %>
               <% else %>
                 <%= link_to user_path(item.user.id), class: "d-flex align-items-center text-decoration-none" do %>

@@ -70,7 +70,13 @@
     </header>
 
     <main class="mb-auto">
-    <%= yield %>
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> text-center m-2" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+    
+      <%= yield %>
     </main>
     
   </body>

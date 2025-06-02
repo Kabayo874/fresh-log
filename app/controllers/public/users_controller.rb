@@ -3,12 +3,12 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if @user.status == false
+    if @user.withdrawn?
       redirect_to root_path, alert: "このユーザーは退会しています"
     else
       @items = @user.items.order(created_at: :desc).page(params[:page])
     end
-  end
+  end  
 
   def edit
     @user = User.find(params[:id])
@@ -30,6 +30,8 @@ class Public::UsersController < ApplicationController
 
   def withdraw
     current_user.update(status: :withdrawn)
+    current_user.item.destroy_all
+    current_user.comments.destroy_all
     reset_session
     redirect_to root_path, notice: "退会処理が完了しました"
   end

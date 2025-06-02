@@ -43,7 +43,7 @@
                 </div>
               </div>
 
-              <% if item.user && item.user.status? %>
+              <% if active_user?(item.user) %>
                 <%= link_to user_path(item.user.id), class: "d-flex align-items-center mt-2" do %>  
                   <%= image_tag item.user.get_profile_image(50, 50),
                     style: "width: 50px; height: 50px; object-fit: cover;",
@@ -52,8 +52,8 @@
                 <% end %>
               <% else %>
                 <div class="d-flex align-items-center mt-2">
-                  <%= image_tag "no_image.jpg", class: "rounded-circle me-2", size: "50x50" %>
-                  <p class="mb-0">Unknown</p>
+                  <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー", style: "width:50px; height:50px; object-fit: contain;", class: "rounded-circle me-3 ms-2" %>
+                  <p class="mb-0">退会したユーザー</p>
                 </div>
               <% end %>
             </div>
