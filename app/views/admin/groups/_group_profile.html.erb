@@ -3,7 +3,7 @@
   <h5><%= group.name %></h5>
 </div>
 <div class="mt-5">
-  <p><%= group.discription %></p>
+  <p><%= group.description %></p>
 </div>
 
 <div class="mb-5">
@@ -18,11 +18,15 @@
   <div class="d-flex flex-column">
     <% group.group_members.each do |member| %>
       <div class="d-flex align-items-center mb-3">
-        <%= link_to admin_user_path(member.id) do %>
+        <%= link_to admin_user_path(member.user.id) do %>
           <%= image_tag member.user.get_profile_image(50, 50),
                       style: "width: 50px; height: 50px; object-fit: cover;",
                       class: "rounded-circle" %>
           <%= member.user.name %>
+
+          <% if member.user.id == group.owner_id %>
+            <span class="badge bg-primary">管理者</span>
+          <% end %>
         <% end %>
       </div>
     <% end %>

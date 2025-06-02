@@ -16,15 +16,15 @@
             </h5>
             <div class="form-body p-4">
               <%= form_with model: @group do |f| %>
-                <%= render 'public/layouts/error_messages', model: f.object %>
+                <%= render 'layouts/error_messages', model: f.object %>
                 
                 <div>
                   <label for="name">グループ名</label>
                   <%= f.text_field :name, id:"name", class: "form-control" %>
                 </div>
                 <div class="pt-2">
-                  <label for="discription">グループの説明</label>
-                  <%= f.text_area :discription, id:"discription", class: "form-control" %>
+                  <label for="description">グループの説明</label>
+                  <%= f.text_area :description, id:"description", class: "form-control" %>
                 </div>
 
                 <div class="pt-2">

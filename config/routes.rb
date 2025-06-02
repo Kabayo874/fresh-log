@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :item_posts, only: [:new, :create, :edit, :update, :destroy]
       resources :comments, only: [:create, :destroy]
     end
-    resources :groups, only: [:new, :create, :show, :edit, :update] do
+    resources :groups, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :group_members, only: [:create, :destroy]
       resources :items, only: [:new, :create]
 

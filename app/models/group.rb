@@ -12,4 +12,8 @@ class Group < ApplicationRecord
   has_many :users, through: :group_members
   has_many :items, dependent: :destroy
 
+  scope :owner_deleted, -> { where(status: :owner_delete) }
+  scope :admin_deleted, -> { where(status: :admin_delete) }
+  enum status: { active: 0, owner_delete: 1, admin_delete: 2 }
+
 end

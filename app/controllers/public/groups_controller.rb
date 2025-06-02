@@ -1,5 +1,5 @@
 class Public::GroupsController < ApplicationController
-  before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def new
     @group = Group.new
@@ -10,6 +10,7 @@ class Public::GroupsController < ApplicationController
     @group.owner_id = current_user.id
   
     if @group.save
+      @group.group_members.create(user_id: current_user.id)
       redirect_to group_path(@group)
     else
       render :new
@@ -34,11 +35,19 @@ class Public::GroupsController < ApplicationController
     end
   end
 
+  def destroy
+    group = Group.find(params[:id])
+    if group.update(status: :owner_delete)
+      redirect_to items_path, notice: "グループを解散しました"
+    else
+      redirect_to group_path(group), alert: "グループの解散に失敗しました"
+    end
+  end
 
   private
 
   def group_params
-    params.require(:group).permit(:name, :discription, :image)
+    params.require(:group).permit(:name, :description, :image)
   end
 
   def ensure_correct_user
