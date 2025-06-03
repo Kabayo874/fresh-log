@@ -31,7 +31,10 @@ class Public::ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.order(created_at: :desc).page(params[:page])
+    @items = Item.includes(:user, :group).to_a
+    @item_posts = ItemPost.includes(:user, item: [:user, :group])
+    combined = (@items + @item_posts).sort_by(&:updated_at).reverse
+    @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
   end
 
   def show
