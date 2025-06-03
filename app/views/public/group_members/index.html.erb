@@ -34,14 +34,12 @@
                         <% end %>
                       </td>
                       <td><%= member.created_at.strftime("%Y-%m-%d") %></td>
-                      <td>
-                        <% if @group.owner_user == current_user %>
-                          <%= link_to "削除", group_group_member_path(@group, member),
-                            method: :delete,
-                            data: { confirm: "このメンバーを削除しますか？" },
-                            class: "btn btn-sm btn-outline-danger" %>
-                        <% end %>
-                      </td>
+                      <% if member.status && !member.user.withdrawn? && member.user != @group.owner_user %>
+                        <%= link_to "削除", group_group_member_path(@group, member),
+                          method: :delete,
+                          data: { confirm: "このメンバーを削除しますか？" },
+                          class: "btn btn-sm btn-outline-danger" %>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>

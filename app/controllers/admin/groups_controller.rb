@@ -19,7 +19,7 @@ class Admin::GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
     if @group.update(status: :admin_delete)
-      redirect_to admin_dashboards_path, notice: 'グループを削除しました。'
+      redirect_to admin_groups_path, notice: 'グループを削除しました。'
     else
       redirect_to admin_group_path(@group), alert: 'グループの削除に失敗しました。'
     end

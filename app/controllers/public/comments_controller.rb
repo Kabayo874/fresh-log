@@ -10,7 +10,7 @@ class Public::CommentsController < ApplicationController
 
   def destroy
     @item = Item.find(params[:item_id])
-    @comment = current_user.comment.find_by(item_id: @item.id, id: params[:id])
+    @comment = current_user.comments.find_by(item_id: @item.id, id: params[:id])
     @comment.destroy
     redirect_to item_path(params[:item_id])
   end

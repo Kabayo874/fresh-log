@@ -41,11 +41,11 @@ class Public::GroupsController < ApplicationController
   end
 
   def destroy
-    group = Group.find(params[:id])
-    if group.update(status: :owner_delete)
+    @group = Group.find(params[:id])
+    if @group.update(status: :owner_delete)
       redirect_to items_path, notice: "グループを解散しました"
     else
-      redirect_to group_path(group), alert: "グループの解散に失敗しました"
+      render :edit, alert: "グループの解散に失敗しました"
     end
   end
 

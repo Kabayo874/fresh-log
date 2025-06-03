@@ -15,7 +15,7 @@
               </a>
             </h5>
             <div class="form-body p-4">
-              <%= form_with model: @group do |f| %>
+              <%= form_with model: @group, local: true do |f| %>
                 <%= render 'layouts/error_messages', model: f.object %>
 
                 <div>
@@ -40,7 +40,7 @@
 
         <!-- 退会リンク -->
         <div class="text-center my-4">
-          <%= link_to "グループ解散", group_path(@group), method: :patch, data: { confirm: "グループの投稿も削除されます。本当にグループを解散しますか？" }, class: "text-secondary" %>
+          <%= link_to "グループ解散", group_path(@group), method: :delete, data: { confirm: "グループの投稿も削除されます。本当にグループを解散しますか？" }, class: "text-secondary" %>
         </div>
       </div>
     </div>
