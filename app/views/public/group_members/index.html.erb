@@ -35,7 +35,6 @@
                       </td>
                       <td><%= member.created_at.strftime("%Y-%m-%d") %></td>
                   
-                      <!-- ここを修正 -->
                       <td>
                         <% unless member.user == @group.owner_user %>
                           <%= link_to "削除", group_group_member_path(@group, member),

@@ -22,26 +22,6 @@
             <h4 class="d-flex align-items-center flex-wrap gap-2">
               <%= @item.title %>
               
-              <% if active_user?(@item.user) %>
-                <span class="text-muted fs-6 d-flex align-items-center">
-                  （投稿者：
-                  <%= link_to user_path(@item.user.id), class: "text-decoration-none d-flex align-items-center ms-1" do %>
-                    <%= image_tag @item.user.get_profile_image(30, 30),
-                      style: "width: 30px; height: 30px; object-fit: cover;",
-                      class: "rounded-circle me-1" %>
-                    <span class="text-dark fw-bold"><%= @item.user.name %></span>
-                  <% end %>
-                  ）
-                </span>
-              <% else %>
-                <span class="text-muted fs-6 d-flex align-items-center">
-                  （投稿者：
-                  <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
-                    style: "width: 30px; height: 30px; object-fit: contain;",
-                    class: "rounded-circle mx-1" %>
-                  退会したユーザー）
-                </span>
-              <% end %>
             </h4>
           </div>
         </div>
@@ -51,31 +31,58 @@
           <div class="col-3">
             <%= image_tag @item.image, size: "150x150" %>
           </div>
-          <div class="col-9">
-            <div class="d-flex align-items-end mb-2">
-              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+        
+          <div class="col-9 mb-2">
+            <!-- ステータス・日付・投稿者 -->
+            <div class="d-flex align-items-center flex-wrap mb-1">
+              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %> me-2 mb-1">
                 <%= @item.status_i18n %>
               </div>
-              <p class="mb-0 ms-2 small">
+        
+              <p class="mb-0 small text-muted me-2 mb-1">
                 <%= @item.created_at.strftime('%Y/%m/%d') %>
               </p>
+        
+              <% if @item.group.present? %>
+                <span class="small text-muted d-flex align-items-center mb-1">
+                  （投稿者：
+                  <% if active_user?(@item.user) %>
+                    <%= link_to user_path(@item.user), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                      <%= image_tag @item.user.get_profile_image(20, 20),
+                        style: "width: 20px; height: 20px; object-fit: cover;",
+                        class: "rounded-circle me-1" %>
+                      <span class="text-dark"><%= @item.user.name %></span>
+                    <% end %>
+                  <% else %>
+                    <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
+                      style: "width: 20px; height: 20px; object-fit: contain;",
+                      class: "rounded-circle mx-1" %>
+                    退会したユーザー
+                  <% end %>
+                  )
+                </span>
+              <% end %>
             </div>
-            <div class="row">
+        
+            <!-- レビュー本文 -->
+            <div class="mb-2">
               <p><%= @item.body %></p>
             </div>
-            
+        
+            <!-- 編集・削除 -->
             <% if @item.user == current_user %>
-            <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
-              <%= link_to edit_item_path(@item.id) do %>
-                <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
-              <% end %>
-              <%= link_to item_path(@item), method: :delete, class: "ms-3" do %>
-                <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
-              <% end %>
-            </div>
+              <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
+                <%= link_to edit_item_path(@item.id) do %>
+                  <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
+                <% end %>
+                <%= link_to item_path(@item), method: :delete, class: "ms-3" do %>
+                  <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>
+        
 
         <!-- Itempost追加投稿 -->
         <% @item.item_posts.each do |item_post| %>
@@ -83,19 +90,45 @@
             <div class="col-3">
               <%= image_tag item_post.image, size: "150x150" %>
             </div>
-            <div class="col-9">
-              <div class="d-flex align-items-end mb-2">
-                  <div class="btn btn-sm no-hover <%= status_color_class(item_post.status) %>">
-                    <%= item_post.status_i18n %>
-                  </div>
-                  <p class="mb-0 ms-2 small">
-                    <%= item_post.created_at.strftime('%Y/%m/%d') %>
-                  </p>
+        
+            <div class="col-9 mb-2">
+              <!-- ステータス・日付・投稿者 -->
+              <div class="d-flex align-items-center flex-wrap mb-1">
+                <div class="btn btn-sm no-hover <%= status_color_class(item_post.status) %> me-2 mb-1">
+                  <%= item_post.status_i18n %>
+                </div>
+        
+                <p class="mb-0 small text-muted me-2 mb-1">
+                  <%= item_post.created_at.strftime('%Y/%m/%d') %>
+                </p>
+        
+                <% if @item.group.present? %>
+                  <span class="small text-muted d-flex align-items-center mb-1">
+                    （投稿者：
+                    <% if active_user?(item_post.user) %>
+                      <%= link_to user_path(item_post.user), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                        <%= image_tag item_post.user.get_profile_image(20, 20),
+                          style: "width: 20px; height: 20px; object-fit: cover;",
+                          class: "rounded-circle me-1" %>
+                        <span class="text-dark"><%= item_post.user.name %></span>
+                      <% end %>
+                    <% else %>
+                      <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
+                        style: "width: 20px; height: 20px; object-fit: contain;",
+                        class: "rounded-circle mx-1" %>
+                      退会したユーザー
+                    <% end %>
+                    )
+                  </span>
+                <% end %>
               </div>
-              <div class="col">      
+        
+              <!-- レビュー本文 -->
+              <div class="mb-2">
                 <p><%= item_post.review %></p>
               </div>
-                    
+        
+              <!-- 編集・削除 -->
               <% if item_post.user == current_user %>
                 <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
                   <%= link_to edit_item_item_post_path(item_id: @item.id, id: item_post.id) do %>
@@ -106,9 +139,10 @@
                   <% end %>
                 </div>
               <% end %>
-            </div> <!-- col-9 -->
-          </div> <!-- row mb-3 -->
+            </div>
+          </div>
         <% end %>
+        
 
         <!-- 追加投稿のリンク --> 
         <% if @item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group)) %>

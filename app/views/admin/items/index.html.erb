@@ -45,6 +45,9 @@
                   <% if item.group.present? %>
                     <%= link_to admin_group_path(item.group) do %>
                       <%= item.group.name %>
+                      <% if item.group.owner_delete? || item.group.admin_delete? %>
+                        <span class="text-danger">(解散すみ)</span>
+                      <% end %>
                     <% end %>
                   <% else %>
                     なし

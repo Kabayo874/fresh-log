@@ -31,11 +31,17 @@ class Public::ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.includes(:user, :group).to_a
-    @item_posts = ItemPost.includes(:user, item: [:user, :group])
+    @items = Item.left_joins(:group)
+                 .includes(:user, :group)
+                 .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+    @item_posts = ItemPost.joins(:item)
+                          .left_joins(item: :group)
+                          .includes(:user, item: [:user, :group])
+                          .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
     combined = (@items + @item_posts).sort_by(&:updated_at).reverse
     @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
   end
+  
 
   def show
     @item = Item.find(params[:id])

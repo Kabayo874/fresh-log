@@ -6,10 +6,20 @@ class Public::UsersController < ApplicationController
     if @user.withdrawn?
       redirect_to root_path, alert: "このユーザーは退会しています"
     else
-      items = @user.items.includes(:group).to_a
-      item_posts = @user.item_posts.includes(item: [:group]).to_a
+      items = @user.items
+             .left_joins(:group)
+             .includes(:group)
+             .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+
+      item_posts = @user.item_posts
+                        .joins(:item)
+                        .left_joins(item: :group)
+                        .includes(item: [:group])
+                        .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+
       combined = (items + item_posts).sort_by(&:updated_at).reverse
       @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
+
     end
   end
   

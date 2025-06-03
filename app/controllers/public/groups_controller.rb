@@ -18,14 +18,20 @@ class Public::GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
+    @group = Group.active.find_by(id: params[:id])
+    if @group.nil?
+      redirect_to items_path, alert: "存在しないグループです"
+      return
+    end
+  
     items = @group.items.includes(:user, :group).to_a
     item_posts = ItemPost.includes(:user, item: [:user, :group])
                          .where(item_id: items.map(&:id))
                          .to_a
     combined = (items + item_posts).sort_by(&:updated_at).reverse
     @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
-  end  
+  end
+  
 
   def edit
     @group = Group.find(params[:id])
