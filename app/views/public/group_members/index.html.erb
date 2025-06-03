@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                   <% @group.group_members.each do |member| %>
-                  <% next unless active_user?(member.user) %>
+                    <% next unless active_user?(member.user) %>
                     <tr>
                       <td>
                         <%= link_to user_path(member.user) do %>
@@ -34,14 +34,20 @@
                         <% end %>
                       </td>
                       <td><%= member.created_at.strftime("%Y-%m-%d") %></td>
-                      <% if member.status && !member.user.withdrawn? && member.user != @group.owner_user %>
-                        <%= link_to "削除", group_group_member_path(@group, member),
-                          method: :delete,
-                          data: { confirm: "このメンバーを削除しますか？" },
-                          class: "btn btn-sm btn-outline-danger" %>
-                      <% end %>
+                  
+                      <!-- ここを修正 -->
+                      <td>
+                        <% unless member.user == @group.owner_user %>
+                          <%= link_to "削除", group_group_member_path(@group, member),
+                            method: :delete,
+                            data: { confirm: "このメンバーを削除しますか？" },
+                            class: "btn btn-sm btn-outline-danger" %>
+                        <% else %>
+                          <span class="text-muted">オーナー</span>
+                        <% end %>
+                      </td>
                     </tr>
-                  <% end %>
+                  <% end %>               
                 </tbody>
               </table>
             </div>

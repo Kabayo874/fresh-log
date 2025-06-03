@@ -116,6 +116,7 @@ ja:
 
   errors:
     messages:
+      taken: "はすでに存在します"
       confirmation: "と一致しません" 
       too_short: "は%{count}文字以上で入力してください"
       blank: "を入力してください"
