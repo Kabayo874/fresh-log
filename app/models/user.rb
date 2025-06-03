@@ -20,7 +20,8 @@ class User < ApplicationRecord
   has_many :groups, through: :group_members
   has_many :items, dependent: :destroy
   has_many :item_posts, dependent: :destroy
-  # has_many :favorites, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_items, through: :favorites, source: :item
   has_many :comments, dependent: :destroy
 
 

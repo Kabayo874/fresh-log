@@ -18,7 +18,7 @@ class Public::UsersController < ApplicationController
                         .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
 
       combined = (items + item_posts).sort_by(&:updated_at).reverse
-      @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
+      @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
 
     end
   end
@@ -50,7 +50,10 @@ class Public::UsersController < ApplicationController
     redirect_to root_path, notice: "退会処理が完了しました"
   end
 
-
+  def favorites
+    @user = User.find(params[:id])
+    @favorite_items = @user.favorited_items.order(updated_at: :desc).page(params[:page]).per(15)
+  end
 
   private
 

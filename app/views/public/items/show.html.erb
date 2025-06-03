@@ -18,11 +18,25 @@
               <%= @item.category_i18n %>
             </div>
           </div>
-          <div class="col-8">
+          <div class="col-8 d-flex align-items-center flex-wrap mb-1">
             <h4 class="d-flex align-items-center flex-wrap gap-2">
               <%= @item.title %>
-              
             </h4>
+            <div class="ms-5 mt-2">
+              <% if @item.favorited_by?(current_user) %>
+                <p>
+                  <%= link_to item_favorite_path(@item), method: :delete, class: "text-decoration-none" do %>
+                    <i class="fa-solid fa-heart" style="color: #2474ff;"></i> <%= @item.favorites.count %> お気に入り
+                  <% end %>
+                </p>
+                <% else %>
+                <p>
+                  <%= link_to item_favorite_path(@item), method: :post, class: "text-decoration-none" do %>
+                    <i class="fa-regular fa-heart" style="color: #2474ff;"></i> <%= @item.favorites.count %> お気に入り
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
           </div>
         </div>
 

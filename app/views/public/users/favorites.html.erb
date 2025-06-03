@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row d-flex flex-wrap mt-3">
+    <div class="col-12 col-md-4 col-lg-3">
+      <%= render 'profile', user: @user %>
+    </div>
+
+    <div class="col-12 col-md-8 col-lg-9 mb-4">
+      <div class="row">
+        <h4>お気に入り一覧</h4>
+      </div>
+
+      <div class="row">
+        <% if @favorite_items.any? %>
+          <% @favorite_items.each do |item| %>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+              <div class="card h-100 position-relative rounded-4">
+
+                <%= link_to item_path(item.id) do %>
+                  <%= image_tag(item.image, class: "card-img-top object-fit-cover") %>
+                <% end %>
+
+                <div class="position-absolute top-0 start-0 m-2 px-2 py-1 btn btn-sm no-hover <%= status_color_class(item.status) %>">
+                  <%= item.status_i18n %>
+                </div>
+
+                <div class="card-body d-flex flex-column">
+                  <!-- タイトル・本文 -->
+                  <div class="mb-auto">
+                    <%= link_to item_path(item.id) do %>
+                      <h5 class="card-title" text-truncate" style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                      <%= item.title %></h5>
+                      <p class="card-text"><%= truncate(item.body, length: 40) %></p>
+                    <% end %>
+                  </div>
+
+                  <!-- カテゴリ & コメント数 & お気に入り数 -->
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn btn-sm no-hover <%= category_color_class(item.category) %>">
+                      <%= item.category_i18n %>
+                    </div>
+                  
+                    <div class="ms-2 d-flex align-items-center text-muted">
+                      <i class="fa-solid fa-comment" style="color: #6c757d"></i>
+                      <span class="ms-1" style="color: #6c757d">
+                        <%= item.comments.count %>
+                      </span>
+                  
+                      <i class="fa-solid fa-heart ms-3" style="color: #6c757d"></i>
+                      <span class="ms-1" style="color: #6c757d">
+                        <%= item.favorites.count %>
+                      </span>
+                    </div>
+                  </div>                  
+                  
+                  <!-- ユーザー名 or グループ名 -->
+                  <div class="d-flex align-items-center mt-2">
+                    <% group = item.group %>
+                    <% user  = item.user %>
+
+                    <% if group.present? %>
+                      <%= link_to group_path(group), class: "d-flex align-items-center text-decoration-none" do %>
+                        <%= image_tag group.image, size:"50x50", class: "rounded-3 me-2" %>
+                        <div>
+                          <strong><%= group.name %></strong><br>
+                          <small class="text-muted">(by <%= active_user?(user) ? user.name : '退会したユーザー' %>)</small>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <%= link_to user_path(user.id), class: "d-flex align-items-center text-decoration-none" do %>
+                        <%= image_tag user.get_profile_image(50, 50),
+                          style: "width: 50px; height: 50px; object-fit: cover;",
+                          class: "rounded-circle me-2" %>
+                        <p class="mb-0"><%= user.name %></p>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <p>お気に入りはまだありません。</p>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-center my-4">
+        <%= paginate @favorite_items %>
+      </div>
+    </div>
+  </div>
+</div>
