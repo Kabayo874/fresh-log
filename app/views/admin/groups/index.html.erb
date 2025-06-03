@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @groups.active.each do |group| %>
+            <% @groups.each do |group| %>
               <tr>
                 <td><%= group.id %></td>
                 <td>
@@ -40,7 +40,15 @@
                 <td><%= group.created_at.strftime("%Y-%m-%d") %></td>
                 <td><%= group.updated_at.strftime("%Y-%m-%d") %></td>
                 <td>
-                  <%= group.status ? "利用中" : "削除済み" %>
+                  <% if group.active? %>
+                    利用中
+                  <% elsif group.owner_delete? %>
+                    オーナー削除
+                  <% elsif group.admin_delete? %>
+                    管理者削除
+                  <% else %>
+                    不明
+                  <% end %>
                 </td>
               </tr>
             <% end %>

@@ -42,6 +42,11 @@ ja:
             password_confirmation:
               confirmation: "パスワード（確認用）が一致しません"
 
+    group_member:
+        exit_reason:
+          voluntary: 自主
+          forced: 強制
+
   activemodel:
     attributes:
       order_object:

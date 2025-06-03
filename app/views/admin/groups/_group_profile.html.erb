@@ -7,16 +7,30 @@
 </div>
 
 <div class="mb-5">
-  <div><%= link_to "投稿一覧", admin_group_path(group) %></div>
-  <div>
-    <%= link_to "グループを削除", admin_group_path(group), method: :delete, data: { confirm: "このグループを削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
+  <div><%= link_to "投稿一覧", admin_group_path(group), class: "user-menu btn btn-primary text-start" %></div>
+  <div><%= link_to "メンバー編集", admin_group_group_members_path(group), class: "user-menu btn btn-primary text-start" %></div>
+  <div class="mt-2">
+    <% case group.status %>
+    <% when "owner_delete" %>
+      <span class="badge bg-secondary fs-6 px-3 py-2">解散済み</span>
+    <% when "admin_delete" %>
+      <span class="badge bg-danger fs-6 px-3 py-2">強制停止中</span>
+    <% else %>
+      <span class="badge bg-success fs-6 px-3 py-2">利用中</span>
+    <% end %>
   </div>
+  <% if group.active? %>
+    <div>
+      <%= link_to "グループを削除", admin_group_path(group), method: :delete, data: { confirm: "このグループを削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
+    </div>
+  <% end %>
 </div>
 
 <div>
   <!-- メンバー一覧 -->
   <div class="d-flex flex-column">
     <% group.group_members.each do |member| %>
+      <% next unless active_user?(member.user) %>
       <div class="d-flex align-items-center mb-3">
         <%= link_to admin_user_path(member.user.id) do %>
           <%= image_tag member.user.get_profile_image(50, 50),

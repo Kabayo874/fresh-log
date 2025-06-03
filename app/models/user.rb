@@ -38,4 +38,16 @@ class User < ApplicationRecord
     group.group_members.exists?(user_id: self.id)
   end
 
+  before_update :handle_withdrawal, if: :will_be_withdrawn?
+
+  private
+
+  def will_be_withdrawn?
+    status_changed? && withdrawn?
+  end
+
+  def handle_withdrawal
+    group_members.update_all(status: false)
+  end
+
 end

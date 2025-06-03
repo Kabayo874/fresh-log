@@ -15,7 +15,10 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @items = @user.items.order(created_at: :desc).page(params[:page])
+    items = @user.items.includes(:group).to_a
+    item_posts = @user.item_posts.includes(item: [:group]).to_a
+    combined = (items + item_posts).sort_by(&:updated_at).reverse
+    @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
   end
 
   def groups

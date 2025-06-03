@@ -7,14 +7,14 @@ class Admin::GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find_by(id: params[:id])
-    if @group.nil?
-      redirect_to admin_dashboards_path, alert: "このグループは存在しないか、すでに解散されています"
-      return
-    end
-
-    @items = @group.items.order(created_at: :desc).page(params[:page])
-  end
+    @group = Group.find(params[:id])
+    items = @group.items.includes(:user, :group).to_a
+    item_posts = ItemPost.includes(:user, item: [:user, :group])
+                         .where(item_id: items.map(&:id))
+                         .to_a
+    combined = (items + item_posts).sort_by(&:updated_at).reverse
+    @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
+  end  
 
   def destroy
     @group = Group.find(params[:id])

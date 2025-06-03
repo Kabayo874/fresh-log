@@ -11,8 +11,8 @@
 </div>
 
 <div>
-  <div><%= link_to "投稿一覧", admin_user_path(user) %></div>
-  <div><%= link_to "グループ一覧", groups_admin_user_path(user) %></div>
+  <div><%= link_to "投稿一覧", admin_user_path(user), class: "user-menu btn btn-primary text-start" %></div>
+  <div><%= link_to "グループ一覧", groups_admin_user_path(user), class: "user-menu btn btn-primary text-start" %></div>
   <div class="mt-4">
     <% case user.status %>
     <% when "active" %>
