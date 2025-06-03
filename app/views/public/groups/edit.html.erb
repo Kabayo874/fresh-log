@@ -37,6 +37,11 @@
             </div>
           </div>
         </div>
+
+        <!-- 退会リンク -->
+        <div class="text-center my-4">
+          <%= link_to "グループ解散", group_path(@group), method: :patch, data: { confirm: "グループの投稿も削除されます。本当にグループを解散しますか？" }, class: "text-secondary" %>
+        </div>
       </div>
     </div>
 

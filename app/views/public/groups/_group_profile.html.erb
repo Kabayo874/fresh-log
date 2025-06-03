@@ -6,16 +6,12 @@
   <p><%= group.description %></p>
 </div>
 
-<div class="mb-5">
-  <div><%= link_to "投稿一覧", group_path(group) %></div>
-  <div>
-    <% if group.owner_user == current_user %>
-      <div><%= link_to "グループ編集", edit_group_path(group) %></div>
-      <div class="mt-3">
-        <%= link_to "グループ解散", group_path(group), method: :delete, data: { confirm: "グループの投稿も削除されます。本当にグループを解散しますか？" }, class: "btn btn-danger btn-sm" %>
-      </div>
-    <% end %>
-  </div>
+<div class="mb-5 d-grid">
+  <%= link_to "投稿一覧", group_path(group), class: "user-menu btn btn-primary text-start" %>
+  <% if group.owner_user == current_user %>
+    <%= link_to "グループ編集", edit_group_path(group), class: "user-menu btn btn-primary text-start" %>
+    <%= link_to "メンバー編集", group_group_members_path(group), class: "user-menu btn btn-primary text-start" %>
+  <% end %>
 </div>
 
 <div>

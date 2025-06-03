@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  # ユーザー画面
   scope module: :public do
     devise_for :users
     root to: "homes#top"
@@ -8,7 +9,6 @@ Rails.application.routes.draw do
 
     get 'homes/about' => 'homes#about', as: 'about'
 
-    # ユーザー画面
     resources :users, only: [:show, :edit, :update, :groups] do
       member do
         get :groups
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy]
     end
     resources :groups, only: [:new, :create, :show, :edit, :update, :destroy] do
-      resources :group_members, only: [:create, :destroy]
+      resources :group_members, only: [:index, :create, :update, :destroy]
       resources :items, only: [:new, :create]
 
     end

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row d-flex flex-wrap">
+    <div class="col-12 col-md-4 col-lg-3">
+      <%= render 'public/groups/group_profile', group: @group %>
+    </div>
+
+    <div class="col-12 col-md-8 col-lg-9 mb-4">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-10 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+            <h5 class="text-dark bg-light p-4 mb-0"><%= @group.name %> のメンバー管理</h5>
+      
+            <div class="table-responsive p-4">
+              <table class="table table-striped table-hover text-center align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>ユーザー</th>
+                    <th>参加日</th>
+                    <th>ステータス</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @group.group_members.each do |member| %>
+                    <tr>
+                      <td><%= member.user.id %></td>
+                      <td>
+                        <%= link_to user_path(member.user) do %>
+                          <%= image_tag member.user.get_profile_image(50, 50),
+                            style: "width: 50px; height: 50px; object-fit: cover;",
+                            class: "rounded-circle" %>
+                          <span><%= member.user.name %></span>
+                        <% end %>
+                      </td>
+                      <td><%= member.created_at.strftime("%Y-%m-%d") %></td>
+                      <td><%= member.status? ? "利用中" : "削除済み" %></td>
+                      <td>
+                        <% unless member.owner? %>
+                          <%= link_to "削除", group_group_member_path(@group, member),
+                            method: :delete,
+                            data: { confirm: "このメンバーを削除しますか？" },
+                            class: "btn btn-sm btn-outline-danger" %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
