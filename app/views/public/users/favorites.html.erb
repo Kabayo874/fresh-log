@@ -33,17 +33,25 @@
                     <% end %>
                   </div>
 
-                  <!-- カテゴリ & お気に入り数 -->
+                  <!-- カテゴリ & コメント数 & お気に入り数 -->
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn btn-sm no-hover <%= category_color_class(item.category) %>">
                       <%= item.category_i18n %>
                     </div>
+                  
                     <div class="ms-2 d-flex align-items-center text-muted">
-                    <i class="fa-solid fa-heart" style="color: #2474ff;"></i>
-                    <span class="ms-1" style="color: #2474ff;"><%= item.favorites.count %></span>
+                      <i class="fa-solid fa-comment" style="color: #6c757d"></i>
+                      <span class="ms-1" style="color: #6c757d">
+                        <%= item.comments.count %>
+                      </span>
+                  
+                      <i class="fa-solid fa-heart ms-3" style="color: #6c757d"></i>
+                      <span class="ms-1" style="color: #6c757d">
+                        <%= item.favorites.count %>
+                      </span>
                     </div>
-                  </div>
-
+                  </div>                  
+                  
                   <!-- ユーザー名 or グループ名 -->
                   <div class="d-flex align-items-center mt-2">
                     <% group = item.group %>
