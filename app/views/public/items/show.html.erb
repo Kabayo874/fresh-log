@@ -24,6 +24,23 @@
               
             </h4>
           </div>
+          <div id="star_<%= @item.id %>"></div>
+          <script>
+          $(document).on('turbolinks:load', function() {
+            let elem = document.querySelector('#star_<%= @item.id %>');
+            if (elem == null) return;
+            
+            elem.innerHTML = "";
+            let opt = {  
+              starOn: "<%= asset_path('star-on.png') %>",
+              starOff: "<%= asset_path('star-off.png') %>",
+              starHalf: "<%= asset_path('star-half.png') %>",
+              score: "<%= @item.star %>",
+              readOnly: true,
+            };
+            raty(elem, opt);
+          });
+          </script>
         </div>
 
         <!-- 初回投稿 -->
