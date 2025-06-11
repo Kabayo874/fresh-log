@@ -16,6 +16,14 @@
           <h5 class="card-title">
             <%= card.is_a?(Item) ? card.title : card.item.title %>
           </h5>
+
+          <!-- 星評価 -->
+          <% if card.is_a?(Item) %>
+            <%= render 'public/items/star_rate', item: card %>
+          <% elsif card.is_a?(ItemPost) && card.item.present? %>
+            <%= render 'public/items/star_rate', item: card.item %>
+          <% end %>
+
           <p class="card-text">
             <%= truncate(card.is_a?(Item) ? card.body : card.review, length: 40) %>
           </p>

@@ -21,27 +21,13 @@
           <div class="col-8">
             <h4 class="d-flex align-items-center flex-wrap gap-2">
               <%= @item.title %>
-              
-            </h4>
+              <span class="ms-3"><%= render 'public/items/star_rate', item: @item %></span>
+            </h4>         
           </div>
-          <div id="star_<%= @item.id %>"></div>
-          <script>
-          $(document).on('turbolinks:load', function() {
-            let elem = document.querySelector('#star_<%= @item.id %>');
-            if (elem == null) return;
+
             
-            elem.innerHTML = "";
-            let opt = {  
-              starOn: "<%= asset_path('star-on.png') %>",
-              starOff: "<%= asset_path('star-off.png') %>",
-              starHalf: "<%= asset_path('star-half.png') %>",
-              score: "<%= @item.star %>",
-              readOnly: true,
-            };
-            raty(elem, opt);
-          });
-          </script>
-        </div>
+
+
 
         <!-- 初回投稿 -->
         <div class="row mb-3">
