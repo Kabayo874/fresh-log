@@ -1,0 +1,66 @@
+<div class="container my-4">
+  <div class="row align-items-center flex-wrap gy-2">
+
+    <!-- カテゴリー -->
+    <div class="col-auto d-flex align-items-center flex-wrap">
+      <% Item.categories.each_key do |category| %>
+        <% is_active = params[:category] == category %>
+        <%= link_to t("enums.item.category.#{category}"),
+                    items_path(request.query_parameters.merge(category: category)),
+                    class: "me-2 mb-2 px-3 py-2 text-decoration-none fw-semibold #{is_active ? 'bg-primary text-white' : 'bg-light text-dark'}",
+                    style: "border-radius: 0.5rem; font-size: 1rem; border: 1px solid #ccc;" %>
+      <% end %>
+    </div>
+
+    <!-- 検索フィルター -->
+    <div class="col-auto ms-auto">
+      <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#advancedFilters">
+      <i class="fa-solid fa-magnifying-glass" style="color: #239dfb;"></i>検索フィルター
+      </button>
+    </div>
+
+    <!-- 折りたたみフィルター -->
+    <div class="collapse w-100 mt-3" id="advancedFilters">
+      <div class="card card-body">
+        <%= form_with url: items_path, method: :get, local: true do %>
+          <div class="row gy-2">
+
+            <!-- 使用状況 -->
+            <div class="col-md-6">
+              <strong class="mb-2 d-block">使用状況:</strong>
+              <% Item.statuses.each_key do |status_key| %>
+                <div class="form-check form-check-inline">
+                  <%= check_box_tag 'status[]', status_key, Array(params[:status]).include?(status_key), id: "status_#{status_key}", class: "form-check-input" %>
+                  <%= label_tag "status_#{status_key}", t("enums.item.status.#{status_key}"), class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- 並び替え -->
+            <div class="col-md-6">
+              <strong class="mb-2 d-block">並び替え:</strong>
+              <% {
+                "created_desc" => "新しい順",
+                "created_asc" => "古い順",
+                "star_desc" => "評価順"
+              }.each do |value, label| %>
+                <div class="form-check form-check-inline">
+                  <%= radio_button_tag :sort, value, params[:sort] == value, id: "sort_#{value}", class: "form-check-input" %>
+                  <%= label_tag "sort_#{value}", label, class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+
+          <!-- hidden fields -->
+          <%= hidden_field_tag :category, params[:category] %>
+          <div class="mt-3">
+            <%= submit_tag "適用", class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  
+  </div>
+</div>
