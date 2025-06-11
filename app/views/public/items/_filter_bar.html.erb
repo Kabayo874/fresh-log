@@ -3,13 +3,18 @@
 
     <!-- カテゴリー -->
     <div class="col-auto d-flex align-items-center flex-wrap">
-      <% Item.categories.each_key do |category| %>
-        <% is_active = params[:category] == category %>
-        <%= link_to t("enums.item.category.#{category}"),
-                    items_path(request.query_parameters.merge(category: category)),
-                    class: "me-2 mb-2 px-3 py-2 text-decoration-none fw-semibold #{is_active ? 'bg-primary text-white' : 'bg-light text-dark'}",
-                    style: "border-radius: 0.5rem; font-size: 1rem; border: 1px solid #ccc;" %>
-      <% end %>
+      <% current_category = params[:category] %>
+        <% Item.categories.each_key do |category| %>
+          <% is_active = current_category == category %>
+          <% new_params = request.query_parameters.dup %>
+          <% is_active ? new_params.delete(:category) : new_params[:category] = category %>
+
+          <%= link_to t("enums.item.category.#{category}"),
+                      items_path(new_params),
+                      class: "me-2 mb-2 px-3 py-2 text-decoration-none fw-semibold #{is_active ? 'bg-primary text-white' : 'bg-light text-dark'}",
+                      style: "border-radius: 0.5rem; font-size: 1rem; border: 1px solid #ccc;" %>
+        <% end %>
+
     </div>
 
     <!-- 検索フィルター -->
@@ -18,6 +23,7 @@
       <i class="fa-solid fa-magnifying-glass" style="color: #239dfb;"></i>検索フィルター
       </button>
     </div>
+
 
     <!-- 折りたたみフィルター -->
     <div class="collapse w-100 mt-3" id="advancedFilters">
