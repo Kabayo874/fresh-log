@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-12 col-md-4 col-lg-3">
       <% if @item.group.present? %>
         <%= render 'admin/groups/group_profile', group: @item.group %>
@@ -19,50 +19,73 @@
             </div>
           </div>
           <div class="col-8">
-
-            <% if active_user?(@item.user) %>
-              <h4 class="d-flex align-items-center flex-wrap gap-2">
-                <%= @item.title %>
-              
-                <span class="text-muted fs-6 d-flex align-items-center">
-                （投稿者：
-                  <%= link_to user_path(@item.user.id), class: "text-decoration-none d-flex align-items-center ms-1" do %>
-                    <%= image_tag @item.user.get_profile_image(30, 30),
-                      style: "width: 30px; height: 30px; object-fit: cover;",
-                      class: "rounded-circle me-1" %>
-                    <span class="text-dark fw-bold"><%= @item.user.name %></span>
-                    <%= withdrawn_badge(@item.user) %>
-                  <% end %>
-                ）
-                </span>
-              </h4>
-            <% end %>
+            <h4 class="d-flex align-items-center flex-wrap gap-2">
+              <%= @item.title %>
+              <span class="ms-3"><%= render 'admin/items/star_rate', item: @item %></span>
+            </h4>         
           </div>
 
-          <div  class="col-auto text-end">
-            <%= link_to "商品投稿を削除", admin_item_path(@item), method: :delete, data: { confirm: "この投稿を削除してもよろしいですか？" }, class: "btn btn-danger btn-sm" %>
-          </div>
-        </div>
+            
+
+
 
         <!-- 初回投稿 -->
         <div class="row mb-3">
           <div class="col-3">
             <%= image_tag @item.image, size: "150x150" %>
           </div>
-          <div class="col-9">
-            <div class="d-flex align-items-end mb-2">
-              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
+        
+          <div class="col-9 mb-2">
+            <!-- ステータス・日付・投稿者 -->
+            <div class="d-flex align-items-center flex-wrap mb-1">
+              <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %> me-2 mb-1">
                 <%= @item.status_i18n %>
               </div>
-              <p class="mb-0 ms-2 small">
+        
+              <p class="mb-0 small text-muted me-2 mb-1">
                 <%= @item.created_at.strftime('%Y/%m/%d') %>
               </p>
+        
+              <% if @item.group.present? %>
+                <span class="small text-muted d-flex align-items-center mb-1">
+                  （投稿者：
+                  <% if active_user?(@item.user) %>
+                    <%= link_to user_path(@item.user), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                      <%= image_tag @item.user.get_profile_image(20, 20),
+                        style: "width: 20px; height: 20px; object-fit: cover;",
+                        class: "rounded-circle me-1" %>
+                      <span class="text-dark"><%= @item.user.name %></span>
+                    <% end %>
+                  <% else %>
+                    <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
+                      style: "width: 20px; height: 20px; object-fit: contain;",
+                      class: "rounded-circle mx-1" %>
+                    退会したユーザー
+                  <% end %>
+                  )
+                </span>
+              <% end %>
             </div>
-            <div class="row">
+        
+            <!-- レビュー本文 -->
+            <div class="mb-2">
               <p><%= @item.body %></p>
             </div>
+        
+            <!-- 編集・削除 -->
+            <% if @item.user == current_user %>
+              <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
+                <%= link_to edit_item_path(@item.id) do %>
+                  <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
+                <% end %>
+                <%= link_to item_path(@item), method: :delete, class: "ms-3" do %>
+                  <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
+                <% end %>
+              </div>
+            <% end %>
           </div>
         </div>
+        
 
         <!-- Itempost追加投稿 -->
         <% @item.item_posts.each do |item_post| %>
@@ -70,29 +93,88 @@
             <div class="col-3">
               <%= image_tag item_post.image, size: "150x150" %>
             </div>
-            <div class="col-9">
-              <div class="d-flex align-items-end mb-2">
-                  <div class="btn btn-sm no-hover <%= status_color_class(@item.status) %>">
-                    <%= @item.status_i18n %>
-                  </div>
-                  <p class="mb-0 ms-2 small">
-                    <%= item_post.created_at.strftime('%Y/%m/%d') %>
-                  </p>
+        
+            <div class="col-9 mb-2">
+              <!-- ステータス・日付・投稿者 -->
+              <div class="d-flex align-items-center flex-wrap mb-1">
+                <div class="btn btn-sm no-hover <%= status_color_class(item_post.status) %> me-2 mb-1">
+                  <%= item_post.status_i18n %>
+                </div>
+        
+                <p class="mb-0 small text-muted me-2 mb-1">
+                  <%= item_post.created_at.strftime('%Y/%m/%d') %>
+                </p>
+        
+                <% if @item.group.present? %>
+                  <span class="small text-muted d-flex align-items-center mb-1">
+                    （投稿者：
+                    <% if active_user?(item_post.user) %>
+                      <%= link_to user_path(item_post.user), class: "text-decoration-none d-flex align-items-center ms-1" do %>
+                        <%= image_tag item_post.user.get_profile_image(20, 20),
+                          style: "width: 20px; height: 20px; object-fit: cover;",
+                          class: "rounded-circle me-1" %>
+                        <span class="text-dark"><%= item_post.user.name %></span>
+                      <% end %>
+                    <% else %>
+                      <%= image_tag "user-slash-solid.svg", alt: "退会ユーザー",
+                        style: "width: 20px; height: 20px; object-fit: contain;",
+                        class: "rounded-circle mx-1" %>
+                      退会したユーザー
+                    <% end %>
+                    )
+                  </span>
+                <% end %>
               </div>
-              <div class="col">      
+        
+              <!-- レビュー本文 -->
+              <div class="mb-2">
                 <p><%= item_post.review %></p>
               </div>
-              <div class="text-end">
-                <%= link_to "追加投稿を削除", admin_item_item_post_path(@item, item_post), method: :delete, data: { confirm: "この追加投稿を削除しますか？" }, class: "btn btn-danger btn-sm" %>
+        
+              <!-- 編集・削除 -->
+              <% if item_post.user == current_user %>
+                <div class="d-flex justify-content-end align-items-center gap-2 mb-2">
+                  <%= link_to edit_item_item_post_path(item_id: @item.id, id: item_post.id) do %>
+                    <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
+                  <% end %>
+                  <%= link_to item_item_post_path(item_id: @item.id, id: item_post.id), method: :delete, data: { confirm: "この投稿を削除しますか？" }, class: "ms-3" do %>
+                    <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+
+        <!-- 追加投稿のリンク --> 
+        <% if @item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group)) %>
+          <div class="row mb-3">
+            <div class="col-3">
+              <div class="border border-2 rounded-3 d-flex align-items-center justify-content-center"
+                style="width: 150px; height: 150px;">
+                <%= link_to new_item_item_post_path(item_id: @item.id) do %>
+                  <i class="fa-solid fa-plus fa-2x"></i>
+                <% end %>
               </div>
-                    
-            </div> <!-- col-9 -->
-          </div> <!-- row mb-3 -->
+            </div>
+            <div class="col-9">
+            </div>
+          </div>
         <% end %>
 
 
 
         <div class="row ms-5">
+          <!-- コメント投稿フォーム -->
+          <div class="mb-4">
+            <%= form_with model: [@item, @comment], local: true do |f| %>
+              <div class="d-flex">
+                <%= f.text_area :comment, class: "form-control me-2", rows: 2, placeholder: "コメントを入力..." %>
+                <%= f.submit "送信", class: "btn btn-outline-primary btn-sm" %>
+              </div>
+            <% end %>
+          </div>
 
           <!-- コメント一覧 -->
           <div>
@@ -104,20 +186,26 @@
                   <%= link_to user_path(comment.user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
                     <%= image_tag comment.user.get_profile_image(50, 50),
                       style: "width: 50px; height: 50px; object-fit: cover;",
-                      class: "rounded-circle me-2" %>
-                    <span><strong><%= comment.user.name %></strong><%= withdrawn_badge(comment.user) %></span>
+                      class: "rounded-circle" %>
+                    <span><strong><%= comment.user.name %></strong></span>
                   <% end %>
                   <span><%= comment.created_at.strftime('%Y/%m/%d') %></span>
                 </div>
-                <%= link_to "コメント削除", admin_item_comment_path(@item, comment), method: :delete, data: { confirm: "このコメントを削除しますか？" }, class: "btn btn-danger btn-sm" %>
-                <div>
-                  <%= simple_format(comment.comment) %>
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="me-2" style="flex: 1;">
+                    <%= simple_format(comment.comment) %>
+                  </div>
+
+                  <% if comment.user == current_user %>
+                    <%= link_to item_comment_path(@item, comment), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "text-decoration-none me-2" do %>
+                      <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
+                    <% end %>
+                  <% end %>
                 </div>
               </div>
             <% end %>
           </div>
         </div>
-
 
       </div>
     </div>

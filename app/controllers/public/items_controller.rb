@@ -72,7 +72,7 @@ class Public::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :body, :image, :category, :status, :group_id)
+    params.require(:item).permit(:title, :body, :image, :category, :status, :group_id, :star)
   end
 
   def is_matching_login_user
