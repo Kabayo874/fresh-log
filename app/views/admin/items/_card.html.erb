@@ -1,7 +1,7 @@
 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
   <div class="card h-100 position-relative rounded-4">
 
-    <%= link_to admin_item_path(card.is_a?(Item) ? card.id : card.item.id) do %>
+    <%= link_to item_path(card.is_a?(Item) ? card.id : card.item.id) do %>
       <%= image_tag(card.is_a?(Item) ? card.image : card.item.image, class: "card-img-top object-fit-cover") %>
     <% end %>
 
@@ -12,10 +12,18 @@
     <div class="card-body d-flex flex-column">
       <!-- タイトル・本文 -->
       <div class="mb-auto">
-        <%= link_to admin_item_path(card.is_a?(Item) ? card.id : card.item.id) do %>
+        <%= link_to item_path(card.is_a?(Item) ? card.id : card.item.id) do %>
           <h5 class="card-title">
             <%= card.is_a?(Item) ? card.title : card.item.title %>
           </h5>
+
+          <!-- 星評価 -->
+          <% if card.is_a?(Item) %>
+            <%= render 'admin/items/star_rate', item: card %>
+          <% elsif card.is_a?(ItemPost) && card.item.present? %>
+            <%= render 'admin/items/star_rate', item: card.item %>
+          <% end %>
+
           <p class="card-text">
             <%= truncate(card.is_a?(Item) ? card.body : card.review, length: 40) %>
           </p>
@@ -35,7 +43,7 @@
         <% user  = card.user %>
 
         <% if group.present? %>
-          <%= link_to admin_group_path(group), class: "d-flex align-items-center text-decoration-none" do %>
+          <%= link_to group_path(group), class: "d-flex align-items-center text-decoration-none" do %>
             <%= image_tag group.image, size:"50x50", class: "rounded-3 me-2" %>
             <div>
               <strong><%= group.name %></strong><br>
@@ -43,7 +51,7 @@
             </div>
           <% end %>
         <% else %>
-          <%= link_to admin_user_path(user.id), class: "d-flex align-items-center text-decoration-none" do %>
+          <%= link_to user_path(user.id), class: "d-flex align-items-center text-decoration-none" do %>
             <%= image_tag user.get_profile_image(50, 50),
               style: "width: 50px; height: 50px; object-fit: cover;",
               class: "rounded-circle me-2" %>
