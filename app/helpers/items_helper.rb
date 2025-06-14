@@ -32,5 +32,23 @@ module ItemsHelper
       "btn-light"
     end
   end
+
+  def toggle_sort(current_sort, key)
+    if current_sort == "#{key}_asc"
+      "#{key}_desc"
+    else
+      "#{key}_asc"
+    end
+  end
+
+  def sort_icon(current_sort, key)
+    if current_sort == "#{key}_asc"
+      "▲"
+    elsif current_sort == "#{key}_desc"
+      "▼"
+    else
+      ""
+    end
+  end
   
 end

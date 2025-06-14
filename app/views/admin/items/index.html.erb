@@ -12,8 +12,18 @@
               <th>画像</th>
               <th>商品名</th>
               <th>ユーザー</th>
-              <th>登録日</th>
-              <th>更新日</th>
+              <th>
+                <%= link_to "登録日", admin_items_path(sort: toggle_sort(params[:sort], "created_at")) %>
+                <%= sort_icon(params[:sort], "created_at") %>
+              </th>
+              <th>
+                <%= link_to "追加投稿", admin_items_path(sort: toggle_sort(params[:sort], "post_count")) %>
+                <%= sort_icon(params[:sort], "post_count") %>
+              </th>
+              <th>
+                <%= link_to "コメント", admin_items_path(sort: toggle_sort(params[:sort], "comment_count")) %>
+                <%= sort_icon(params[:sort], "comment_count") %>
+              </th>
               <th>グループ</th>
             </tr>
           </thead>
@@ -40,7 +50,8 @@
                   <% end %>
                 </td>
                 <td><%= item.created_at.strftime("%Y-%m-%d") %></td>
-                <td><%= item.updated_at.strftime("%Y-%m-%d") %></td>
+                <td><%= post_count = item.item_posts.count %></td>
+                <td><%= comment_count = item.comments.count %></td>
                 <td>
                   <% if item.group.present? %>
                     <%= link_to admin_group_path(item.group) do %>
