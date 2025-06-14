@@ -12,12 +12,14 @@ Rails.application.routes.draw do
     resources :users, only: [:show, :edit, :update, :groups] do
       member do
         get :groups
+        get :favorites
         patch :withdraw
       end
     end
     resources :items, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       resources :item_posts, only: [:new, :create, :edit, :update, :destroy]
       resources :comments, only: [:create, :destroy]
+      resource :favorite, only: [:create, :destroy]
     end
     resources :groups, only: [:new, :create, :show, :edit, :update, :destroy] do
       resources :group_members, only: [:index, :create, :update, :destroy]

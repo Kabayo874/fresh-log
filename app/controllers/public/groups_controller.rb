@@ -29,7 +29,7 @@ class Public::GroupsController < ApplicationController
                          .where(item_id: items.map(&:id))
                          .to_a
     combined = (items + item_posts).sort_by(&:updated_at).reverse
-    @cards = Kaminari.paginate_array(combined).page(params[:page]).per(12)
+    @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
   end
   
 
