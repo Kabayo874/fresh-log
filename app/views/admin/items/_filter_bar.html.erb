@@ -28,7 +28,7 @@
     <!-- 折りたたみフィルター -->
     <div class="collapse w-100 mt-3" id="advancedFilters">
       <div class="card card-body">
-        <%= form_with url: filter_url || items_path, method: :get, local: true do %>
+        <%= form_with url: filter_url, method: :get, local: true do %>
           <div class="row gy-2">
 
             <!-- 使用状況 -->

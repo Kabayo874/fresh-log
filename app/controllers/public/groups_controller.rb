@@ -24,13 +24,39 @@ class Public::GroupsController < ApplicationController
       return
     end
   
-    items = @group.items.includes(:user, :group).to_a
+    items = @group.items.includes(:user, :group)
     item_posts = ItemPost.includes(:user, item: [:user, :group])
-                         .where(item_id: items.map(&:id))
-                         .to_a
-    combined = (items + item_posts).sort_by(&:updated_at).reverse
+                         .where(item_id: items.pluck(:id))
+  
+    if params[:category].present?
+      items = items.where(category: params[:category])
+      item_ids = items.pluck(:id)
+      item_posts = item_posts.where(item_id: item_ids)
+    end
+  
+    if params[:status].present?
+      statuses = Array(params[:status])
+      items = items.where(status: statuses)
+      item_ids = items.pluck(:id)
+      item_posts = item_posts.where(item_id: item_ids)
+    end
+  
+    combined = (items.to_a + item_posts.to_a)
+  
+    case params[:sort]
+    when "created_asc"
+      combined.sort_by!(&:created_at)
+    when "star_desc"
+      combined.sort_by! do |item|
+        item.respond_to?(:star) ? -item.star.to_i : 0
+      end
+    else
+      combined.sort_by!(&:updated_at).reverse!
+    end
+  
     @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
   end
+  
   
 
   def edit
