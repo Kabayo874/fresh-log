@@ -111,3 +111,11 @@ ul.pagination li.page-item.active a.page-link {
   border-color: #6c757d !important;
   color: white !important;
 }
+
+
+/* 星評価の画像サイズ調整 */
+.star-readonly img,
+#post_raty img {
+  width: 16px;
+  height: 16px;
+}

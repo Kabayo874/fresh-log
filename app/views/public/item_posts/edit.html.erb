@@ -48,6 +48,13 @@
                   <%= f.label :status_repeat, ItemPost.statuses_i18n[:repeat] %>
                 </div>
 
+                <%= f.fields_for :item do |item_fields| %>
+                  <div class="form-group">
+                    <label>評価をし直す？</label>
+                    <%= render 'public/items/star_form', f: item_fields, item: @item_post.item %>
+                  </div>
+                <% end %>
+
                 <div class="pt-2">
                   <%= f.submit "変更を保存", class: "btn btn-primary" %>
                 </div>

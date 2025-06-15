@@ -11,43 +11,6 @@
               <th>ID</th>
               <th>画像</th>
               <th>商品名</th>
-              <th>
-                <div class="d-flex flex-column align-items-center">
-                  <span>カテゴリー</span>
-                  <%= form_with url: admin_items_path, method: :get, local: true, class: "d-flex align-items-center mb-0" do %>
-                    <%= select_tag :category_filter, options_for_select([
-                        ['すべて', 'all'],
-                        ['化粧品', 'cosmetics'],
-                        ['日用品', '日用品'],
-                        ['食品', '食品'],
-                        ['サプリメント', 'supplement']
-                      ], params[:category_filter]), class: "form-select form-select-sm me-1" %>
-
-                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
-                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
-                    <% end %>
-                  <% end %>
-                </div>
-              </th>
-              <th>
-                <div class="d-flex flex-column align-items-center">
-                  <span>ステータス</span>
-                  <%= form_with url: admin_items_path, method: :get, local: true, class: "d-flex align-items-center" do %>
-                    <%= select_tag :status_filter, options_for_select([
-                        ['すべて', 'all'],
-                        ['未使用', 'unopened'],
-                        ['使用開始', 'start'],
-                        ['使用中', 'active'],
-                        ['使用終了', 'finish'],
-                        ['廃棄', 'discard'],
-                        ['リピート', 'repeat']
-                      ], params[:status_filter]), class: "form-select form-select-sm me-1" %>
-                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
-                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
-                    <% end %>
-                  <% end %>
-                </div>
-              </th>
               <th>ユーザー</th>
               <th>
                 <%= link_to "登録日", admin_items_path(sort: toggle_sort(params[:sort], "created_at")) %>
@@ -87,6 +50,7 @@
             <% @items.each do |item| %>
               <tr>
                 <td><%= item.id %></td>
+              
                 <td>
                   <%= link_to admin_item_path(item) do %>
                     <%= image_tag item.image, size: "50x50" %>
@@ -96,16 +60,6 @@
                   <%= link_to admin_item_path(item) do %>
                     <%= item.title %>
                   <% end %>
-                </td>
-                <td>
-                  <span class="btn btn-sm <%= category_color_class(item.category) %>">
-                    <%= item.category_i18n %>
-                  </span>
-                </td>
-                <td>
-                  <span class="btn btn-sm <%= status_color_class(item.status) %>">
-                    <%= item.status_i18n %>
-                  </span>
                 </td>
                 <td>
                   <%= link_to admin_user_path(item.user) do %>

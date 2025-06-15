@@ -11,34 +11,35 @@ class Public::ItemPostsController < ApplicationController
 
   def new
     @item = Item.find(params[:item_id])
-    @item_post = ItemPost.new
+    @item_post = ItemPost.new(item_id: @item.id)
   end
   
   def create
     @item = Item.find(params[:item_id])
     @item_post = current_user.item_posts.new(item_post_params)
-    @item_post.item_id = @item.id
-    if @item_post.save
-      if @item.group.present?
-        redirect_to item_path(@item)
-      else
-        redirect_to item_path(@item)
-      end
+    @item_post.item = @item
+
+    if item_post_params[:item_attributes] && item_post_params[:item_attributes][:star]
+      @item.star = item_post_params[:item_attributes][:star]
+    end
+
+    if @item_post.save && @item.save
+      redirect_to item_path(@item), notice: '投稿しました。'
     else
       render :new
     end
   end
 
   def edit
-    @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
+    @item = @item_post.item
   end
 
   def update
-    @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
+    @item = @item_post.item
     if @item_post.update(item_post_params)
-      redirect_to item_path(@item)
+      redirect_to item_path(@item), notice: '投稿を更新しました'
     else
       render :edit
     end
@@ -58,7 +59,7 @@ class Public::ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item_post).permit(:review, :image, :status)
+    params.require(:item_post).permit(:review, :image, :status, :item_id, item_attributes: [:star])
   end
 
   def is_matching_login_user
