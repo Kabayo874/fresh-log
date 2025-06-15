@@ -9,6 +9,7 @@
     <div class="col-12 col-md-8 col-lg-9 mb-4">
       <div class="row">
         <h4>グループ投稿一覧</h4>
+        <%= render partial: 'public/items/filter_bar', locals: { filter_url: group_path(@group) } %>
       </div>
 
       <div class="row">

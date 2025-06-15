@@ -4,8 +4,19 @@ class Admin::UsersController < ApplicationController
 
   
   def index
+    sort = params[:sort] || 'created_at_desc'
+    direction = sort.ends_with?('_desc') ? :desc : :asc
+    order_column = sort.sub(/_(asc|desc)\z/, '')
+  
     @users = User.all
+
+    if params[:status_filter].present? && params[:status_filter] != 'all'
+      @users = @users.where(status: params[:status_filter])
+    end
+
+    @users = @users.order(order_column => direction)
   end
+  
 
   def destroy
     @user = User.find(params[:id])

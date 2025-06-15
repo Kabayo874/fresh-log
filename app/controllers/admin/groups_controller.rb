@@ -3,7 +3,17 @@ class Admin::GroupsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @groups = Group.all
+    sort = params[:sort] || 'created_at_desc'
+    direction = sort.ends_with?('_desc') ? :desc : :asc
+    order_column = sort.sub(/_(asc|desc)\z/, '')
+
+    @groups = Group.includes(:owner_user)
+
+    if params[:status_filter].present? && params[:status_filter] != "all"
+      @groups = @groups.where(status: params[:status_filter])
+    end
+
+    @groups = @groups.order(order_column => direction)
   end
 
   def show

@@ -19,4 +19,13 @@ class Public::SearchesController < ApplicationController
       @items = Kaminari.paginate_array([]).page(params[:page])
     end
   end
+
+  def genre_search
+    @genre_id = params[:genre_id]
+    @genre = Genre.find(@genre_id)
+    genre_items = Item.where(genre_id: @genre_id)
+    genre_item_posts = ItemPost.joins(:item).where(items: { genre_id: @genre_id })
+    combined_items = (genre_items + genre_item_posts).uniq
+    @items = Kaminari.paginate_array(combined_items).page(params[:page]).per(12)
+  end
 end

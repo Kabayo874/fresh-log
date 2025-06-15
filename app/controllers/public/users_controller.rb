@@ -7,21 +7,41 @@ class Public::UsersController < ApplicationController
       redirect_to root_path, alert: "このユーザーは退会しています"
     else
       items = @user.items
-             .left_joins(:group)
-             .includes(:group)
-             .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
-
+                   .left_joins(:group)
+                   .includes(:group)
+                   .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+      items = items.where(category: params[:category]) if params[:category].present?
+      items = items.where(status: params[:status]) if params[:status].present?
+  
       item_posts = @user.item_posts
                         .joins(:item)
                         .left_joins(item: :group)
                         .includes(item: [:group])
                         .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
-
-      combined = (items + item_posts).sort_by(&:updated_at).reverse
+      item_posts = item_posts.where(status: params[:status]) if params[:status].present?
+      item_posts = item_posts.select do |post|
+        params[:category].blank? || post.item.category == params[:category]
+      end
+  
+      combined = items.to_a + item_posts.to_a
+  
+      case params[:sort]
+      when "created_desc"
+        combined.sort_by! { |card| card.created_at }.reverse!
+      when "created_asc"
+        combined.sort_by! { |card| card.created_at }
+      when "star_desc"
+        combined.sort_by! do |card|
+          card.try(:star) || card.try(:item)&.try(:star) || 0
+        end.reverse!
+      else
+        combined.sort_by! { |card| card.updated_at }.reverse!
+      end
+  
       @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
-
     end
   end
+  
   
 
   def edit

@@ -12,9 +12,30 @@
               <th>アイコン</th>
               <th>グループ名</th>
               <th>作成者</th>
-              <th>登録日</th>
-              <th>更新日</th>
-              <th>ステータス</th>
+              <th>
+                <%= link_to "登録日", admin_groups_path(sort: toggle_sort(params[:sort], "created_at")) %>
+                <%= sort_icon(params[:sort], "created_at") %>
+              </th>
+              <th>
+                <%= link_to "更新日", admin_groups_path(sort: toggle_sort(params[:sort], "updated_at")) %>
+                <%= sort_icon(params[:sort], "updated_at") %>
+              </th>
+              <th>
+                <div class="d-flex flex-column align-items-center">
+                  <span>ステータス</span>
+                  <%= form_with url: admin_groups_path, method: :get, local: true, class: "d-flex align-items-center" do %>
+                    <%= select_tag :status_filter, options_for_select([
+                        ['すべて', 'all'],
+                        ['利用中', 'active'],
+                        ['オーナー削除', 'owner_delete'],
+                        ['管理者削除', 'admin_delete']
+                      ], params[:status_filter]), class: "form-select form-select-sm me-1" %>
+                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
+                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>

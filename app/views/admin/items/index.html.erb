@@ -11,11 +11,39 @@
               <th>ID</th>
               <th>画像</th>
               <th>商品名</th>
-              <th>評価</th>
               <th>ユーザー</th>
-              <th>登録日</th>
-              <th>更新日</th>
-              <th>グループ</th>
+              <th>
+                <%= link_to "登録日", admin_items_path(sort: toggle_sort(params[:sort], "created_at")) %>
+                <%= sort_icon(params[:sort], "created_at") %>
+              </th>
+              <th>
+                <%= link_to "追加投稿", admin_items_path(sort: toggle_sort(params[:sort], "post_count")) %>
+                <%= sort_icon(params[:sort], "post_count") %>
+              </th>
+              <th>
+                <%= link_to "追加投稿日", admin_items_path(sort: toggle_sort(params[:sort], "latest_posted_at")) %>
+                <%= sort_icon(params[:sort], "latest_posted_at") %>
+              </th>
+              <th>
+                <%= link_to "コメント", admin_items_path(sort: toggle_sort(params[:sort], "comment_count")) %>
+                <%= sort_icon(params[:sort], "comment_count") %>
+              </th>
+              <th>
+                <div class="d-flex flex-column align-items-center">
+                  <span>グループ</span>
+                  <%= form_with url: admin_items_path, method: :get, local: true, class: "d-flex align-items-center" do %>
+                    <%= select_tag :group_filter, options_for_select([
+                        ['すべて', 'all'],
+                        ['グループあり', 'with_group'],
+                        ['グループなし', 'without_group'],
+                        ['解散済みグループ', 'disbanded_group']
+                      ], params[:group_filter]), class: "form-select form-select-sm me-1" %>
+                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
+                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -34,13 +62,6 @@
                   <% end %>
                 </td>
                 <td>
-                  <% if item.is_a?(Item) %>
-                    <%= render 'public/items/star_rate', item: item %>
-                  <% elsif item.is_a?(ItemPost) && item.item.present? %>
-                    <%= render 'public/items/star_rate', item: item.item %>
-                  <% end %>
-                </td>
-                <td>
                   <%= link_to admin_user_path(item.user) do %>
                     <%= image_tag item.user.get_profile_image(50, 50),
                       style: "width: 50px; height: 50px; object-fit: cover;",
@@ -49,7 +70,12 @@
                   <% end %>
                 </td>
                 <td><%= item.created_at.strftime("%Y-%m-%d") %></td>
-                <td><%= item.updated_at.strftime("%Y-%m-%d") %></td>
+                <td><%= post_count = item.item_posts.count %></td>
+                <td>
+                  <% latest_post = item.item_posts.maximum(:created_at) %>
+                  <%= latest_post.present? ? latest_post.strftime("%Y-%m-%d") : "なし" %>
+                </td>
+                <td><%= comment_count = item.comments.count %></td>
                 <td>
                   <% if item.group.present? %>
                     <%= link_to admin_group_path(item.group) do %>
