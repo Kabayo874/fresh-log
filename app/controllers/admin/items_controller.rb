@@ -22,6 +22,25 @@ class Admin::ItemsController < ApplicationController
       @items = @items.sort_by(&:created_at).reverse
     end
 
+    case params[:group_filter]
+    when "with_group"
+      @items = @items.where.not(group_id: nil)
+    when "without_group"
+      @items = @items.where(group_id: nil)
+    when "disbanded_group"
+      @items = @items.joins(:group).where(groups: { owner_delete: true }).or(
+                  @items.joins(:group).where(groups: { admin_delete: true })
+                )
+    end
+
+    if params[:category_filter].present? && params[:category_filter] != "all"
+      @items = @items.where(category: params[:category_filter])
+    end
+
+    if params[:status_filter].present? && params[:status_filter] != "all"
+      @items = @items.where(status: params[:status_filter])
+    end
+
     @items = Kaminari.paginate_array(@items).page(params[:page]).per(20)
   end
   
