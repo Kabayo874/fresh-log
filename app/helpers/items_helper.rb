@@ -50,5 +50,13 @@ module ItemsHelper
       ""
     end
   end
+
+  def toggle_sort(current_sort, field)
+    if current_sort == "#{field}_asc"
+      "#{field}_desc"
+    else
+      "#{field}_asc"
+    end
+  end  
   
 end
