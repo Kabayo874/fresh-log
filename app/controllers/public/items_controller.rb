@@ -31,6 +31,8 @@ class Public::ItemsController < ApplicationController
   end
 
   def index
+    user_group_ids = current_user.groups.pluck(:id)
+
     sort_key = case params[:sort]
       when "created_asc"
         :created_asc
@@ -44,18 +46,29 @@ class Public::ItemsController < ApplicationController
     
     category = params[:category]
     status_params = Array(params[:status])
-
   
     @items = Item.left_joins(:group)
-                 .includes(:user, :group)
-                 .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+               .includes(:user, :group)
+               .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+               .where(
+                 "(items.private = ?)" + # 公開投稿
+                 " OR (items.user_id = ?)" + # 自分の投稿
+                 " OR (items.group_id IN (?))", # 所属グループの投稿
+                 false, current_user.id, user_group_ids
+               )
     @items = @items.where(category: category) if category.present?
     @items = @items.where(status: status_params) if status_params.present?
   
     @item_posts = ItemPost.joins(:item)
-                          .left_joins(item: :group)
-                          .includes(:user, item: [:user, :group])
-                          .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+    .left_joins(item: :group)
+    .includes(:user, item: [:user, :group])
+    .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+    .where(
+      "(items.private = ?)" +
+      " OR (items.user_id = ?)" +
+      " OR (items.group_id IN (?))",
+      false, current_user.id, user_group_ids
+    )
     @item_posts = @item_posts.where(status: status_params) if status_params.present?
     @item_posts = @item_posts.where(items: { category: category }) if category.present?
   
@@ -108,7 +121,7 @@ class Public::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :body, :image, :category, :status, :group_id, :star, :deadline)
+    params.require(:item).permit(:title, :body, :image, :category, :status, :group_id, :star, :deadline, :private)
   end
 
   def is_matching_login_user
