@@ -16,6 +16,14 @@
           <h5 class="card-title">
             <%= card.is_a?(Item) ? card.title : card.item.title %>
           </h5>
+
+          <!-- 星評価 -->
+          <% if card.is_a?(Item) %>
+            <%= render 'public/items/star_rate', item: card %>
+          <% elsif card.is_a?(ItemPost) && card.item.present? %>
+            <%= render 'public/items/star_rate', item: card.item %>
+          <% end %>
+
           <p class="card-text">
             <%= truncate(card.is_a?(Item) ? card.body : card.review, length: 40) %>
           </p>
@@ -51,7 +59,9 @@
             <%= image_tag group.image, size:"50x50", class: "rounded-3 me-2" %>
             <div>
               <strong><%= group.name %></strong><br>
-              <small class="text-muted">(by <%= active_user?(user) ? user.name : '退会したユーザー' %>)</small>
+              <small class="text-muted">
+                (by <%= (user.withdrawn? || user.deactivated?) ? '退会したユーザー' : user.name %>)
+              </small>
             </div>
           <% end %>
         <% else %>
@@ -59,7 +69,9 @@
             <%= image_tag user.get_profile_image(50, 50),
               style: "width: 50px; height: 50px; object-fit: cover;",
               class: "rounded-circle me-2" %>
-            <p class="mb-0"><%= user.name %></p>
+            <p class="mb-0">
+              <%= (user.withdrawn? || user.deactivated?) ? '退会したユーザー' : user.name %>
+            </p>
           <% end %>
         <% end %>
       </div>
