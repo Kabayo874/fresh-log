@@ -38,6 +38,11 @@
                 </div>
 
                 <div class="pt-2">
+                  <label for="deadline">期限（任意:他のユーザーには表示されません）</label>
+                  <%= f.date_field :deadline, id: "deadline", class: "form-control" %>
+                </div>
+
+                <div class="pt-2">
                   <label for="status">使用状況</label>
                   <%= f.radio_button :status, Item.statuses.key(0) %>
                   <%= f.label :status_unopened, Item.statuses_i18n[:unopened] %>

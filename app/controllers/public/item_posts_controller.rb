@@ -18,17 +18,19 @@ class Public::ItemPostsController < ApplicationController
     @item = Item.find(params[:item_id])
     @item_post = current_user.item_posts.new(item_post_params)
     @item_post.item = @item
-
-    if item_post_params[:item_attributes] && item_post_params[:item_attributes][:star]
-      @item.star = item_post_params[:item_attributes][:star]
+  
+    if item_post_params[:item_attributes]
+      @item.star = item_post_params[:item_attributes][:star] if item_post_params[:item_attributes][:star].present?
+      @item.deadline = item_post_params[:item_attributes][:deadline] if item_post_params[:item_attributes][:deadline].present?
     end
-
+  
     if @item_post.save && @item.save
       redirect_to item_path(@item), notice: '投稿しました。'
     else
       render :new
     end
   end
+  
 
   def edit
     @item_post = ItemPost.find(params[:id])
@@ -59,7 +61,7 @@ class Public::ItemPostsController < ApplicationController
   private
 
   def item_post_params
-    params.require(:item_post).permit(:review, :image, :status, :item_id, item_attributes: [:star])
+    params.require(:item_post).permit(:review, :image, :status, :item_id, item_attributes: [:star, :deadline])
   end
 
   def is_matching_login_user

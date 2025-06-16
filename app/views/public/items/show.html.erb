@@ -24,7 +24,7 @@
               <span class="ms-3"><%= render 'public/items/star_rate', item: @item %></span>
             </h4>         
 
-            <div class="ms-5 mt-2">
+            <div class="ms-5 mt-2 d-flex align-items-center flex-wrap gap-2">
               <% if @item.favorited_by?(current_user) %>
                 <p>
                   <%= link_to item_favorite_path(@item), method: :delete, class: "text-decoration-none" do %>
@@ -37,6 +37,10 @@
                     <i class="fa-regular fa-heart" style="color: #2474ff;"></i> <%= @item.favorites.count %> お気に入り
                   <% end %>
                 </p>
+              <% end %>
+
+              <% if @item.deadline.present? && (@item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group))) %>
+                <span class="text-muted small ms-2">期限：<%= @item.deadline.strftime('%Y/%m/%d') %></span>
               <% end %>
             </div>
           </div>

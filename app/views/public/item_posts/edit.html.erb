@@ -53,6 +53,11 @@
                     <label>評価をし直す？</label>
                     <%= render 'public/items/star_form', f: item_fields, item: @item_post.item %>
                   </div>
+
+                  <div class="form-group pt-2">
+                    <label for="deadline">期限を変更する？</label>
+                    <%= item_fields.date_field :deadline, id: "deadline", class: "form-control", value: @item_post.item.deadline&.to_date %>
+                  </div>
                 <% end %>
 
                 <div class="pt-2">
