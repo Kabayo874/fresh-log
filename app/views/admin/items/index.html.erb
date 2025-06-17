@@ -1,7 +1,7 @@
 
 <div class="container">
   <div class="row no-gutters">
-    <div class="col-md-10 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
+    <div class="col-md-12 col-sm-12 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
       <h5 class="text-dark bg-light p-4 mb-0">投稿一覧</h5>
 
       <div class="table-responsive p-4">
@@ -13,6 +13,40 @@
               <th>商品名</th>
               <th>ユーザー</th>
               <th>
+                <div class="d-flex flex-column align-items-center">
+                  <span>カテゴリ</span>
+                  <%= form_with url: admin_items_path, method: :get, local: true, class: "d-flex align-items-center" do %>
+                    <%= select_tag :category,
+                        options_for_select(Item.categories_i18n.map { |k, v| [v, k] }.unshift(["すべて", ""]),
+                          params[:category]),
+                        class: "form-select form-select-sm me-1" %>
+                    <% (params.to_unsafe_h.except(:category, :controller, :action)).each do |key, value| %>
+                      <%= hidden_field_tag key, value %>
+                    <% end %>
+                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
+                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex flex-column align-items-center">
+                  <span>商品状況</span>
+                  <%= form_with url: admin_items_path, method: :get, local: true, class: "d-flex align-items-center" do %>
+                    <%= select_tag :status,
+                        options_for_select(Item.statuses_i18n.map { |k, v| [v, k] }.unshift(["すべて", ""]),
+                          params[:status]),
+                        class: "form-select form-select-sm me-1" %>
+                    <% (params.to_unsafe_h.except(:status, :controller, :action)).each do |key, value| %>
+                      <%= hidden_field_tag key, value %>
+                    <% end %>
+                    <%= button_tag type: 'submit', class: "border-0 bg-transparent p-0", title: "絞り込む" do %>
+                      <i class="fa-solid fa-filter" style="color: #005eff;"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </th>
+              <th>
                 <%= link_to "登録日", admin_items_path(sort: toggle_sort(params[:sort], "created_at")) %>
                 <%= sort_icon(params[:sort], "created_at") %>
               </th>
@@ -23,6 +57,10 @@
               <th>
                 <%= link_to "追加投稿日", admin_items_path(sort: toggle_sort(params[:sort], "latest_posted_at")) %>
                 <%= sort_icon(params[:sort], "latest_posted_at") %>
+              </th>
+              <th>
+                <%= link_to "評価", admin_items_path(sort: toggle_sort(params[:sort], "star")) %>
+                <%= sort_icon(params[:sort], "star") %>
               </th>
               <th>
                 <%= link_to "コメント", admin_items_path(sort: toggle_sort(params[:sort], "comment_count")) %>
@@ -69,12 +107,23 @@
                     <span><%= item.user.name %></span>
                   <% end %>
                 </td>
+                <td>
+                  <div class="btn btn-sm no-hover <%= category_color_class(item.category) %>">
+                    <%= item.category_i18n %>
+                  </div>
+                </td>
+                <td>
+                  <div class="btn btn-sm no-hover <%= status_color_class(item.status) %>">
+                    <%= item.status_i18n %>
+                  </div>
+                </td>
                 <td><%= item.created_at.strftime("%Y-%m-%d") %></td>
                 <td><%= post_count = item.item_posts.count %></td>
                 <td>
                   <% latest_post = item.item_posts.maximum(:created_at) %>
                   <%= latest_post.present? ? latest_post.strftime("%Y-%m-%d") : "なし" %>
                 </td>
+                <td><%= render 'admin/items/star_rate', item: item %></td>
                 <td><%= comment_count = item.comments.count %></td>
                 <td>
                   <% if item.group.present? %>

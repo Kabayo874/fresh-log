@@ -39,6 +39,10 @@ class Admin::ItemsController < ApplicationController
       @items = @items.sort_by { |item| item.item_posts.maximum(:created_at) || Time.at(0) }.reverse
     when "latest_posted_at_asc"
       @items = @items.sort_by { |item| item.item_posts.maximum(:created_at) || Time.at(0) }
+    when "star"
+      @items = @items.order(star: :asc)
+    when "star_desc"
+      @items = @items.order(star: :desc)
     else
       @items = @items.sort_by(&:created_at).reverse
     end
