@@ -32,46 +32,46 @@ class Public::ItemsController < ApplicationController
 
   def index
     user_group_ids = current_user.groups.pluck(:id)
-
+    user_group_ids = [-1] if user_group_ids.empty?  # 空配列対策
+  
+    # ソートキーの判定
     sort_key = case params[:sort]
-      when "created_asc"
-        :created_asc
-      when "star_desc"
-        :star_desc
-      when "created_desc"
-        :created_desc
-      else
-        :updated_desc
-      end
-    
+                when "created_asc" then :created_asc
+                when "star_desc"   then :star_desc
+                when "created_desc" then :created_desc
+                else :updated_desc
+                end
+  
     category = params[:category]
     status_params = Array(params[:status])
   
+    item_table = Item.arel_table
+  
+    # 条件作成
+    self_items    = item_table[:user_id].eq(current_user.id)
+    public_items  = item_table[:private].not_eq(true)
+    group_items   = item_table[:group_id].in(user_group_ids).and(item_table[:private].not_eq(true))
+  
+    combined_condition = self_items.or(public_items).or(group_items)
+  
+    # 投稿を取得
     @items = Item.left_joins(:group)
-               .includes(:user, :group)
-               .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
-               .where(
-                 "(items.private = ?)" + # 公開投稿
-                 " OR (items.user_id = ?)" + # 自分の投稿
-                 " OR (items.group_id IN (?))", # 所属グループの投稿
-                 false, current_user.id, user_group_ids
-               )
+                  .includes(:user, :group)
+                  .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+                  .where(combined_condition)
     @items = @items.where(category: category) if category.present?
     @items = @items.where(status: status_params) if status_params.present?
   
+    # 子投稿(ItemPost)も同様に取得
     @item_posts = ItemPost.joins(:item)
-    .left_joins(item: :group)
-    .includes(:user, item: [:user, :group])
-    .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
-    .where(
-      "(items.private = ?)" +
-      " OR (items.user_id = ?)" +
-      " OR (items.group_id IN (?))",
-      false, current_user.id, user_group_ids
-    )
+                          .left_joins(item: :group)
+                          .includes(:user, item: [:user, :group])
+                          .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+                          .where(combined_condition)
     @item_posts = @item_posts.where(status: status_params) if status_params.present?
     @item_posts = @item_posts.where(items: { category: category }) if category.present?
   
+    # 配列にまとめてソート
     combined = @items + @item_posts
   
     combined.sort_by! do |record|
@@ -85,9 +85,11 @@ class Public::ItemsController < ApplicationController
       else
         -record.updated_at.to_i
       end
-    end    
-  
+    end
+    
+    # ページネーション
     @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
+  
   end
   
   
