@@ -13,6 +13,11 @@
       <div class="m-5">
 
         <div class="row mb-3">
+          <% if @item.private %>
+            <div class="alert alert-warning text-center" role="alert">
+              <strong>非表示設定中</strong>
+            </div>
+          <% end %>
           <div class="col-auto">
             <div class="btn btn-primary btn-sm <%= category_color_class(@item.category) %>">
               <%= @item.category_i18n %>
@@ -24,7 +29,7 @@
               <span class="ms-3"><%= render 'admin/items/star_rate', item: @item %></span>
             </h4>         
           </div>
-
+        </div>
             
 
 

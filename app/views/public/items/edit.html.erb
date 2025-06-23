@@ -64,6 +64,11 @@
                 </div>
 
                 <div class="pt-2">
+                  <%= f.check_box :private %>
+                  <%= f.label :private, "非公開にする（自分やグループだけに表示）" %>
+                </div>
+
+                <div class="pt-2">
                   <%= f.submit "変更を保存", class: "btn btn-primary" %>
                 </div>
               <% end %>

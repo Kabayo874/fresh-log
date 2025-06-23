@@ -9,6 +9,13 @@
       <%= card.status_i18n %>
     </div>
 
+    <% if card.is_a?(Item) ? card.private : card.item.private %>
+      <div class="position-absolute top-0 end-0 m-2 px-2 py-1 bg-white rounded small d-flex align-items-center gap-1 shadow-sm"
+          style="border: 1px solid #ffc107; color: #e69500;">
+        <i class="fa-solid fa-eye-slash"></i>
+      </div>
+    <% end %>
+
     <div class="card-body d-flex flex-column">
       <!-- タイトル・本文 -->
       <div class="mb-auto">
