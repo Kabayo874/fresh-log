@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   # 管理者画面
   namespace :admin do
-    get 'dashboards', to: 'dashboards#index'
+    # get 'dashboards', to: 'dashboards#index'
     resources :users, only: [:index, :destroy, :show] do
       member do
         get :groups
