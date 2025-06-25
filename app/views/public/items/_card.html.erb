@@ -58,6 +58,18 @@
         </div>
       </div>
 
+      <!-- 期限（自分の投稿のみ） -->
+      <div>
+        <% deadline = card.is_a?(Item) ? card.deadline : card.item.deadline %>
+        <% user = card.user %>
+
+        <% if user == current_user && deadline.present? %>
+          <div class="text-muted small mt-1">
+            期限：<%= deadline.strftime('%Y/%m/%d') %>
+          </div>
+        <% end %>
+      </div>
+
       <!-- ユーザー名 or グループ名 -->
       <div class="d-flex align-items-center mt-2">
         <% group = card.is_a?(Item) ? card.group : card.item.group %>

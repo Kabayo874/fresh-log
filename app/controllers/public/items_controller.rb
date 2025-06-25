@@ -40,19 +40,19 @@ class Public::ItemsController < ApplicationController
   
     category = params[:category]
     status_params = Array(params[:status])
-  
     item_table = Item.arel_table
   
-    # 非表示ではない投稿
     visible_condition = item_table[:private].eq(false).or(item_table[:private].eq(nil))
   
+
+    #Item + ItemPost
     @items = Item.left_joins(:group)
-                 .includes(:user, :group)
-                 .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
-                 .where(visible_condition)
+                  .includes(:user, :group)
+                  .where('groups.status IS NULL OR groups.status = ?', Group.statuses[:active])
+                  .where(visible_condition)
     @items = @items.where(category: category) if category.present?
     @items = @items.where(status: status_params) if status_params.present?
-  
+
     @item_posts = ItemPost.joins(:item)
                           .left_joins(item: :group)
                           .includes(:user, item: [:user, :group])
@@ -60,9 +60,9 @@ class Public::ItemsController < ApplicationController
                           .where(visible_condition)
     @item_posts = @item_posts.where(status: status_params) if status_params.present?
     @item_posts = @item_posts.where(items: { category: category }) if category.present?
-  
+
     combined = @items + @item_posts
-  
+
     combined.sort_by! do |record|
       case sort_key
       when :created_desc
@@ -79,10 +79,7 @@ class Public::ItemsController < ApplicationController
     @cards = Kaminari.paginate_array(combined).page(params[:page]).per(15)
   end
   
-  
-  
 
-  
 
   def show
     @item = Item.find(params[:id])

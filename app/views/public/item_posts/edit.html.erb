@@ -24,16 +24,17 @@
                 <%= render 'layouts/error_messages', model: f.object %>
 
                 <div class="pt-2">
+                  <label for="inputImage">商品画像</label><br>
+                  <%= f.file_field :image, id:"inputImage", placeholder: "商品画像", accept: "image/*" %>
+                </div>
+                <div class="pt-2">
                   <label for="review">説明</label>
                   <%= f.text_area :review, autofocus: true, id:"review", placeholder:"説明", class: "form-control" %>
                 </div>
-                <div class="pt-2">
-                  <label for="inputImage">商品画像</label>
-                  <%= f.file_field :image, id:"inputImage", placeholder: "商品画像", accept: "image/*" %>
-                </div>
+                
 
-                <div class="pt-2">
-                  <label for="status">使用状況</label>
+                <div class="pt-2 mb-2">
+                  <label for="status">使用状況</label><br>
                   <%= f.radio_button :status, ItemPost.statuses.key(0) %>
                   <%= f.label :status_unopened, ItemPost.statuses_i18n[:unopened] %>
                   <%= f.radio_button :status, ItemPost.statuses.key(1) %>

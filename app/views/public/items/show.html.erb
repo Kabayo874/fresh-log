@@ -9,10 +9,10 @@
     </div>
 
 
-    <div class="col-12 col-md-8 col-lg-9 mb-4">
+    <div class="col-12 col-md-8 col-lg-9">
       <div class="m-5">
 
-        <div class="row mb-3">
+        <div class="row mb-1">
           <% if @item.private %>
             <div class="alert alert-warning text-center" role="alert">
               <strong>非表示設定中</strong>
@@ -43,14 +43,16 @@
                   <% end %>
                 </p>
               <% end %>
-
-              <% if @item.deadline.present? && (@item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group))) %>
-                <span class="text-muted small ms-2">期限：<%= @item.deadline.strftime('%Y/%m/%d') %></span>
-              <% end %>
             </div>
           </div>
 
-            
+          <div class="mb-4">
+            <% if @item.deadline.present? && (@item.user == current_user || (@item.group.present? && current_user.member_of?(@item.group))) %>
+              <span class="text-muted small ms-2">期限：<%= @item.deadline.strftime('%Y/%m/%d') %></span>
+            <% end %>
+          </div>
+
+        </div>
 
 
 

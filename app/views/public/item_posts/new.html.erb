@@ -24,7 +24,7 @@
                   <%= render 'layouts/error_messages', model: f.object %>
 
                   <div class="pt-2">
-                    <label for="image">商品画像</label>
+                    <label for="image">商品画像</label><br>
                     <%= f.file_field :image, accept: "image/*" %>
                   </div>
 
@@ -33,8 +33,8 @@
                     <%= f.text_area :review, rows: '5', id:"post", class: "form-control" %>
                   </div>
 
-                  <div class="pt-2">
-                    <label for="status">使用状況</label>
+                  <div class="pt-2 mb-2">
+                    <label for="status">使用状況</label><br>
                     <%= f.radio_button :status, ItemPost.statuses.key(0) %>
                     <%= f.label :status_unopened, ItemPost.statuses_i18n[:unopened] %>
                     <%= f.radio_button :status, ItemPost.statuses.key(1) %>

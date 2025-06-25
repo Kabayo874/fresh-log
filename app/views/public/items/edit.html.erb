@@ -33,17 +33,12 @@
                   <%= f.text_area :body, autofocus: true, id:"comment", placeholder:"説明", class: "form-control" %>
                 </div>
                 <div class="pt-2">
-                  <label for="inputImage">商品画像</label>
+                  <label for="inputImage">商品画像</label><br>
                   <%= f.file_field :image, id:"inputImage", placeholder: "画像", accept: "image/*" %>
                 </div>
 
                 <div class="pt-2">
-                  <label for="deadline">期限（任意:他のユーザーには表示されません）</label>
-                  <%= f.date_field :deadline, id: "deadline", class: "form-control" %>
-                </div>
-
-                <div class="pt-2">
-                  <label for="status">使用状況</label>
+                  <label for="status">使用状況</label><br>
                   <%= f.radio_button :status, Item.statuses.key(0) %>
                   <%= f.label :status_unopened, Item.statuses_i18n[:unopened] %>
                   <%= f.radio_button :status, Item.statuses.key(1) %>
@@ -61,6 +56,11 @@
                 <div class="pt-2">
                 <label for="status">評価</label>
                   <%= render 'star_form', f: f, item: @item %>
+                </div>
+
+                <div class="pt-2">
+                  <label for="deadline">期限（任意:他のユーザーには表示されません）</label>
+                  <%= f.date_field :deadline, id: "deadline", class: "form-control" %>
                 </div>
 
                 <div class="pt-2">
