@@ -10,6 +10,9 @@ document.addEventListener('turbolinks:load', function () {
     console.warn("raty not loaded or element not found");
     return;
   }
+
+  elem.innerHTML = "";
+
   raty(elem, {
     starOn: star_on_img,
     starOff: star_off_img,
@@ -26,6 +29,9 @@ document.addEventListener('turbolinks:load', function () {
 document.addEventListener('turbolinks:load', function () {
   document.querySelectorAll('.star-readonly').forEach((elem) => {
     if (typeof raty !== "function") return;
+
+    elem.innerHTML = "";
+    
     raty(elem, {
       starOn: star_on_img,
       starOff: star_off_img,

@@ -8,32 +8,46 @@
   </div>
 
   <div class="mb-5">
-    <h4 class="mb-3">📸 商品一覧画面の見方</h4>
+    <h4 class="mb-3">商品一覧画面の見方</h4>
     <div class="text-center mb-4">
-      <%= image_tag "about2.png", class: "img-fluid rounded shadow-sm", alt: "商品一覧画面" %>
-      <%= image_tag "about3.png", class: "img-fluid rounded shadow-sm", alt: "詳細検索画面" %>
+      <%= image_tag "about6.png", class: "img-fluid rounded shadow-sm", alt: "商品一覧画面", style: "width: 70%;" %>
     </div>
     <ul class="list-unstyled">
       <li><span class="badge bg-warning text-dark me-2">1</span> 商品の名前や投稿者を確認できます。</li>
-      <li><span class="badge bg-warning text-dark me-2">2</span> カテゴリや状態で絞り込みが可能。</li>
-      <li><span class="badge bg-warning text-dark me-2">3</span> 並び替えで期限順・評価順の表示切替。</li>
+      <li><span class="badge bg-warning text-dark me-2">2</span> カテゴリや状態で絞り込みができます。</li>
+      <li><span class="badge bg-warning text-dark me-2">3</span> 並び替えで期限順・評価順の表示切替ができます。</li>
       <li><span class="badge bg-warning text-dark me-2">4</span> 「＋」ボタンで新規登録ができます。</li>
     </ul>
   </div>
 
   <div class="mb-5">
-    <h4 class="mb-3">📝 よくある操作</h4>
+    <h4 class="mb-3">商品詳細画面の見方</h4>
+    <div class="text-center mb-4">
+      <%= image_tag "about5.png", class: "img-fluid rounded shadow-sm", alt: "商品詳細画面", style: "width: 70%;" %>
+    </div>
+    <ul class="list-unstyled">
+      <li><span class="badge bg-warning text-dark me-2">1</span> 期限は自分（または投稿グループのメンバー）しか表示されません。</li>
+      <li><span class="badge bg-warning text-dark me-2">2</span> 自分（またはグループ）の投稿には、「＋」ボタンで経過の投稿ができます。</li>
+      <li><span class="badge bg-warning text-dark me-2">3</span> 他の人の投稿にコメントを投稿できます。</li>
+      <li><span class="badge bg-warning text-dark me-2">4</span> 投稿の編集や削除ができます。</li>
+    </ul>
+  </div>
+
+  <div class="mb-5">
+    <h4 class="mb-3">よくある質問</h4>
     <div class="accordion" id="faqAccordion">
       <div class="accordion-item">
         <h2 class="accordion-header" id="faq1">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content">
-            商品を削除したいときは？
+            グループとは何ですか？
           </button>
         </h2>
         <div id="faq1Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
           <div class="accordion-body">
-            商品カードの右上メニュー「…」から「削除」を選んでください。<br>
-            ※削除後の復元はできません。
+            ユーザー同士でグループを組み、グループで商品の投稿や管理ができます。<br>
+            家族やサークル、職場など共通で使用するものの管理にお使いください。<br>
+            ※グループは他人からも見ることができます。<br>
+            ※グループメンバーの追加はグループ管理者のみが行えます。
           </div>
         </div>
       </div>
@@ -41,13 +55,28 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="faq2">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content">
-            非公開にするには？
+            投稿を非公開にするには？
           </button>
         </h2>
         <div id="faq2Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
           <div class="accordion-body">
-            編集画面から「公開範囲」を「非公開」に設定できます。
+            投稿や編集画面から「公開範囲」を「非公開」に設定できます。
             非公開にした商品は他のユーザーには表示されません。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content">
+            期限には何の日を入れたらいいの？
+          </button>
+        </h2>
+        <div id="faq2Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            特に決まりはありません。
+            商品に記載されている使用・賞味期限のほか、開封日から使い切りたい目安など、ご自由にお使いください。
+            期限を登録せずに登録することも可能です。
           </div>
         </div>
       </div>
@@ -55,15 +84,16 @@
   </div>
 
   <div>
-    <h4 class="mb-3">⚠️ 注意点</h4>
+    <h4 class="mb-3">注意点</h4>
     <ul>
-      <li>期限切れ商品は赤く強調表示されます。</li>
-      <li>削除後の商品は元に戻せません。</li>
+      <li>削除後の商品やコメントは元に戻せません。</li>
       <li>非公開設定にすると、自分以外には見えません。</li>
     </ul>
   </div>
 
   <div class="text-center mt-5">
-    <%= link_to "トップページに戻る", root_path, class: "btn btn-outline-primary" %>
+    <%= link_to root_path do %>
+      <i class="fa-solid fa-arrow-left fa-2xl" style="color: #1b6cf8;"></i>
+    <% end %>
   </div>
 </div>
