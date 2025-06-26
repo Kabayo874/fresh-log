@@ -1,1 +1,69 @@
-<h1>About</h1>
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <%= image_tag 'fresh-log_logo.png', alt: 'Fresh-log', height: '80', class: 'mb-3' %>
+    <h2 class="mb-2">Fresh-log の使い方</h2>
+    <p class="text-muted">
+      「これ、いつから使ってたっけ？」そんな不安を、記録して解消。
+    </p>
+  </div>
+
+  <div class="mb-5">
+    <h4 class="mb-3">📸 商品一覧画面の見方</h4>
+    <div class="text-center mb-4">
+      <%= image_tag "about2.png", class: "img-fluid rounded shadow-sm", alt: "商品一覧画面" %>
+      <%= image_tag "about3.png", class: "img-fluid rounded shadow-sm", alt: "詳細検索画面" %>
+    </div>
+    <ul class="list-unstyled">
+      <li><span class="badge bg-warning text-dark me-2">1</span> 商品の名前や投稿者を確認できます。</li>
+      <li><span class="badge bg-warning text-dark me-2">2</span> カテゴリや状態で絞り込みが可能。</li>
+      <li><span class="badge bg-warning text-dark me-2">3</span> 並び替えで期限順・評価順の表示切替。</li>
+      <li><span class="badge bg-warning text-dark me-2">4</span> 「＋」ボタンで新規登録ができます。</li>
+    </ul>
+  </div>
+
+  <div class="mb-5">
+    <h4 class="mb-3">📝 よくある操作</h4>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq1">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1Content">
+            商品を削除したいときは？
+          </button>
+        </h2>
+        <div id="faq1Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            商品カードの右上メニュー「…」から「削除」を選んでください。<br>
+            ※削除後の復元はできません。
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2Content">
+            非公開にするには？
+          </button>
+        </h2>
+        <div id="faq2Content" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            編集画面から「公開範囲」を「非公開」に設定できます。
+            非公開にした商品は他のユーザーには表示されません。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h4 class="mb-3">⚠️ 注意点</h4>
+    <ul>
+      <li>期限切れ商品は赤く強調表示されます。</li>
+      <li>削除後の商品は元に戻せません。</li>
+      <li>非公開設定にすると、自分以外には見えません。</li>
+    </ul>
+  </div>
+
+  <div class="text-center mt-5">
+    <%= link_to "トップページに戻る", root_path, class: "btn btn-outline-primary" %>
+  </div>
+</div>
