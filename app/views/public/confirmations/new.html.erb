@@ -5,6 +5,8 @@
           <div class="col-md-8 col-sm-10 mx-2 mx-sm-auto border rounded-5 px-0 my-5 overflow-hidden">
             <h5 class="text-dark bg-light p-4 mb-0">アカウント作成</h5>
             <div class="form-body p-4">
+
+
               <%= form_with(model: resource, scope: resource_name, url: confirmation_path(resource_name), method: :post, local: true) do |f| %>
                 <%= render "devise/shared/error_messages", resource: resource %>
             
