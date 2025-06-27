@@ -27,6 +27,7 @@ class Public::ItemPostsController < ApplicationController
     if @item_post.save && @item.save
       redirect_to item_path(@item), notice: '投稿しました。'
     else
+      flash.now[:alert] = '投稿に失敗しました。'
       render :new
     end
   end
@@ -43,6 +44,7 @@ class Public::ItemPostsController < ApplicationController
     if @item_post.update(item_post_params)
       redirect_to item_path(@item), notice: '投稿を更新しました'
     else
+      flash.now[:alert] = '更新に失敗しました。'
       render :edit
     end
   end
@@ -50,13 +52,10 @@ class Public::ItemPostsController < ApplicationController
   def destroy
     @item = Item.find(params[:item_id])
     @item_post = ItemPost.find(params[:id])
-      if @item_post.user == current_user
-        @item_post.destroy
-        redirect_to item_path(params[:item_id]), notice: "投稿を削除しました"
-      else
-        redirect_to item_path(params[:item_id]), alert: "削除できるのは自分の投稿のみです"
-      end
-  end
+    @item_post.destroy
+  
+    redirect_to item_path(@item), notice: "投稿を削除しました"
+  end  
 
   private
 

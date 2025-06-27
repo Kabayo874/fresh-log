@@ -21,9 +21,9 @@ class Public::ItemsController < ApplicationController
   
     if @item.save
       if @item.group.present?
-        redirect_to group_path(@item.group)
+        redirect_to group_path(@item.group), notice: '投稿しました。'
       else
-        redirect_to user_path(current_user) 
+        redirect_to user_path(current_user) , notice: '投稿しました。'
       end
     else
       render :new
@@ -94,8 +94,9 @@ class Public::ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     if @item.update(item_params)
-      redirect_to item_path(@item.id)
+      redirect_to item_path(@item.id), notice: '変更を登録しました。'
     else
+      flash.now[:alert] = '投稿に失敗しました。'
       render :edit
     end
   end
@@ -103,7 +104,7 @@ class Public::ItemsController < ApplicationController
   def destroy
     item = Item.find(params[:id])
     item.destroy
-    redirect_to items_path
+    redirect_to items_path, notice: '投稿を削除しました。'
   end
 
 

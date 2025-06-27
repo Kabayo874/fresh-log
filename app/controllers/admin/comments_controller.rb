@@ -6,6 +6,6 @@ class Admin::CommentsController < ApplicationController
     @item = Item.find(params[:item_id])
     @comment = @item.comments.find(params[:id])
     @comment.destroy
-    redirect_to admin_item_path(@item), notice: '追加投稿を削除しました。'
+    redirect_to admin_item_path(@item), notice: 'コメントを削除しました。'
   end
 end
