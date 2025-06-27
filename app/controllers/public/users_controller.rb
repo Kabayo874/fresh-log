@@ -1,5 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :reject_guest_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -105,6 +106,12 @@ class Public::UsersController < ApplicationController
     user = User.find(params[:id])
     unless user.id == current_user.id
       redirect_to items_path
+    end
+  end
+
+  def reject_guest_user
+    if User::GUEST_USER_EMAIL == current_user.email
+      redirect_to request.referer || root_path, alert: "ゲストユーザーはプロフィール編集を行えません。"
     end
   end
 

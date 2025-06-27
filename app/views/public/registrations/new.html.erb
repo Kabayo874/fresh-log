@@ -9,6 +9,11 @@
           <%= flash[:notice] %>
           <%= flash[:alert] %>
         </div>
+
+        <div class="mb-3">
+          <%= button_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, method: :post,
+                class: "btn btn-outline-secondary w-100" %>
+        </div>
         
         <div class="form-body p-4">
           <%= form_with model: @user, url: user_registration_path, scope: :user, local: true do |f| %>

@@ -41,6 +41,16 @@ class User < ApplicationRecord
 
   before_update :handle_withdrawal, if: :will_be_withdrawn?
 
+  # ゲストユーザー
+  GUEST_USER_EMAIL = "guest@example.com"
+
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = "guestuser"
+    end
+  end
+
   private
 
   def will_be_withdrawn?
