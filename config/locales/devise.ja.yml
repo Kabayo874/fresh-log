@@ -38,7 +38,7 @@ ja:
         image: 商品画像
       group:
         name: グループ名
-        discription: グループ説明
+        description: グループ説明
         image: グループ画像
 
     models:
