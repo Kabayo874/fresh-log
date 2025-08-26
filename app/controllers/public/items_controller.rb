@@ -83,6 +83,30 @@ class Public::ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+
+      # グループが存在して非アクティブなら見せない
+    if @item.group.present? && @item.group.inactive?
+      redirect_to items_path, alert: "この投稿は存在しません"
+      return
+    end
+
+    # 非公開チェック
+    if @item.private?
+      if @item.group.present?
+        # グループ投稿の非公開 → グループメンバー or 投稿者のみ閲覧可
+        unless @item.group.users.include?(current_user) || @item.user == current_user
+          redirect_to items_path, alert: "この投稿は非公開です"
+          return
+        end
+      else
+        # 個人投稿の非公開 → 投稿者のみ閲覧可
+        unless @item.user == current_user
+          redirect_to items_path, alert: "この投稿は非公開です"
+          return
+        end
+      end
+    end
+
     @item_post = ItemPost.new
     @comment = Comment.new
   end
