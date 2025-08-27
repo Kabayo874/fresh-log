@@ -59,7 +59,9 @@
         <!-- 初回投稿 -->
         <div class="row mb-3">
           <div class="col-3">
-            <%= image_tag @item.image, size: "150x150" %>
+            <div style="width: 150px; height: 150px; overflow: hidden; border-radius: 8px;">
+              <%= image_tag @item.image, style: "width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
           </div>
         
           <div class="col-9 mb-2">
@@ -118,7 +120,9 @@
         <% @item.item_posts.each do |item_post| %>
           <div class="row mb-3">
             <div class="col-3">
-              <%= image_tag item_post.image, size: "150x150" %>
+            <div style="width: 150px; height: 150px; overflow: hidden; border-radius: 8px;">
+              <%= image_tag item_post.image, style: "width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
             </div>
         
             <div class="col-9 mb-2">
