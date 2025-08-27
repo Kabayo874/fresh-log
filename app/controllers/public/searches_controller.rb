@@ -11,7 +11,13 @@ class Public::SearchesController < ApplicationController
 
 
       items_by_title_or_body = Item.where("title LIKE ? OR body LIKE ?", like_word, like_word)
-      item_posts_by_review = Item.joins(:item_posts).where("item_posts.review LIKE?", like_word)
+                                   .where(private: [false, nil])
+
+      item_posts_by_review = Item.joins(:item_posts)
+                                 .where("item_posts.review LIKE?", like_word)
+                                 .where(private: [false, nil])
+
+
       combined_items = (items_by_title_or_body + item_posts_by_review).uniq
       @items = Kaminari.paginate_array(combined_items).page(params[:page]).per(12)
     else
