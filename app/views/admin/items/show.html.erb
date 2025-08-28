@@ -76,7 +76,7 @@
         
             <!-- レビュー本文 -->
             <div class="mb-2">
-              <p><%= @item.body %></p>
+              <%= simple_format(@item.body) %>
             </div>
         
             <!-- 編集・削除 -->
@@ -137,7 +137,7 @@
         
               <!-- レビュー本文 -->
               <div class="mb-2">
-                <p><%= item_post.review %></p>
+                <%= simple_format(item_post.review) %>
               </div>
         
               <!-- 編集・削除 -->
