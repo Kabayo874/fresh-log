@@ -107,7 +107,7 @@
                 <%= link_to edit_item_path(@item.id) do %>
                   <i class="fa-solid fa-pen-to-square" style="color: #1869f7;"></i>
                 <% end %>
-                <%= link_to item_path(@item), method: :delete, class: "ms-3" do %>
+                <%= link_to item_path(@item), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "ms-3" do %>
                   <i class="fa-solid fa-trash" style="color: #1869f7;"></i>
                 <% end %>
               </div>
